@@ -1,0 +1,21 @@
+<div class="m-2">
+  <h5 class="bg-info text-white text-center p-2">
+    {{!isDiagnosed ? 'Upload Page' : 'Diagnose Result'}}
+  </h5>
+  <h5 *ngIf="diabetesLevel" class="bg-success text-white text-center p-2">
+    {{diabetesLevel}}
+  </h5>
+  <form [formGroup]="uploadForm" class="m-2"
+        enctype="multipart/form-data" (ngSubmit)="uploadSubmit()">
+    <div class="form-group">
+      <label>Name</label><br>
+      <input formControlName="customerName" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Tongue Picture</label><br>
+      <input formControlName="tongueImg" type="file" class="form-control" accept=".png, .jpg, .jpeg"
+      (change)="changeImg($event)">
+    </div>
+    <button type="submit" class="btn btn-secondary">Submit<span *ngIf="submited">Try again {{second}}s later</span></button>
+  </form>
+</div>
