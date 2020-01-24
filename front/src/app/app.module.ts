@@ -9,12 +9,34 @@ import { AppComponent } from './app.component';
 import { DiagnoseComponent } from './components/diagnose/diagnose.component';
 import { LoginComponent } from './components/login/login.component';
 import { TestComponent } from './components/test/test.component';
+import { NavComponent } from './components/nav/nav.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { SideComponent } from './components/side/side.component';
+import { MainComponent } from './components/main/main.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { DoctorMainComponent } from './components/doctor.main/doctor.main.component';
+import { AdminMainComponent } from './components/admin.main/admin.main.component';
+
+import { LoginGuard } from './guards/login.guard';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { MessageComponent } from './components/message/message.component';
+import {MessageService} from './services/message.service';
+
 @NgModule({
   declarations: [
     AppComponent,
     DiagnoseComponent,
     LoginComponent,
-    TestComponent
+    TestComponent,
+    NavComponent,
+    FooterComponent,
+    SideComponent,
+    MainComponent,
+    WelcomeComponent,
+    DoctorMainComponent,
+    AdminMainComponent,
+    ErrorPageComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +45,15 @@ import { TestComponent } from './components/test/test.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    LoginGuard,
+    MessageService
+  ],
+  bootstrap: [
+    AppComponent,
+    // NavComponent,
+    // FooterComponent
+    // TestComponent
+  ]
 })
 export class AppModule { }

@@ -1,15 +1,32 @@
 const express = require('express');
 const app = express();
-// const multiparty = require('multiparty');
 const bodyParser = require('body-parser');
 const exec = require('child_process').exec;
 const MODEL_DIR = 'E:\\keras-yolo3-master\\keras-yolo3-master\\final_model\\';
-
 const cors = require('cors');
 const multer = require('multer');
+const session = require('express-session');
 
-app.use(cors({origin: '*'}));
+const login = require('./routes/login');
+const auth = require('./routes/auth');
 
+app.use(session({
+    secret: 'BTD secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 10 * 60 * 1000
+    }
+}));
+
+// app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Credentials', false);
+//     res.header('Access-Control-Allow-Origin', req.headers.origin);
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+//     next();
+// });
+//
 // app.all('*', function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
 //     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
@@ -18,10 +35,21 @@ app.use(cors({origin: '*'}));
 //     if(req.method=="OPTIONS") res.sendStatus(200);
 //     else  next();
 // });
-
+// app.use(cors({origin: '*'}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(MODEL_DIR+'data'));
+
+
+app.use(function (req, res, next) {
+    console.log(req.url, ' arrived at: ', Date.now());
+    next();
+});
+app.use('/api', login);
+// app.get('/authLogin', login);
+// app.post('/login', login);
+// app.get('/sess', login);
+// app.get('/logout', login);
 
 const storage = multer.diskStorage({
     destination: (req, file, callBack) => {

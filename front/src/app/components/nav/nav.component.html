@@ -1,0 +1,84 @@
+<nav class="navbar fixed-top navbar-dark bg-dark py-0">
+  <a class="navbar-brand" href="#">
+    <img id="header_img" src="../../../assets/icon_header.png" width="50px" height="50px" alt="Home">
+    BTD System
+  </a>
+  <div style="width: 1px;height: 30px;background: #59bcdb"></div>
+  <!--  <div class="collapse navbar-collapse">-->
+  <ul class="nav nav-pills mr-auto">
+    <li class="active pl-2">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+    <li class="nav-item pl-2">
+      <a class="nav-link" href="#">Policy</a>
+    </li>
+    <li class="nav-item pl-2">
+      <a class="nav-link" href="#">Staff</a>
+    </li>
+    <li class="nav-item pl-2">
+      <a class="nav-link" href="#">About</a>
+    </li>
+  </ul>
+  <ul class="nav nav-pills" *ngIf="!correct">
+    <li class="nav-item pl-2 mr-3">
+      <a class="nav-link" data-toggle="modal" data-target="#modal-login">Login/Register</a>
+    </li>
+  </ul>
+  <ul class="nav nav-pills" *ngIf="correct">
+    <li class="nav-item pl-2 mr-3">
+      <a class="nav-link" (click)="logout()">Logout</a>
+    </li>
+    <li class="nav-item pl-2 mr-3">
+      <a class="nav-link" >{{userSession}}</a>
+    </li>
+  </ul>
+  <!--  </div>-->
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" #modalLogin id="modal-login" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-label-login" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-login">Login</h5>
+        <button type="button" class="close" (click)="setCorrect()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="setMessage" class="text-white text-center" id="loginMessage"
+        [class.bg-danger]="!correct" [class.bg-success]="correct">
+          {{message}}
+        </div>
+        <form #loginForm='ngForm' (ngSubmit)="submitForm(loginForm)">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input id="username" name="usename" class="form-control" type="text"
+                 [(ngModel)]="login.username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" name="password" class="form-control" type="password"
+                 [(ngModel)]="login.password" required>
+          </div>
+          <div class="form-group">
+            <label class="mt-2"> Who are you?</label><br>
+            <input id="c0" name="role" class="radio-role mx-2" type="radio" [(ngModel)]="login.role" checked value="0">
+            <label for="c0">Customer</label>
+            <input id="c1" name="role" class="radio-role mx-2" type="radio" [(ngModel)]="login.role" value="1">
+            <label for="c1">Doctor</label>
+            <input id="c2" name="role" class="radio-role mx-2" type="radio" [(ngModel)]="login.role" value="2">
+            <label for="c2">Admin</label>
+          </div>
+          <button class="btn btn-secondary" (click)="setCorrect()" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-info ml-auto"
+                  [disabled]="loginForm.invalid || loginForm.controls['role']?.value==undefined">Login</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <span class="mr-auto">Don't have account? <a href="#">Register now!</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+

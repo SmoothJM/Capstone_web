@@ -1,0 +1,78 @@
+nav {
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+  0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+
+
+ul {
+  overflow: hidden;
+}
+
+li {
+  transition-duration: 0.5s;
+  color: darkgrey;
+}
+
+li:active {
+  font-size: 15px;
+}
+
+li:hover {
+  transform: scale(1.5);
+}
+
+a {
+  cursor: pointer;
+}
+
+a.nav-link {
+  /*color: #138496;*/
+  color: #EDEDED;
+  text-underline-style: none;
+}
+
+#header_img {
+  transition-duration: 0.5s;
+}
+
+#header_img:hover {
+  transform: translate(100px, 100px) scale(5, 5);
+}
+
+form > button {
+  float: right;
+  margin-left: 20px;
+}
+
+input.ng-valid.ng-dirty {
+  border: 2px solid darkgreen;
+}
+
+input.ng-dirty.ng-invalid {
+  border: 2px solid darkred;
+}
+
+
+/*input[type="radio"]{*/
+/*  display: none;*/
+/*}*/
+/*input[type='radio']+label::before {*/
+/*  content: '';*/
+/*  display: inline-block;*/
+/*  width: 15px;*/
+/*  height: 15px;*/
+/*  margin-right: 6px;*/
+/*  border-radius: 100%;*/
+/*  vertical-align: middle;*/
+/*  border: 1px solid #E4E4E4;*/
+/*  background: #FFFFFF;*/
+/*  background-image: url('https://i.loli.net/2018/07/20/5b517d0bf066a.png');*/
+/*  background-position: 0px 0px;*/
+/*}*/
+/*input[type='radio']:hover+label::before {*/
+/*  background-position: -15px 0px;*/
+/*}*/
+/*input[type='radio']:checked+label::before {*/
+/*  background-position: -15px -15px;*/
+/*}*/
