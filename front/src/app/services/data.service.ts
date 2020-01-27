@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { LoginModel } from "../model/login.model";
+import {CustomerModel} from '../model/customer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,14 @@ export class DataService {
 
   logout(): Observable<any> {
     return this.sendRequest('get', this.basicURL+'/logout');
+  }
+
+
+  checkDuplicateEmail(customer: CustomerModel): Observable<boolean> {
+    return this.sendRequest('post', this.basicURL+'/customer/checkEmail', customer);
+  }
+  register(customer: CustomerModel): Observable<any> {
+    return this.sendRequest('post', this.basicURL+'/customer', customer);
   }
 
   private sendRequest<T>(verb: string, url: string, body?: any): Observable<T> {

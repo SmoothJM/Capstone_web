@@ -22,8 +22,19 @@ export class LoginGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-    let flag: boolean = false;
+    let accessURL = route.url[0].path;
+    return new Promise<boolean>((resolve) => {
+      this.http.post<boolean>(this.url,{accessURL}).subscribe(data => {
+        resolve(data);
+        if (!data) {
+          this.messageService.reportMessage(new Message('Login first please!', true));
+          this.router.navigateByUrl('/');
+        }
+      });
+    });
 
+
+    // let flag: boolean = false;
     // console.log('guards');
     // return this.http.get<boolean>(this.url)
     // return flag;
@@ -40,17 +51,7 @@ export class LoginGuard implements CanActivate {
     //   });
     // });
 
-    return new Promise<boolean>((resolve) => {
-      this.http.get<boolean>(this.url).subscribe(data => {
 
-        resolve(data);
-        if (!data) {
-          console.log('Login first please!');
-          this.messageService.reportMessage(new Message('Login first please!', true));
-          this.router.navigateByUrl('/');
-        }
-      });
-    });
   }
 
 

@@ -52,9 +52,9 @@
         </div>
         <form #loginForm='ngForm' (ngSubmit)="submitForm(loginForm)">
           <div class="form-group">
-            <label for="username">Username:</label>
-            <input id="username" name="usename" class="form-control" type="text"
-                 [(ngModel)]="login.username" required>
+            <label for="email">Email:</label>
+            <input id="email" name="email" class="form-control" type="text"
+                 [(ngModel)]="login.email" required pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$">
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
@@ -76,7 +76,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <span class="mr-auto">Don't have account? <a href="#">Register now!</a></span>
+        <span class="mr-auto">Don't have account? <a routerLink="/register" (click)="closeModal()">Register now!</a></span>
       </div>
     </div>
   </div>

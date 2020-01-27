@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let userSchema = Schema({
+let userModel = Schema({
+    email: String,
     username: String,
     password: String,
     state: {
@@ -14,7 +15,7 @@ let userSchema = Schema({
     }
 });
 
-let UserModel = mongoose.model('user',userSchema,'user');
+let UserModel = mongoose.model('user',userModel,'user');
 module.exports = UserModel;
 
 

@@ -27,7 +27,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username:'',
+      email:'',
       password:'',
       role:''
     });
@@ -43,14 +43,17 @@ export class NavComponent implements OnInit {
     this.setMessage = false;
   }
 
+  closeModal() {
+    $('#modal-login').modal('hide');
+  }
   submitForm(form: any) {
     this.dataService.getAccount(this.login).subscribe(data => {
       this.setMessage = true;
       this.message = data['message'];
       if (data['correct']) {
         this.correct = data['correct'];
+        this.userSession = data['username'];
         setTimeout(() => {
-          this.userSession = this.login.username;
           if (this.login.role == 0) {
             this.router.navigateByUrl('/main');
           } else if (this.login.role == 1) {
@@ -58,7 +61,7 @@ export class NavComponent implements OnInit {
           } else {
             this.router.navigateByUrl('/admin');
           }
-          $('#modal-login').modal('hide');
+          this.closeModal();
           this.setMessage = false;
         },800);
       } else {
@@ -71,7 +74,6 @@ export class NavComponent implements OnInit {
     this.correct = false;
     this.userSession = '';
     this.dataService.logout().subscribe(_ => {
-      console.log('logout');
     });
     this.router.navigateByUrl('/');
   }

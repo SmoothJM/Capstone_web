@@ -1,5 +1,5 @@
 require('../dbConnect');
-const UserModel = require('../schemas/userSchema');
+const UserModel = require('../schemas/userModel');
 
 module.exports.findUser = function (condition, cal) {
     UserModel.findOne(condition, (err, result) => {
@@ -8,6 +8,12 @@ module.exports.findUser = function (condition, cal) {
     });
 };
 
+module.exports.addUser = function(user, cal) {
+    UserModel.create(user, (err, result) => {
+        if (err) throw err;
+        cal(err, result);
+    });
+};
 
 
 

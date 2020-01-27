@@ -6,9 +6,8 @@ const MODEL_DIR = 'E:\\keras-yolo3-master\\keras-yolo3-master\\final_model\\';
 const cors = require('cors');
 const multer = require('multer');
 const session = require('express-session');
-
+const customer = require('./routes/customer');
 const login = require('./routes/login');
-const auth = require('./routes/auth');
 
 app.use(session({
     secret: 'BTD secret',
@@ -41,10 +40,7 @@ app.use(bodyParser.json());
 app.use(express.static(MODEL_DIR+'data'));
 
 
-app.use(function (req, res, next) {
-    console.log(req.url, ' arrived at: ', Date.now());
-    next();
-});
+app.use('/api/customer', customer);
 app.use('/api', login);
 // app.get('/authLogin', login);
 // app.post('/login', login);

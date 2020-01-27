@@ -1,0 +1,116 @@
+<div id="bg">
+  <div class="container-fluid">
+    <div class="row m-5 pt-5">
+      <div class="offset-2 col-8">
+        <div class="card mb-3 card-shadow">
+          <img src="../../../assets/Einstein_cap.png" class="card-img-top">
+          <div class="card-header">
+            <h5 class="mb-0">Be Our Member!</h5>
+          </div>
+          <div class="card-body">
+            <form #form='ngForm' (ngSubmit)="submit(form)">
+              <div class="form-group">
+                <label for="emailc"><strong>Email:</strong></label>
+                <input id="emailc" #email='ngModel' name="emailc" class="form-control" type="text" placeholder="As your login account."
+                       [(ngModel)]="customer.email" required
+                       pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$">
+                <ul class="bg-danger text-white mt-2" *ngIf="email.dirty && email.invalid">
+                  <li *ngIf="email.errors?.required">You must enter an email address.</li>
+                  <li *ngIf="email.errors?.pattern">Please enter correct email address format.</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for="usernamec"><strong>Username:</strong></label>
+                <input id="usernamec" #username='ngModel' name="usernamec" class="form-control" type="text"
+                       placeholder="Name you want to show on the website."
+                       [(ngModel)]="customer.username" required pattern="^[a-zA-Z0-9_]{4,16}$">
+                <ul class="bg-danger text-white mt-2" *ngIf="username.dirty && username.invalid">
+                  <li *ngIf="username.errors?.required">You must enter an username.</li>
+                  <li *ngIf="username.errors?.pattern">Username can only include letters, number and underline.</li>
+                  <li *ngIf="username.errors?.pattern">Username is at least length of 4, less than 16. </li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for="passwordc"><strong>Password:</strong></label>
+                <input id="passwordc" #password='ngModel' name="passwordc" class="form-control" type="password"
+                       placeholder="Enter your password."
+                       [(ngModel)]="customer.password" required pattern="^.*(?=.{6,20})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?]).*$">
+                <ul class="bg-danger text-white mt-2" *ngIf="password.dirty && password.invalid">
+                  <li *ngIf="password.errors?.required">Please enter a password</li>
+                  <li *ngIf="password.errors?.pattern">Password length is from 6 to 20, and should include at least an uppercase, a lowercase, a number and a special letter in:
+                    !@#$%^&*?</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for="confirmPwd"><strong>Confirm Password:</strong></label>
+                <input id="confirmPwd" #confirmPwd='ngModel' name="confirmPwd" class="form-control" type="password" placeholder="Confirm your password."
+                       [(ngModel)]="confirmPassword" [ngClass]="{'matched-pwd':matchedPwd,'not-matched-pwd':!matchedPwd && confirmPwd.dirty}"
+                (keyup)="matchPwd($event)">
+<!--                [ngStyle]="{'border: 2px solid darkgreen;':confirmPwd.dirty&&matchedPwd,'border: 2px solid darkred;':confirmPwd.dirty&&!matchedPwd}"-->
+<!--                {'matched-pwd':matchedPwd,'not-matched-pwd':!matchedPwd && confirmPwd.dirty}-->
+                <ul class="bg-danger text-white mt-2" *ngIf="!matchedPwd && confirmPwd.dirty">
+                  <li>Twice entered password are not matched</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for="age"><strong>Age:</strong></label>
+                <input id="age" #age='ngModel' name="age" class="form-control" type="number" placeholder="Enter your real age."
+                       [(ngModel)]="customer.age" required pattern="^[0-9]{1,3}$">
+                <ul class="bg-danger text-white mt-2" *ngIf="age.dirty && age.invalid">
+                  <li *ngIf="age.errors?.required">Please enter your age</li>
+                  <li *ngIf="age.errors?.pattern">Age should at least 1 digit, less than 3 digits and larger than 0</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for="gender"><strong>Gender:</strong></label>
+                <select id="gender" #gender='ngModel' name="gender" class="custom-select" required
+                [(ngModel)]="customer.gender">
+                  <option value="male" selected>Male</option>
+                  <option value="female">Female</option>
+                  <option value="secret">Secret</option>
+                </select>
+                <ul class="bg-danger text-white mt-2" *ngIf="gender.dirty && gender.invalid">
+                  <li *ngIf="gender.errors?.required">Please select your gender</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for="desc"><strong>Description:</strong></label>
+                <textarea id="desc" #desc='ngModel' name="desc" class="form-control" rows="5" [(ngModel)]="customer.desc" pattern="[^\<|\>]*"
+                          placeholder="Tell us about your past medical history and your recent condition."></textarea>
+                <ul class="bg-danger text-white mt-2" *ngIf="desc.dirty && desc.invalid">
+                  <li *ngIf="desc.errors?.pattern">Please don't enter '<' or '>'</li>
+                </ul>
+              </div>
+              <button type="reset" style="float: right" class="btn btn-secondary mx-2">Reset</button>
+              <button type="submit" style="float: right" [disabled]="form.invalid || !matchedPwd" class="btn btn-info">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

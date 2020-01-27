@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { DiagnoseComponent } from './components/diagnose/diagnose.component';
@@ -20,7 +21,8 @@ import { AdminMainComponent } from './components/admin.main/admin.main.component
 import { LoginGuard } from './guards/login.guard';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { MessageComponent } from './components/message/message.component';
-import {MessageService} from './services/message.service';
+import { MessageService } from './services/message.service';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -36,14 +38,16 @@ import {MessageService} from './services/message.service';
     DoctorMainComponent,
     AdminMainComponent,
     ErrorPageComponent,
-    MessageComponent
+    MessageComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     LoginGuard,
