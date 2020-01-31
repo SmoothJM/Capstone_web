@@ -1,5 +1,5 @@
 export class LoginModel {
-  constructor(public state?: number,
+  constructor(public status?: number,
               public email?: string,
               public username?: string,
               public password?: string,

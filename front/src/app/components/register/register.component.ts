@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   public form: FormGroup;
   public confirmPassword: string;
   public matchedPwd: boolean = false;
+  public checkPolicy: boolean = false;
 
   constructor(private fb: FormBuilder,
               private dataService: DataService,
@@ -30,25 +31,22 @@ export class RegisterComponent implements OnInit {
       usernamec:'',
       passwordc:'',
       confirmPwd:'',
-      age:'',
+      birthday:'',
       gender:'',
-      desc:''
+      desc:'',
+      policy:false
     }
     //,{validator: this.matchPwd()}
     );
   }
 
   matchPwd(event: any) {
-    console.log(this.customer.password);
-    console.log(this.confirmPassword);
     this.matchedPwd = this.customer.password == this.confirmPassword;
-    console.log(this.matchedPwd);
     // let flag = fg.get('passwordc').value === fg.get('confirmPwd').value;
   }
 
   submit(registerForm: any) {
     this.dataService.checkDuplicateEmail(this.customer).subscribe(isDuplicate => {
-
       if(isDuplicate) {
         this.messageService.reportMessage(new Message('This email have registered!',true));
       } else {
@@ -56,6 +54,7 @@ export class RegisterComponent implements OnInit {
           this.messageService.reportMessage(new Message('Register success!',false));
           setTimeout(() => {
             this.router.navigateByUrl('/');
+            this.messageService.reportMessage(new Message('',false));
           },800);
         });
       }

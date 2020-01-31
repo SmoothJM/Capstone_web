@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
         email: customer['email'],
         username: customer['username'],
         password: customer['password'],
-        state: 0,
+        status: 0,
         role: 0,
     };
     userModel.addUser(user, (err, result) => {

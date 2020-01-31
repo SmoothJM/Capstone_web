@@ -5,7 +5,7 @@ let userModel = Schema({
     email: String,
     username: String,
     password: String,
-    state: {
+    status: {
         type: Number,
         default: 0
     },

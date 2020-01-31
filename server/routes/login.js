@@ -47,7 +47,7 @@ router.post('/login', (req, res) => {
                 correct: false,
                 message: 'Email or Password is incorrect. Please try again.'
             });
-        } else if (result['state'] === 0) {
+        } else if (result['status'] === 0) {
             req.session.regenerate( (error) => {
                 username = result['username'];
                 req.session.user = result;

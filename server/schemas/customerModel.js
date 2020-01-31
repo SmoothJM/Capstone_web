@@ -5,7 +5,7 @@ let customerModel = Schema({
     email: String,
     username: String,
     password: String,
-    age: Number,
+    birthday: Date,
     gender: String,
     desc: String
 });

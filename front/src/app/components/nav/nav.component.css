@@ -4,6 +4,9 @@ nav {
   0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
 
+#modal-login{
+  overflow: hidden;
+}
 
 ul {
   overflow: hidden;
