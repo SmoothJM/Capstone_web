@@ -75,7 +75,9 @@ router.get('/logout', (req,res) => {
 });
 
 router.get('/sess', (req,res) => {
-    res.json((req.session && req.session.user)? req.session.user['username']:'');
+    res.json((req.session && req.session.user)?
+        {username:req.session.user['username'],role:req.session.user['role']}:
+        '');
 });
 
 

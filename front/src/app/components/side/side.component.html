@@ -1,1 +1,59 @@
-<p>side works!</p>
+<div class="side-bar mb-5">
+  <div class="ml-2">
+    <table>
+      <tr>
+        <td style="vertical-align: bottom" rowspan="2">
+          <img src="../../../assets/Control_Panel.png" width="85px" height="60px">
+        </td>
+        <td rowspan="2">&nbsp;&nbsp;</td>
+        <td style="vertical-align: bottom">
+          <h4>BTD System</h4>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size: small; color: darkgrey; vertical-align: top">
+          Personal physician
+        </td>
+      </tr>
+    </table>
+  </div>
+  <a class="options my-2 p-2" routerLink="/main/profile" routerLinkActive="actived">
+    <i class="far fa-user-circle pr-3"></i>
+    Edit Your Profile
+  </a>
+
+  <div class="divider"></div>
+
+  <a class=" my-2 p-2" routerLink="/main/diagnose" routerLinkActive="actived">
+    <i class="fas fa-stethoscope pr-3"></i>
+    Take Diagnose
+  </a>
+  <a class=" my-2 p-2" routerLink="/main/appointment" routerLinkActive="actived">
+    <i class="far fa-calendar-plus pr-3"></i>
+    Schedule Appointment
+  </a>
+  <a class="my-2 p-2" (click)="toggleCollapse()">
+    <i class="fas fa-history pr-3"></i>
+    Check History
+    <i class="fas fa-angle-right pt-1" *ngIf="!collapse" style="float: right;"></i>
+    <i class="fas fa-angle-down pt-1" *ngIf="collapse" style="float: right"></i>
+  </a>
+  <div *ngIf="collapse">
+    <a class=" my-1 ml-4 p-1" routerLink="/main/history/appointment" routerLinkActive="actived"
+       style="font-size:16px">
+      <i class="fas fa-calendar-check pr-3"></i>
+        Appointment History
+    </a>
+    <a class=" my-1 ml-4 p-1" routerLink="/main/history/diagnose" routerLinkActive="actived"
+    style="font-size:16px">
+      <i class="fas fa-book-medical pr-3"></i>
+        Diagnose History
+
+    </a>
+  </div>
+
+  <div id="copyright" class="text-center">
+    <i class="far fa-copyright"></i>
+    2020 BTD System
+  </div>
+</div>

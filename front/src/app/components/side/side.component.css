@@ -1,0 +1,57 @@
+.side-bar {
+  height: 80vh;
+  width: 280px;
+  /*position: fixed;*/
+}
+
+.divider {
+  width: 270px;
+  height: 1px;
+  background: lightgray;
+  margin: 5px;
+}
+
+/*.options {*/
+/*  padding: 8px 12px;*/
+/*  border-radius: 3px;*/
+/*  font-size: 18px;*/
+/*  transition-duration: 0.3s;*/
+/*}*/
+/*.options:hover {*/
+/*  cursor: pointer;*/
+/*  background: rgb(235, 236, 240);*/
+/*  box-shadow: 2px 2px 2px 2px rgba(0,0,0,.2);*/
+/*}*/
+/*.options:active {*/
+/*  color: rgb(0, 82, 204);*/
+/*  background: lightgray;*/
+/*  box-shadow: 2px 2px 2px 2px rgba(0,0,0,.2);*/
+/*}*/
+.card {
+  width: 100%;
+}
+a {
+  display: block;
+  text-decoration:none;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 3px;
+  font-size: 18px;
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+a:hover {
+  background: rgb(235, 236, 240);
+  box-shadow: 2px 2px 2px 2px rgba(0,0,0,.2);
+}
+.actived {
+  color: rgb(0, 82, 204);
+  background: rgb(235, 236, 240);
+  box-shadow: 2px 2px 2px 2px rgba(0,0,0,.2);
+}
+
+#copyright {
+  padding-top: 200px;
+  font-size: small;
+  color: darkgray;
+}

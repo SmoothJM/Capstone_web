@@ -56,8 +56,6 @@
   </div>
 </div>
 
-
-
 <div class="container-fluid py-5">
   <div class="row align-items-center">
     <div class="col-1"></div>
@@ -101,37 +99,86 @@
         <li data-target="#carousel-staff" data-slide-to="1" class="m-2"></li>
         <li data-target="#carousel-staff" data-slide-to="2" class="m-2"></li>
       </ol>
-      <div class="carousel-inner">
+      <div class="carousel-inner p-4">
         <div class="carousel-item active">
           <div class="row justify-content-center">
-            <!--            <div class="col-1"></div>-->
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100">
-              <!--              <div class="card" style="width: 18rem;">-->
-              <!--                <img src="../assets/tongue2.png" class="card-img-top">-->
-              <!--                <div class="card-body">-->
-              <!--                  <h5 class="card-title">Title</h5>-->
-              <!--                  <p class="card-text">This is a test card.</p>-->
-              <!--                </div>-->
-              <!--              </div>-->
+            <div class="col-4" *ngFor="let doc1 of doctors1">
+              <div class="card slide-shadow mb-5">
+                <div class="card-header">
+                  <table>
+                    <tr>
+                      <td rowspan="2">
+                        <img src="{{doc1.photo}}" class="rounded-circle" width="80" height="80">
+                      </td>
+                      <td>&nbsp;&nbsp;&nbsp;</td>
+                      <td><strong>{{doc1.username}}: </strong> <a href="#"> {{doc1.email}}</a></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;&nbsp;&nbsp;</td>
+                      <td>Office location: {{doc1.addr}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Introduction</h5>
+                  <div class="card-text">{{doc1.desc}}</div>
+                </div>
+              </div>
             </div>
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
-            <!--            <div class="col-3"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>-->
-            <!--            <div class="col-1"></div>-->
           </div>
         </div>
         <div class="carousel-item">
           <div class="row justify-content-center">
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
+            <div class="col-4" *ngFor="let doc2 of doctors2">
+              <div class="card slide-shadow mb-5">
+                <div class="card-header">
+                  <table>
+                    <tr>
+                      <td rowspan="2">
+                        <img src="{{doc2.photo}}" class="rounded-circle" width="80" height="80">
+                      </td>
+                      <td>&nbsp;&nbsp;&nbsp;</td>
+                      <td><strong>{{doc2.username}}: </strong> <a href="#"> {{doc2.email}}</a></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;&nbsp;&nbsp;</td>
+                      <td>Office location: {{doc2.addr}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Introduction</h5>
+                  <div class="card-text">{{doc2.desc}}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="carousel-item">
           <div class="row justify-content-center">
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
-            <div class="col-4"><img src="../assets/Einstein.jpg" class="d-block w-100"></div>
+            <div class="col-4" *ngFor="let doc3 of doctors3">
+              <div class="card slide-shadow mb-5">
+                <div class="card-header">
+                  <table>
+                    <tr>
+                      <td rowspan="2">
+                        <img src="{{doc3.photo}}" class="rounded-circle" width="80" height="80">
+                      </td>
+                      <td>&nbsp;&nbsp;&nbsp;</td>
+                      <td><strong>{{doc3.username}}: </strong> <a href="#"> {{doc3.email}}</a></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;&nbsp;&nbsp;</td>
+                      <td>Office location: {{doc3.addr}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Introduction</h5>
+                  <div class="card-text">{{doc3.desc}}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

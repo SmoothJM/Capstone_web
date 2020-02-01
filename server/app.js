@@ -8,13 +8,13 @@ const multer = require('multer');
 const session = require('express-session');
 const customer = require('./routes/customer');
 const login = require('./routes/login');
-
+const doctor = require('./routes/doctor');
 app.use(session({
     secret: 'BTD secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 10 * 60 * 1000
+        maxAge: 60 * 10 * 60 * 1000
     }
 }));
 
@@ -41,6 +41,7 @@ app.use(express.static(MODEL_DIR+'data'));
 
 
 app.use('/api/customer', customer);
+app.use('/api/doctor', doctor);
 app.use('/api', login);
 // app.get('/authLogin', login);
 // app.post('/login', login);

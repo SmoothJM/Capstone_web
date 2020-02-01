@@ -8,6 +8,7 @@ let doctorSchema = Schema({
     addr: String,
     gender: String,
     desc: String,
+    photo: String,
     schedule: [Date]
 });
 

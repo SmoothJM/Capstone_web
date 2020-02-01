@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const bodyParser = require('body-parser');
 const customerModel = require('../data/customerData');
 const md5 = require('md5');
 const userModel = require('../data/userData');

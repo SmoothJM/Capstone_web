@@ -18,6 +18,7 @@ export class NavComponent implements OnInit {
   public correct: boolean = false;
   public setMessage: boolean = false;
   public message: string;
+  public home: string;
 
   // @ViewChild('modal-login',{static:false}) modal2;
 
@@ -34,8 +35,19 @@ export class NavComponent implements OnInit {
     this.dataService.getSession().subscribe(data => {
       if (data) {
         this.correct = true;
+        switch (data['role']) {
+          case 0:
+            this.home = '/main/overview';
+            break;
+          case 1:
+            this.home = '/doctor';
+            break;
+          case 2:
+            this.home = '/admin';
+            break;
+        }
       }
-      this.userSession = data;
+      this.userSession = data['username'];
     });
   }
 
@@ -55,11 +67,14 @@ export class NavComponent implements OnInit {
         this.userSession = data['username'];
         setTimeout(() => {
           if (this.login.role == 0) {
-            this.router.navigateByUrl('/main');
+            this.router.navigateByUrl('/main/overview');
+            this.home = '/main';
           } else if (this.login.role == 1) {
             this.router.navigateByUrl('/doctor');
+            this.home = '/doctor';
           } else {
             this.router.navigateByUrl('/admin');
+            this.home = '/admin';
           }
           this.closeModal();
           this.setMessage = false;

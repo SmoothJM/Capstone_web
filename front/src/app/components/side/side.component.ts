@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideComponent implements OnInit {
 
+  public collapse: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  toggleCollapse() {
+    this.collapse = !this.collapse;
+  }
 }
