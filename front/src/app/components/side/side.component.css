@@ -1,8 +1,9 @@
 .side-bar {
-  height: 80vh;
+  height: 100%;
   width: 280px;
   /*position: fixed;*/
 }
+
 
 .divider {
   width: 270px;
