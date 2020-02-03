@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginGuard } from './guards/login.guard';
 import { MessageService } from './services/message.service';
 import { DoctorService } from './services/doctor.service';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { DiagnoseComponent } from './components/diagnose/diagnose.component';
@@ -29,6 +30,12 @@ import { AppointmentComponent } from './components/appointment/appointment.compo
 import { ProfileComponent } from './components/profile/profile.component';
 import { AppointmentHistoryComponent } from './components/appointment-history/appointment-history.component';
 import { DiagnoseHistoryComponent } from './components/diagnose-history/diagnose-history.component';
+import { AppointmentDoctorComponent } from './components/appointment-doctor/appointment-doctor.component';
+import { PatientComponent } from './components/patient/patient.component';
+import { ResearchComponent } from './components/research/research.component';
+import { ManageUserComponent } from './components/manage-user/manage-user.component';
+import { ManageReportComponent } from './components/manage-report/manage-report.component';
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +57,13 @@ import { DiagnoseHistoryComponent } from './components/diagnose-history/diagnose
     AppointmentComponent,
     ProfileComponent,
     AppointmentHistoryComponent,
-    DiagnoseHistoryComponent
+    DiagnoseHistoryComponent,
+    AppointmentDoctorComponent,
+    PatientComponent,
+    ResearchComponent,
+    ManageUserComponent,
+    ManageReportComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +76,8 @@ import { DiagnoseHistoryComponent } from './components/diagnose-history/diagnose
   providers: [
     LoginGuard,
     MessageService,
-    DoctorService
+    DoctorService,
+    DatePipe
   ],
   bootstrap: [
     AppComponent,

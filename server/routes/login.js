@@ -21,7 +21,7 @@ const md5 = require('md5');
 //     console.log(url.parse(req.url));
 //
 // });
-router.post('/authLogin',(req,res) => {
+router.post('/authLogin', (req, res) => {
     let accessURL = req.body['accessURL'];
 
     let role = 0;
@@ -48,7 +48,7 @@ router.post('/login', (req, res) => {
                 message: 'Email or Password is incorrect. Please try again.'
             });
         } else if (result['status'] === 0) {
-            req.session.regenerate( (error) => {
+            req.session.regenerate((error) => {
                 username = result['username'];
                 req.session.user = result;
                 res.json({
@@ -66,20 +66,23 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/logout', (req,res) => {
+router.get('/logout', (req, res) => {
     req.session.cookie.maxAge = 0;
     req.session.destroy(err => {
-       if (err) throw err;
+        if (err) throw err;
     });
     res.json('logout done!');
 });
 
-router.get('/sess', (req,res) => {
-    res.json((req.session && req.session.user)?
-        {username:req.session.user['username'],role:req.session.user['role']}:
+router.get('/sess', (req, res) => {
+    res.json((req.session && req.session.user) ?
+        {
+            username: req.session.user['username'],
+            role: req.session.user['role'],
+            email: req.session.user['email']
+        } :
         '');
 });
-
 
 
 module.exports = router;

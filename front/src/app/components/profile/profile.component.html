@@ -1,1 +1,59 @@
-<p>profile works!</p>
+<div class="card mb-3 card-shadow">
+  <img src="../../../assets/bg_img2.jpg" class="card-img-top">
+  <div class="card-header">
+    <h5 class="mb-0">Edit your profile!</h5>
+  </div>
+  <div class="card-body">
+    <form #form='ngForm' (ngSubmit)="submit(form)">
+      <div class="form-group">
+        <label for="email"><strong>Email:</strong></label>
+        <input id="email" #email='ngModel' name="email" class="form-control" type="text"
+               [(ngModel)]="customer.email" readonly>
+      </div>
+      <div class="form-group">
+        <label for="username"><strong>Username:</strong></label>
+        <input id="username" #username='ngModel' name="username" class="form-control" type="text"
+               placeholder="Name you want to show on the website."
+               [(ngModel)]="customer.username" required pattern="^[a-zA-Z0-9_]{4,16}$">
+        <ul class="bg-danger text-white mt-2" *ngIf="username.dirty && username.invalid">
+          <li *ngIf="username.errors?.required">You must enter an username.</li>
+          <li *ngIf="username.errors?.pattern">Username can only include letters, number and underline.</li>
+          <li *ngIf="username.errors?.pattern">Username is at least length of 4, less than 16.</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label for="birthday"><strong>Date of birth:</strong></label>
+        <input id="birthday" #birthday='ngModel' name="birthday" class="form-control" type="date"
+               placeholder="Enter your real birthday."
+               [(ngModel)]="customer.birthday" required>
+        <ul class="bg-danger text-white mt-2" *ngIf="birthday.dirty && birthday.invalid">
+          <li *ngIf="birthday.errors?.required">Please enter your birthday</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label><strong>Gender:</strong></label><br>
+        <input id="gender1" name="gender" type="radio" value="male" [checked]="customer.gender == 'male'"
+               [(ngModel)]="customer.gender">
+        <label for="gender1"><i class="fas fa-mars"></i><br>Male</label>
+        <input id="gender2" name="gender" type="radio" value="female" [checked]="customer.gender == 'female'"
+               [(ngModel)]="customer.gender">
+        <label for="gender2"><i class="fas fa-venus"></i><br>Female</label>
+        <input id="gender3" name="gender" type="radio" value="secret" [checked]="customer.gender == 'secret'"
+               [(ngModel)]="customer.gender">
+        <label for="gender3"><i class="fas fa-mask"></i><br>Secret</label>
+      </div>
+      <div class="form-group">
+        <label for="desc"><strong>Description:</strong></label>
+        <textarea id="desc" #desc='ngModel' name="desc" class="form-control" rows="5" [(ngModel)]="customer.desc"
+                  pattern="[^\<|\>]*"
+                  placeholder="Tell us about your past medical history and your recent condition."></textarea>
+        <ul class="bg-danger text-white mt-2" *ngIf="desc.dirty && desc.invalid">
+          <li *ngIf="desc.errors?.pattern">Please don't enter '<' or '>'</li>
+        </ul>
+      </div>
+      <button type="submit" style="float: right" [disabled]="form.invalid"
+              class="btn btn-info">Save
+      </button>
+    </form>
+  </div>
+</div>

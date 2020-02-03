@@ -40,10 +40,10 @@ export class NavComponent implements OnInit {
             this.home = '/main/overview';
             break;
           case 1:
-            this.home = '/doctor';
+            this.home = '/doctor/overview';
             break;
           case 2:
-            this.home = '/admin';
+            this.home = '/admin/overview';
             break;
         }
       }
@@ -70,10 +70,10 @@ export class NavComponent implements OnInit {
             this.router.navigateByUrl('/main/overview');
             this.home = '/main';
           } else if (this.login.role == 1) {
-            this.router.navigateByUrl('/doctor');
+            this.router.navigateByUrl('/doctor/overview');
             this.home = '/doctor';
           } else {
-            this.router.navigateByUrl('/admin');
+            this.router.navigateByUrl('/admin/overview');
             this.home = '/admin';
           }
           this.closeModal();

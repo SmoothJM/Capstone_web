@@ -14,3 +14,10 @@ module.exports.addCustomer = function (customer, cal) {
         cal(err, result);
     });
 };
+
+module.exports.updateCustomer = function (condition, customer, cal) {
+    CustomerModel.updateOne(condition, customer, (err, result) => {
+        if (err) throw err;
+        cal(result);
+    });
+};

@@ -1,4 +1,30 @@
-a {
-  color: darkgray;
-  font-size: small;
+td {
+  padding: 0 3px;
+  font-size: 50px;
+}
+
+.i1{
+  background-image: -webkit-linear-gradient(right, #FFFF00, #FF0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.i2{
+  background-image: -webkit-linear-gradient(right, #00FFFF, #FFFF00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.i3{
+  background-image: -webkit-linear-gradient(right, #8B00FF, #00FFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.te {
+  color: #FF0000;
+  color:#FF7F00;
+  color: #FFFF00;
+  color: #00FF00;
+  color: #00FFFF;
+  color: #0000FF;
+  color: #8B00FF;
 }

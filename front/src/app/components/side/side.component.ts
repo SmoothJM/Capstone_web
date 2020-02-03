@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-side',
@@ -7,11 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideComponent implements OnInit {
 
+  public role: string = '';
   public collapse: boolean = false;
 
-  constructor() { }
+  constructor(private dataService: DataService) {
+
+  }
 
   ngOnInit() {
+    this.dataService.getSession().subscribe(data => {
+      this.role = data['role'];
+    });
   }
 
   toggleCollapse() {

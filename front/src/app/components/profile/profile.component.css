@@ -1,0 +1,56 @@
+img {
+  opacity: 0.8;
+  color: #fff;
+  background: #000
+}
+
+.card-shadow {
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+  0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+input.ng-valid.ng-dirty:not(#confirmPwd){
+  border: 2px solid darkgreen;
+}
+
+input.ng-dirty.ng-invalid:not(#confirmPwd) {
+  border: 2px solid darkred;
+}
+
+textarea.ng-valid.ng-dirty {
+  border: 2px solid darkgreen;
+}
+textarea.ng-dirty.ng-invalid {
+  border: 2px solid darkred;
+}
+i{
+  font-size: 50px;
+}
+input[type="radio"] +label{
+  color:  #59bcdb;
+  display:inline-block;
+  width:100px;
+  height:100px;
+  border-radius:5px;
+  transition-duration: 0.5s;
+  text-align: center;
+  padding-top: 10px;
+  margin-right: 20px;
+}
+
+input[type="radio"]:checked + label {
+  background: linear-gradient(to top right, #59bcdb, #0069AB);
+  color: #ffffff;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+  0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+input[type="radio"]:hover + label {
+  background: linear-gradient(to top right,#59bcdb, #0069AB);
+  color: #ffffff;
+}
+input[type="radio"]{
+  position:absolute;
+  clip:rect(0,0,0,0);
+}
+

@@ -12,26 +12,40 @@ export class DataService {
   // basicURL = 'http://localhost:3000'
   constructor(private http: HttpClient) { }
 
+  // Login part
   getAccount(user: LoginModel): Observable<boolean> {
     return this.sendRequest<boolean>('post',this.basicURL + '/login', user);
   }
-
   getSession(): Observable<string> {
     return this.sendRequest('get',this.basicURL+'/sess');
   }
-
   logout(): Observable<any> {
     return this.sendRequest('get', this.basicURL+'/logout');
   }
 
 
+  // Customer part
   checkDuplicateEmail(customer: CustomerModel): Observable<boolean> {
     return this.sendRequest('post', this.basicURL+'/customer/checkEmail', customer);
   }
   register(customer: CustomerModel): Observable<any> {
     return this.sendRequest('post', this.basicURL+'/customer', customer);
   }
+  getCustomer(): Observable<any> {
+    return this.sendRequest('get', this.basicURL+'/customer');
+  }
 
+  updateCustomer(customer: CustomerModel): Observable<any> {
+    return this.sendRequest('put', this.basicURL+'/customer',customer);
+  }
+
+
+  /**
+   * Total request function.
+   * @param verb
+   * @param url
+   * @param body
+   */
   private sendRequest<T>(verb: string, url: string, body?: any): Observable<T> {
     let headerOptions = new HttpHeaders();
     headerOptions = headerOptions.set( 'Access-Key', '<secret>');

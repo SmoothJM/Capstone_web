@@ -34,4 +34,30 @@ router.post('/', (req, res) => {
     });
     res.json({message: 'Add customer success!'});
 });
+
+router.get('/', (req,res) => {
+    let email = req.session.user?req.session.user['email']:'';
+    customerModel.findCustomer({email:email},(err, result) => {
+        if (err) throw err;
+        result = result.toObject();
+        delete result.password;
+        res.json(result);
+    });
+});
+
+router.put('/', (req, res) => {
+    let customer = req.body;
+    let email = req.body.email;
+    delete customer._id;
+    delete customer.email;
+    // delete customer.__v;
+    customerModel.updateCustomer({email:email}, customer, (err, result) => {
+        if (err) console.log('');
+        res.json('Saved changes.');
+    });
+    userModel.updateUser({email:email}, {username:customer.username},(err, result) => {
+       if(err) console.log('');console.log(result);
+    });
+});
+
 module.exports = router;

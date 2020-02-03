@@ -15,6 +15,13 @@ module.exports.addUser = function(user, cal) {
     });
 };
 
+module.exports.updateUser = function(condition, user, cal) {
+    UserModel.updateOne(condition, user, (err, result) => {
+        if (err) throw err;
+        cal(result);
+    });
+};
+
 
 
 

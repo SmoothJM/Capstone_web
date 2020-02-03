@@ -13,6 +13,12 @@ import {AppointmentComponent} from './components/appointment/appointment.compone
 import {ProfileComponent} from './components/profile/profile.component';
 import {AppointmentHistoryComponent} from './components/appointment-history/appointment-history.component';
 import {DiagnoseHistoryComponent} from './components/diagnose-history/diagnose-history.component';
+import {AppointmentDoctorComponent} from './components/appointment-doctor/appointment-doctor.component';
+import {ResearchComponent} from './components/research/research.component';
+import {PatientComponent} from './components/patient/patient.component';
+import {ManageUserComponent} from './components/manage-user/manage-user.component';
+import {ManageReportComponent} from './components/manage-report/manage-report.component';
+import {InfoComponent} from './components/info/info.component';
 
 const routes: Routes = [
   {
@@ -25,8 +31,24 @@ const routes: Routes = [
       {path: 'history/diagnose', component: DiagnoseHistoryComponent},
     ], canActivate: [LoginGuard]
   },
-  {path: 'doctor', component: DoctorMainComponent, canActivate: [LoginGuard]},
-  {path: 'admin', component: AdminMainComponent, canActivate: [LoginGuard]},
+  {
+    path: 'doctor', component: DoctorMainComponent, children: [
+      {path: 'overview', component: OverviewComponent},
+      {path: 'profile', component: ProfileComponent},
+      {path: 'appointment', component: AppointmentDoctorComponent},
+      {path: 'research', component: ResearchComponent},
+      {path: 'patient', component: PatientComponent}
+    ], canActivate: [LoginGuard]
+  },
+  {
+    path: 'admin', component: AdminMainComponent, children: [
+      {path: 'overview', component: OverviewComponent},
+      {path: 'user', component: ManageUserComponent},
+      {path: 'report', component: ManageReportComponent},
+      {path: 'info', component: InfoComponent},
+    ],
+    canActivate: [LoginGuard]
+  },
   {path: 'register', component: RegisterComponent},
   {path: '', component: WelcomeComponent},
   {path: '**', component: ErrorPageComponent}
