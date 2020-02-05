@@ -8,8 +8,10 @@ import { CustomerModel } from '../model/customer.model';
   providedIn: 'root'
 })
 export class DataService {
-  basicURL = '/api';
   // basicURL = 'http://localhost:3000'
+  basicURL = '/api';
+  customerURL = this.basicURL+'/customer';
+
   constructor(private http: HttpClient) { }
 
   // Login part
@@ -26,17 +28,21 @@ export class DataService {
 
   // Customer part
   checkDuplicateEmail(customer: CustomerModel): Observable<boolean> {
-    return this.sendRequest('post', this.basicURL+'/customer/checkEmail', customer);
+    return this.sendRequest('post', this.customerURL+'/checkEmail', customer);
   }
   register(customer: CustomerModel): Observable<any> {
-    return this.sendRequest('post', this.basicURL+'/customer', customer);
+    return this.sendRequest('post', this.customerURL, customer);
   }
   getCustomer(): Observable<any> {
-    return this.sendRequest('get', this.basicURL+'/customer');
+    return this.sendRequest('get', this.customerURL);
   }
 
   updateCustomer(customer: CustomerModel): Observable<any> {
-    return this.sendRequest('put', this.basicURL+'/customer',customer);
+    return this.sendRequest('put', this.customerURL, customer);
+  }
+
+  uploadTongueImg(fd): Observable<any> {
+    return this.sendRequest('post', this.customerURL+'/tongue', fd)
   }
 
 

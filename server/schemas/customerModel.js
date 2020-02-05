@@ -7,7 +7,8 @@ let customerModel = Schema({
     password: String,
     birthday: Date,
     gender: String,
-    desc: String
+    desc: String,
+    docEmail: String
 });
 
 let CustomerModel = mongoose.model('customer',customerModel,'customer');

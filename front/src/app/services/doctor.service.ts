@@ -14,6 +14,10 @@ export class DoctorService {
     return this.sendRequest('get', this.basicUrl+'/doctor');
   }
 
+  // getDoctors(): DoctorModel[] {
+  //   this.getDoctorsObservable().subscribe()
+  // }
+
   private sendRequest<T>(verb: string, url: string, body?: any): Observable<T> {
     let headerOptions = new HttpHeaders();
     headerOptions = headerOptions.set( 'Access-Key', '<secret>');

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, DoCheck} from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { LoginModel } from "../../model/login.model";
 import { DataService } from "../../services/data.service";
@@ -51,6 +51,12 @@ export class NavComponent implements OnInit {
     });
   }
 
+  // ngDoCheck(): void {
+  //   this.dataService.getSession().subscribe(data => {
+  //     this.userSession = data['username'];
+  //   });
+  // }
+
   setCorrect() {
     this.setMessage = false;
   }
@@ -58,6 +64,7 @@ export class NavComponent implements OnInit {
   closeModal() {
     $('#modal-login').modal('hide');
   }
+
   submitForm(form: any) {
     this.dataService.getAccount(this.login).subscribe(data => {
       this.setMessage = true;

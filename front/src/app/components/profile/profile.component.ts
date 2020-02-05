@@ -15,7 +15,7 @@ import { Message } from '../../model/message.model';
 export class ProfileComponent implements OnInit {
   public customer: CustomerModel = new CustomerModel();
   public form: FormGroup;
-  // public birth = new Date('05-18-1994');
+  public role: string = '';
 
   constructor(private dataService: DataService,
               private fb: FormBuilder,
@@ -24,6 +24,22 @@ export class ProfileComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+
+    this.dataService.getSession().subscribe(data => {
+      this.role = data['role'];
+      if(this.role == '0') {
+        this.dataService.getCustomer().subscribe(data => {
+          this.customer = data;
+          this.customer.birthday = this.customer.birthday
+            .replace(/-/g, '\/').replace(/T.+/, '');
+          this.customer.birthday = this.dataPipe.transform(Date.parse(this.customer.birthday),'yyyy-MM-dd');
+
+        });
+      } else {
+        console.log('doctor profile');
+      }
+    });
+
     this.form = this.fb.group({
       email:'',
       username:'',
@@ -32,21 +48,13 @@ export class ProfileComponent implements OnInit {
       desc:'',
     });
 
-    this.dataService.getCustomer().subscribe(data => {
-      this.customer = data;
-      this.customer.birthday = this.customer.birthday
-        .replace(/-/g, '\/').replace(/T.+/, '');
 
-      this.customer.birthday = this.dataPipe.transform(Date.parse(this.customer.birthday),'yyyy-MM-dd');
-
-    })
   }
 
   submit(f:any) {
     this.dataService.updateCustomer(this.customer).subscribe(data => {
       this.messageService.reportMessage(new Message('The changes have been saved！'));
       this.router.navigateByUrl('/main/overview');
-      console.log(data);
       setTimeout(() => {
         this.messageService.reportMessage(new Message(''));
       }, 800);

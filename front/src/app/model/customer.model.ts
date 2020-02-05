@@ -4,6 +4,7 @@ export class CustomerModel {
               public password?: string,
               public birthday?: string,
               public gender?: string,
-              public desc?: string) {
+              public desc?: string,
+              public docEmail?: string) {
   }
 }

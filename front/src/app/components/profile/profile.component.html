@@ -3,7 +3,7 @@
   <div class="card-header">
     <h5 class="mb-0">Edit your profile!</h5>
   </div>
-  <div class="card-body">
+  <div class="card-body" *ngIf="role==0">
     <form #form='ngForm' (ngSubmit)="submit(form)">
       <div class="form-group">
         <label for="email"><strong>Email:</strong></label>
@@ -55,5 +55,9 @@
               class="btn btn-info">Save
       </button>
     </form>
+  </div>
+
+  <div class="card-body" *ngIf="role==1">
+    doctor profile
   </div>
 </div>

@@ -56,3 +56,14 @@ a:hover {
   font-size: small;
   color: darkgray;
 }
+
+/*.history-hide {*/
+/*  display: none;*/
+/*  color: red;*/
+/*}*/
+/*.history-show {*/
+/*  !*display: inline;*!*/
+/*  transform: translateY(50px);*/
+/*  transition-duration: 1s;*/
+/*  color: #0069AB;*/
+/*}*/

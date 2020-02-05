@@ -1,21 +1,18 @@
 
-<div class="col-5 offset-1 text-center">
-  <table class="follow-table">
-    <tr>
-      <td><i class="fab fa-youtube i1"></i></td>
-      <td><i class="fab fa-linkedin i2"></i></td>
-      <td><i class="fab fa-twitter i3"></i></td>
-    </tr>
-    <tr>
-      <td><i class="fab fa-tencent-weibo i1"></i></td>
-      <td><i class="fab fa-weibo i2"></i></td>
-      <td><i class="fab fa-alipay i3"></i></td>
-    </tr>
-    <tr>
-      <td><i class="fab fa-snapchat-square i1"></i></td>
-      <td><i class="fab fa-facebook-square i2"></i></td>
-      <td><i class="fab fa-github i3"></i></td>
-    </tr>
-  </table>
+<div class="faq p-1">
+  <div class="panel" *ngFor="let doctor of doctors">
+    <div class="question">
+      <span>
+      <img src="{{doctor.photo}}" class="rounded-circle" width="60" height="60">
+      {{doctor.username}}&nbsp;&nbsp;<small>{{doctor.email}}</small>
+      </span>
+      <i class="fas fa-angle-down"></i>
+    </div>
+    <div class="answer" style="overflow: hidden">
+      <div class="dropdown-divider"></div>
+      {{doctor.desc}}
+      <div class="dropdown-divider"></div>
+      <button class="btn btn-info" style="float: right; overflow: hidden">Select</button>
+    </div>
+  </div>
 </div>
-<span><i class="fab fa-facebook-square"></i></span>

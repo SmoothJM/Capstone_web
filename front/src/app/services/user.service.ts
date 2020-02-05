@@ -10,10 +10,10 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  uploadTongueImg(fd): Observable<any> {
-    // http://localhost:3000/uploadTongue
-    const url = '/api/uploadTongue';
-    const headerOptions = { headers: new HttpHeaders({responseType: 'text'})  };
-    return this.http.post(url, fd, headerOptions);
-  }
+  // uploadTongueImg(fd): Observable<any> {
+  //   // http://localhost:3000/uploadTongue
+  //   const url = '/api/uploadTongue';
+  //   const headerOptions = { headers: new HttpHeaders({responseType: 'text'})  };
+  //   return this.http.post(url, fd, headerOptions);
+  // }
 }
