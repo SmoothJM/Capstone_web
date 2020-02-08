@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {UserService} from '../../services/user.service';
 import {DataService} from '../../services/data.service';
@@ -17,7 +17,6 @@ declare var $: any;
   styleUrls: ['./diagnose.component.scss']
 })
 export class DiagnoseComponent implements OnInit {
-  public isDiagnosed: boolean = false;
   public submitted: boolean = false;
   public second: number = 5;
   public uploadForm: FormGroup;
@@ -27,23 +26,107 @@ export class DiagnoseComponent implements OnInit {
   public doctorsInit: DoctorModel[] = new Array();
   public docsPerPage: number = 5;
   public selectedPage: number = 1;
+  public snapped: boolean = false;
 
+  @ViewChild('video', {static: true}) video: ElementRef;
+  @ViewChild('canvas', {static: true}) canvas: ElementRef;
+  videoHeight: number = 0;
+  videoWidth: number = 0;
+  private currentStream: any;
+  private constraints = {
+    video: {
+      facingMode: "environment",
+      width: { ideal: 500 },
+      height: { ideal: 500 }
+    }
+  };
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private dataService: DataService,
               private doctorService: DoctorService,
               private router: Router,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private renderer: Renderer2) {
   }
 
 
-  bindDoctor(docEmail: string) {
-    this.customer.docEmail = docEmail;
-    this.dataService.updateCustomer(this.customer).subscribe(data => {
-      this.messageService.reportMessage(new Message(''));
-      // this.router.navigateByUrl('/main/diagnose');
+  closeModal() {
+    $('#modal-cam').modal('hide');
+  }
+
+  openModal() {
+    this.snapped = false;
+    if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+      navigator.mediaDevices.getUserMedia(this.constraints).then(this.attachVideo.bind(this)).catch(this.handleError);
+    } else {
+      alert('Sorry, camera not available.');
+    }
+  }
+  attachVideo(stream) {
+    this.currentStream = stream;
+    this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
+    this.renderer.listen(this.video.nativeElement, 'play', (event) => {
+      this.videoHeight = this.video.nativeElement.videoHeight;
+      this.videoWidth = this.video.nativeElement.videoWidth;
     });
+  }
+  handleError(error) {
+    console.log('Error: ', error);
+  }
+  closeCam() {
+    this.currentStream.getTracks().forEach(function (track) {
+      track.stop();
+    });
+  }
+  snap() {
+    this.renderer.setProperty(this.canvas.nativeElement, 'width', this.videoWidth);
+    this.renderer.setProperty(this.canvas.nativeElement, 'height', this.videoHeight);
+    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0);
+    this.snapped = true;
+  }
+  toBlob (base64Data) {
+    let byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(base64Data.split(',')[1]);
+    else
+      byteString = unescape(base64Data.split(',')[1]);
+    let mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    let ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], {type: mimeString});
+  }
+
+  uploadTake() {
+    let base64Data = this.canvas.nativeElement.toDataURL('image/jpeg');
+    let blob = this.toBlob(base64Data);
+    let fd = new FormData();
+    fd.append('tongueImg', blob);
+    this.dataService.uploadTongueImg(fd).subscribe(data => {
+      const flag: boolean = data.flag;
+      if (flag) {
+        this.diabetesLevel = data.result;
+      } else {
+        alert(data.result);
+      }
+    });
+    this.closeCam();
+  }
+
+
+  bindDoctor(doctor: DoctorModel) {
+   let flag = confirm(`Are you sure to select ${doctor.username}?`);
+   if (flag) {
+     this.customer.docEmail = doctor.email;
+     this.dataService.updateCustomer(this.customer).subscribe(data => {
+       this.messageService.reportMessage(new Message(`You have selected ${doctor.username} as your personal doctor.`));
+       setTimeout(() => {
+         this.messageService.reportMessage(new Message(''));
+       }, 1500);
+     });
+   }
   }
 
 
@@ -56,9 +139,7 @@ export class DiagnoseComponent implements OnInit {
     // setInterval(() => {
     //   this.second -= 1;
     // }, 1000);
-
     this.dataService.uploadTongueImg(fd).subscribe(data => {
-      console.log(data);
       const flag: boolean = data.flag;
       if (flag) {
         this.diabetesLevel = data.result;
@@ -80,10 +161,10 @@ export class DiagnoseComponent implements OnInit {
 
   addClickEvent() {
     setTimeout(() => {
-      $('.faq .question').on('click', function() {
+      $('.expand-panel .panel-head').on('click', function() {
         $(this).parents('.panel').toggleClass('open').siblings().removeClass('open');
-        $(this).siblings('.answer').slideToggle(300);
-        $(this).parents('.panel').siblings().find('.answer').slideUp(300);
+        $(this).siblings('.panel-body').slideToggle(300);
+        $(this).parents('.panel').siblings().find('.panel-body').slideUp(300);
       });
     }, 100);
   }
@@ -91,7 +172,6 @@ export class DiagnoseComponent implements OnInit {
     this.selectedPage = newPage;
     this.addClickEvent();
   }
-
   get pageNumbers(): number[] {
     return Array(Math.ceil(this.doctorsInit.length / this.docsPerPage)).fill(0)
       .map((x, i) => i + 1);
@@ -104,7 +184,6 @@ export class DiagnoseComponent implements OnInit {
     this.addClickEvent();
 
     this.uploadForm = this.fb.group({
-      customerName: [''],
       tongueImg: ['']
     });
 

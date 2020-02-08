@@ -1,5 +1,22 @@
-
-
+#box-profile {
+  z-index: 20;
+  top: 200px;
+  left: 100px;
+  width: 300px;
+  height: 270px;
+  border: lightgray 2px solid;
+  position: absolute;
+}
+#tongue-profile {
+  z-index: 20;
+  top: 230px;
+  left: 170px;
+  width: 160px;
+  height: 210px;
+  border: lightgray 2px solid;
+  border-radius: 60px 60px 100% 100%;
+  position: absolute;
+}
 
 .faq {
   .panel {
