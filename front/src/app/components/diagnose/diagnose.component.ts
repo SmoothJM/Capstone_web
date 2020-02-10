@@ -100,17 +100,13 @@ export class DiagnoseComponent implements OnInit {
   }
 
   uploadTake() {
+    this.messageService.reportMessage(new Message(''));
     let base64Data = this.canvas.nativeElement.toDataURL('image/jpeg');
     let blob = this.toBlob(base64Data);
     let fd = new FormData();
     fd.append('tongueImg', blob);
     this.dataService.uploadTongueImg(fd).subscribe(data => {
-      const flag: boolean = data.flag;
-      if (flag) {
-        this.diabetesLevel = data.result;
-      } else {
-        alert(data.result);
-      }
+      this.diagnoseResultDisplay(data.flag, data.result);
     });
     this.closeCam();
   }
@@ -129,9 +125,22 @@ export class DiagnoseComponent implements OnInit {
    }
   }
 
+  diagnoseResultDisplay(flag, result?) {
+    if (flag) {
+      // this.diabetesLevel = data.result;
+      this.messageService.reportMessage(new Message('Your diagnose is done, please check the result' +
+        ' in Diagnose History.'));
+      setTimeout(() => {
+        this.messageService.reportMessage(new Message(''));
+      }, 3000);
+    } else {
+      this.messageService.reportMessage(new Message(result, true));
+    }
+  }
 
   uploadSubmit() {
     // const customerName = this.uploadForm.controls.customerName.value;
+    this.messageService.reportMessage(new Message(''));
     const fd = new FormData();
     fd.append('tongueImg', this.tongueImg);
     // console.log(fd.get('tongueImg'));
@@ -140,12 +149,7 @@ export class DiagnoseComponent implements OnInit {
     //   this.second -= 1;
     // }, 1000);
     this.dataService.uploadTongueImg(fd).subscribe(data => {
-      const flag: boolean = data.flag;
-      if (flag) {
-        this.diabetesLevel = data.result;
-      } else {
-        alert(data.result);
-      }
+      this.diagnoseResultDisplay(data.flag, data.result);
     });
   }
 
@@ -193,7 +197,9 @@ export class DiagnoseComponent implements OnInit {
         this.messageService.reportMessage(new Message('Before diagnose, please select a doctor as your' +
           ' personal doctor. Your diagnose report can only be viewed by the doctor you selected.', false));
       }
-
+      setTimeout(() => {
+        this.messageService.reportMessage(new Message(''));
+      }, 5000);
     });
   }
 
