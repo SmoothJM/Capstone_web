@@ -18,9 +18,8 @@ declare var $: any;
 })
 export class DiagnoseComponent implements OnInit {
   public submitted: boolean = false;
-  public second: number = 5;
+  public second: number = 0;
   public uploadForm: FormGroup;
-  public diabetesLevel: string;
   public tongueImg: File;
   public customer: CustomerModel = new CustomerModel();
   public doctorsInit: DoctorModel[] = new Array();
@@ -79,12 +78,17 @@ export class DiagnoseComponent implements OnInit {
       track.stop();
     });
   }
+  cleanSnap() {
+    this.canvas.nativeElement.getContext('2d').clearRect(0,0,this.videoWidth,this.videoHeight);
+    this.snapped = false;
+  }
   snap() {
     this.renderer.setProperty(this.canvas.nativeElement, 'width', this.videoWidth);
     this.renderer.setProperty(this.canvas.nativeElement, 'height', this.videoHeight);
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0);
     this.snapped = true;
   }
+
   toBlob (base64Data) {
     let byteString;
     if (base64Data.split(',')[0].indexOf('base64') >= 0)
@@ -101,14 +105,27 @@ export class DiagnoseComponent implements OnInit {
 
   uploadTake() {
     this.messageService.reportMessage(new Message(''));
-    let base64Data = this.canvas.nativeElement.toDataURL('image/jpeg');
-    let blob = this.toBlob(base64Data);
-    let fd = new FormData();
-    fd.append('tongueImg', blob);
-    this.dataService.uploadTongueImg(fd).subscribe(data => {
-      this.diagnoseResultDisplay(data.flag, data.result);
-    });
-    this.closeCam();
+    if (confirm('Are you sure to use this photo?')) {
+      let base64Data = this.canvas.nativeElement.toDataURL('image/jpeg');
+      let blob = this.toBlob(base64Data);
+      let fd = new FormData();
+      fd.append('tongueImg', blob);
+      this.dataService.uploadTongueImg(fd).subscribe(data => {
+        this.diagnoseResultDisplay(data.flag, data.result);
+      });
+      this.closeCam();
+      this.second = 15;
+      this.submitted = true;
+      let delay = setInterval(() => {
+        this.second -= 1;
+        if(this.second == 0) {
+          clearInterval(delay);
+          this.submitted = false;
+        }
+      }, 1100);
+    } else {
+      this.cleanSnap();
+    }
   }
 
 

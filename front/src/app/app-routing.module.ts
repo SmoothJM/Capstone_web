@@ -16,9 +16,10 @@ import {DiagnoseHistoryComponent} from './components/diagnose-history/diagnose-h
 import {AppointmentDoctorComponent} from './components/appointment-doctor/appointment-doctor.component';
 import {ResearchComponent} from './components/research/research.component';
 import {PatientComponent} from './components/patient/patient.component';
-import {ManageUserComponent} from './components/manage-user/manage-user.component';
-import {ManageReportComponent} from './components/manage-report/manage-report.component';
 import {InfoComponent} from './components/info/info.component';
+import {ChatComponent} from './components/chat/chat.component';
+import {ManagerCustomerComponent} from './components/manager-customer/manager-customer.component';
+import {ManagerDoctorComponent} from './components/manager-doctor/manager-doctor.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent},
       {path: 'history/appointment', component: AppointmentHistoryComponent},
       {path: 'history/diagnose', component: DiagnoseHistoryComponent},
+      {path: 'chat', component: ChatComponent},
     ], canActivate: [LoginGuard]
   },
   {
@@ -37,14 +39,15 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent},
       {path: 'appointment', component: AppointmentDoctorComponent},
       {path: 'research', component: ResearchComponent},
-      {path: 'patient', component: PatientComponent}
+      {path: 'patient', component: PatientComponent},
+      {path: 'chat', component: ChatComponent},
     ], canActivate: [LoginGuard]
   },
   {
     path: 'admin', component: AdminMainComponent, children: [
       {path: 'overview', component: OverviewComponent},
-      {path: 'user', component: ManageUserComponent},
-      {path: 'report', component: ManageReportComponent},
+      {path: 'customer', component: ManagerCustomerComponent},
+      {path: 'doctor', component: ManagerDoctorComponent},
       {path: 'info', component: InfoComponent},
     ],
     canActivate: [LoginGuard]

@@ -49,9 +49,12 @@
          style="font-size:16px">
         <i class="fas fa-book-medical pr-3"></i>
         Diagnose History
-
       </a>
     </div>
+    <a class=" my-2 p-2" routerLink="/main/chat" routerLinkActive="actived">
+      <i class="far fa-comments pr-3"></i>
+      Message Your Doctor
+    </a>
   </div>
   <div *ngIf="role == 1">
     <a class="options my-3 p-2" routerLink="/doctor/profile" routerLinkActive="actived">
@@ -63,25 +66,29 @@
       <i class="fas fa-user-injured pr-3"></i>
       Patient Report
     </a>
+    <a class=" my-2 p-2" routerLink="/doctor/chat" routerLinkActive="actived">
+      <i class="far fa-comments" style="padding-right: 12px"></i>
+      Message Your Patients
+    </a>
     <a class=" my-2 p-2" routerLink="/doctor/appointment" routerLinkActive="actived">
       <i class="far fa-calendar-alt pr-3"></i>
       Appointment
     </a>
-    <a class=" my-2 p-1" routerLink="/doctor/research" routerLinkActive="actived">
-      <i class="far fa-newspaper pr-3"></i>
+    <a class=" my-2 p-2" routerLink="/doctor/research" routerLinkActive="actived">
+      <i class="far fa-newspaper" style="padding-right: 12px"></i>
       Issue Research
     </a>
   </div>
 
 
   <div *ngIf="role == 2">
-    <a class=" my-2 p-2" routerLink="/admin/user" routerLinkActive="actived">
+    <a class=" my-2 p-2" routerLink="/admin/customer" routerLinkActive="actived">
       <i class="fas fa-users pr-3"></i>
-      Manage User
+      Manage Customer
     </a>
-    <a class=" my-2 p-2" routerLink="/admin/report" routerLinkActive="actived">
-      <i class="fas fa-book pr-3"></i>
-      Manage Report
+    <a class=" my-2 p-2" routerLink="/admin/doctor" routerLinkActive="actived">
+      <i class="fas fa-user-nurse pr-3"></i>
+      Manage Doctor
     </a>
     <a class=" my-2 p-2" routerLink="/admin/info" routerLinkActive="actived">
       <i class="fas fa-info-circle pr-3"></i>

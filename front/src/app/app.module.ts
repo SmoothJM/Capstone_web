@@ -33,9 +33,10 @@ import { DiagnoseHistoryComponent } from './components/diagnose-history/diagnose
 import { AppointmentDoctorComponent } from './components/appointment-doctor/appointment-doctor.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { ResearchComponent } from './components/research/research.component';
-import { ManageUserComponent } from './components/manage-user/manage-user.component';
-import { ManageReportComponent } from './components/manage-report/manage-report.component';
 import { InfoComponent } from './components/info/info.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { ManagerDoctorComponent } from './components/manager-doctor/manager-doctor.component';
+import { ManagerCustomerComponent } from './components/manager-customer/manager-customer.component';
 
 @NgModule({
   declarations: [
@@ -61,9 +62,10 @@ import { InfoComponent } from './components/info/info.component';
     AppointmentDoctorComponent,
     PatientComponent,
     ResearchComponent,
-    ManageUserComponent,
-    ManageReportComponent,
-    InfoComponent
+    InfoComponent,
+    ChatComponent,
+    ManagerDoctorComponent,
+    ManagerCustomerComponent
   ],
   imports: [
     BrowserModule,

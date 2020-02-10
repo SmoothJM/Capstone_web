@@ -36,8 +36,13 @@
   </div>
 
   <div class="text-center">
-    <button class="btn btn-round-large card-shadow btn-info"
-            data-toggle="modal" data-target="#modal-cam" (click)="openModal()">Take Photo Now!</button>
+    <button class="btn btn-round-large card-shadow btn-info" [disabled]="submitted"
+            data-toggle="modal" data-target="#modal-cam" (click)="openModal()">
+      Take Photo Now!
+      <p *ngIf="submitted" id="delay">
+        {{'Try again in '+second+'s'}}
+      </p>
+    </button>
   </div>
 </div>
 
@@ -49,8 +54,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modal-label-login">Take a photo for your tongue</h5>
-        <a class="close" data-dismiss="modal" aria-label="Close">
-<!--          <i class="far fa-times-circle text-danger"></i>-->
+        <a class="close" data-dismiss="modal" (click)="closeCam()" aria-label="Close">
           <i class="fas fa-times-circle text-danger"></i>
         </a>
 
@@ -63,13 +67,13 @@
         <canvas #canvas id="canvas" width="500" height="500"></canvas>
         <div>
           <button class="btn btn-info mx-2" (click)="snap()">Snap!</button>
-          <button class="btn btn-secondary" data-dismiss="modal" (click)="closeCam()">Cancel</button>
+          <button class="btn btn-secondary" (click)="cleanSnap()">Cancel</button>
           <button class="btn btn-outline-info" style="float: right" (click)="uploadTake()"
                   [disabled]="!snapped" data-dismiss="modal">Upload</button>
         </div>
       </div>
       <div class="modal-footer">
-        Keep your tongue in the tongue shape box then click Snap!
+        Keep your tongue fills the tongue shape box then click Snap!
       </div>
     </div>
   </div>
