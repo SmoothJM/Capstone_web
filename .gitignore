@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 # static image
-./front/src/assets/customer/tongue/*
+./front/src/assets/customer/tongue
