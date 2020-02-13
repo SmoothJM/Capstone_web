@@ -26,6 +26,8 @@ export class DiagnoseComponent implements OnInit {
   public docsPerPage: number = 5;
   public selectedPage: number = 1;
   public snapped: boolean = false;
+  public fileName: string = 'Select your local tongue photo';
+  public uploaded: boolean = true;
 
   @ViewChild('video', {static: true}) video: ElementRef;
   @ViewChild('canvas', {static: true}) canvas: ElementRef;
@@ -114,7 +116,7 @@ export class DiagnoseComponent implements OnInit {
         this.diagnoseResultDisplay(data.flag, data.result);
       });
       this.closeCam();
-      this.second = 15;
+      this.second = 20;
       this.submitted = true;
       let delay = setInterval(() => {
         this.second -= 1;
@@ -156,23 +158,27 @@ export class DiagnoseComponent implements OnInit {
   }
 
   uploadSubmit() {
-    // const customerName = this.uploadForm.controls.customerName.value;
     this.messageService.reportMessage(new Message(''));
     const fd = new FormData();
     fd.append('tongueImg', this.tongueImg);
-    // console.log(fd.get('tongueImg'));
-    // this.submitted = true;
-    // setInterval(() => {
-    //   this.second -= 1;
-    // }, 1000);
+    this.second = 20;
+    this.submitted = true;
+    let delay = setInterval(() => {
+      this.second -= 1;
+      if(this.second == 0) {
+        clearInterval(delay);
+        this.submitted = false;
+      }
+    }, 1100);
     this.dataService.uploadTongueImg(fd).subscribe(data => {
       this.diagnoseResultDisplay(data.flag, data.result);
     });
   }
 
   changeImg(event) {
+    this.uploaded = false;
     this.tongueImg = event.target.files[0] as File;
-    // console.log(this.tongueImg);
+    this.fileName = event.target.value.split('\\')[event.target.value.split('\\').length-1];
   }
 
   get doctors(): DoctorModel[] {

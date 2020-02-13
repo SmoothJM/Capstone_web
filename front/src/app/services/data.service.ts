@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {Observable, ObservedValueOf, throwError} from 'rxjs';
 import { LoginModel } from "../model/login.model";
 import { CustomerModel } from '../model/customer.model';
+import {Diagnose} from '../model/diagnose.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,13 +37,17 @@ export class DataService {
   getCustomer(): Observable<any> {
     return this.sendRequest('get', this.customerURL);
   }
-
   updateCustomer(customer: CustomerModel): Observable<any> {
     return this.sendRequest('put', this.customerURL, customer);
   }
-
   uploadTongueImg(fd): Observable<any> {
-    return this.sendRequest('post', this.customerURL+'/tongue', fd)
+    return this.sendRequest('post', this.customerURL+'/tongue', fd);
+  }
+  getAllDiagnoses(): Observable<Diagnose[]> {
+    return this.sendRequest('get', this.customerURL+'/diagnose');
+  }
+  removeDiagnose(img: string): Observable<any> {
+    return this.sendRequest('delete', this.customerURL+'/diagnose', {img: img});
   }
 
 

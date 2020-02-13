@@ -1,0 +1,12 @@
+td {
+  vertical-align: middle;
+  text-align: center;
+}
+th {
+  text-align: center;
+}
+
+.imgTd {
+  padding: 5px 5px;
+}
+

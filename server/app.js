@@ -8,7 +8,7 @@ const login = require('./routes/login');
 const doctor = require('./routes/doctor');
 
 const app = express();
-
+app.use(express.static(__dirname + '/public'));
 app.use(session({
     secret: 'BTD secret',
     resave: false,

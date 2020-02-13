@@ -19,12 +19,18 @@
           enctype="multipart/form-data" (ngSubmit)="uploadSubmit()">
       <div class="input-group">
         <div class="input-group-prepend">
-          <button class="btn btn-outline-secondary" type="submit">Upload</button>
+          <button class="btn btn-outline-secondary" type="submit" style="width: 220px"
+          [disabled]="uploaded || submitted">
+            Upload
+            <span *ngIf="submitted" class="ml-1 pl-1 delay">
+              {{'Try again in '+second+'s'}}
+            </span>
+          </button>
         </div>
         <div class="custom-file">
           <input type="file" accept=".png, .jpg, .jpeg" (change)="changeImg($event)"
                  class="custom-file-input" id="uploadFile">
-          <label class="custom-file-label" for="uploadFile">Choose local tongue picture</label>
+          <label class="custom-file-label" for="uploadFile">{{fileName}}</label>
         </div>
       </div>
     </form>

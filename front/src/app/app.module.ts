@@ -37,6 +37,7 @@ import { InfoComponent } from './components/info/info.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ManagerDoctorComponent } from './components/manager-doctor/manager-doctor.component';
 import { ManagerCustomerComponent } from './components/manager-customer/manager-customer.component';
+import { TrustUrlPipePipe } from './guards/trust-url-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ManagerCustomerComponent } from './components/manager-customer/manager-
     InfoComponent,
     ChatComponent,
     ManagerDoctorComponent,
-    ManagerCustomerComponent
+    ManagerCustomerComponent,
+    TrustUrlPipePipe
   ],
   imports: [
     BrowserModule,

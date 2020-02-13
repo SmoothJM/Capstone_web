@@ -21,6 +21,8 @@ const md5 = require('md5');
 //     console.log(url.parse(req.url));
 //
 // });
+
+// verify user login and not access URL beyond rights.
 router.post('/authLogin', (req, res) => {
     let accessURL = req.body['accessURL'];
 
@@ -50,7 +52,9 @@ router.post('/login', (req, res) => {
         } else if (result['status'] === 0) {
             req.session.regenerate((error) => {
                 username = result['username'];
+                result['password']='';
                 req.session.user = result;
+                // req.session.username['password'] = '';
                 res.json({
                     correct: true,
                     message: `Welcome dear ${username}.`,

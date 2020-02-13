@@ -1,31 +1,36 @@
 const express = require('express');
 const router = express.Router();
-const customerModel = require('../data/customerData');
 const md5 = require('md5');
-const userModel = require('../data/userData');
 const multer = require('multer');
-const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
-const TONGUE_DIR = 'C:/Users/14534/WebstormProjects/capstone/front/src/assets/customer/tongue';
 const exec = require('child_process').exec;
+const fs = require('fs');
 
+const customerModel = require('../data/customerData');
+const userModel = require('../data/userData');
+const diagnoseModel = require('../data/diagnoseData');
+
+
+const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
+const TONGUE_DIR = 'C:/Users/14534/WebstormProjects/capstone/server/public/customer/tongue';
 
 const storage = multer.diskStorage({
     destination: (req, file, callBack) => {
         callBack(null, TONGUE_DIR);
     },
     filename: (req, file, callBack) => {
-        callBack(null, file.fieldname + '-' + Date.now()+'.jpg')
+        callBack(null, file.fieldname + '-' + Date.now() + '.jpg')
     }
 });
 
 let upload = multer({storage: storage});
 
+// Take diagnose, if there is a tongue detected then insert diagnose result into DB.
 router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
     const file = req.file;
     const img_name = file.filename;
     // console.log(file);
     // console.log(img_name);
-    exec('python '+MODEL_DIR+'od_predict.py ' + img_name, function (error, stdout, stderr) {
+    exec('python ' + MODEL_DIR + 'od_predict.py ' + img_name, function (error, stdout, stderr) {
         if (error) {
             console.error('error: ' + error);
             return;
@@ -33,18 +38,36 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
         let resultArr = stdout.split('loaded.');
         let result = resultArr[resultArr.length - 1];
         result = Number(result);
-        if(result>0){
-            exec('python '+MODEL_DIR+'model_diagnose.py ' + img_name, function (err, stdo, stde) {
+        if (result > 0) {
+            exec('python ' + MODEL_DIR + 'model_diagnose.py ' + img_name, function (err, stdo, stde) {
                 if (err) {
                     console.error('error: ' + err);
                     return;
                 }
+                stdo = String(stdo);
+                stdo = stdo.replace('\r\n', '');
+                let date = new Date().setHours(new Date().getHours() - 6);
+                diagnoseModel.insertDiagnose({
+                    email: req.session.user['email'],
+                    username: req.session.user['username'],
+                    result: stdo,
+                    img: img_name,
+                    time: new Date()
+                }, (err, result) => {
+                    if (err) throw err;
+                });
                 res.json({
                     flag: true,
                     result: stdo
                 });
             });
-        }else{
+        } else {
+            fs.unlink(TONGUE_DIR+'/'+img_name, err => {
+                if (err) console.log(err);
+            });
+            fs.unlink(TONGUE_DIR+'/result_whole/'+img_name, err => {
+                if (err) console.log(err);
+            });
             res.json({
                 flag: false,
                 result: "Cannot detected tongue, please use another photo."
@@ -52,6 +75,42 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
         }
     });
 });
+
+// Delete one diagnose result
+router.delete('/diagnose', (req, res) => {
+    diagnoseModel.deleteDiagnose(req.body, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    });
+    fs.unlink(TONGUE_DIR+'/'+req.body['img'], err => {
+        if (err) console.log(err);
+    });
+    fs.unlink(TONGUE_DIR+'/result_whole/'+req.body['img'], err => {
+        if (err) console.log(err);
+    });
+    fs.unlink(TONGUE_DIR+'/result_box/'+req.body['img'], err => {
+        if (err) console.log(err);
+    });
+
+});
+
+// Return all diagnoses
+router.get('/diagnose', (req, res) => {
+    // let email = req.session.user['email'];
+    let email = 'deng5945@uwlax.edu';
+    diagnoseModel.findAllDiagnose({email: email}, (err, result) => {
+        if (err) throw err;
+        // result.forEach((diagnose, index) => {
+        //     fs.readFile('public/customer/tongue/result_box/'+diagnose['img'],'utf8', (err, data) => {
+        //         if(err) console.log(err);
+        //         console.log(index, data);
+        //     });
+        // });
+        res.json(result);
+    });
+});
+
+// Check the email is duplicate or not when register new customer.
 router.post('/checkEmail', (req, res) => {
     let email = req.body['email'];
     customerModel.findCustomer({email: email}, (err, result) => {
@@ -64,6 +123,7 @@ router.post('/checkEmail', (req, res) => {
     })
 });
 
+// Register new customer.
 router.post('/', (req, res) => {
     req.body['password'] = md5(req.body['password']);
     let customer = req.body;
@@ -83,31 +143,37 @@ router.post('/', (req, res) => {
     res.json({message: 'Add customer success!'});
 });
 
-router.get('/', (req,res) => {
-    let email = req.session.user?req.session.user['email']:'';
-    customerModel.findCustomer({email:email},(err, result) => {
+// get
+router.get('/', (req, res) => {
+    let email = req.session.user ? req.session.user['email'] : '';
+    customerModel.findCustomer({email: email}, (err, result) => {
         if (err) throw err;
-        result = result.toObject();
-        delete result.password;
-        res.json(result);
+        if (result != null) {
+            result = result.toObject();
+            delete result.password;
+            res.json(result);
+        } else {
+            res.json('Not user login');
+        }
+
     });
 });
 
+// Update customer profile.
 router.put('/', (req, res) => {
     let customer = req.body;
     let email = req.body.email;
     delete customer._id;
     delete customer.email;
     // delete customer.__v;
-    customerModel.updateCustomer({email:email}, customer, (err, result) => {
+    customerModel.updateCustomer({email: email}, customer, (err, result) => {
         if (err) console.log('');
         res.json('Saved changes.');
     });
-    userModel.updateUser({email:email}, {username:customer.username},(err, result) => {
-       if(err) console.log('');
+    userModel.updateUser({email: email}, {username: customer.username}, (err, result) => {
+        if (err) console.log('');
     });
 });
-
 
 
 module.exports = router;

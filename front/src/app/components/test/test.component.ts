@@ -3,6 +3,8 @@ import {AfterViewInit, Component, ElementRef,
 import {DataService} from '../../services/data.service';
 import {DoctorModel} from '../../model/doctor.model';
 import {DoctorService} from '../../services/doctor.service';
+import {HttpClient} from '@angular/common/http';
+import {DomSanitizer} from '@angular/platform-browser';
 
 declare var $: any;
 
@@ -13,49 +15,74 @@ declare var $: any;
 })
 export class TestComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('video', {static: true}) video: ElementRef;
-  @ViewChild('canvas', {static: true}) canvas: ElementRef;
+  // @ViewChild('video', {static: true}) video: ElementRef;
+  // @ViewChild('canvas', {static: true}) canvas: ElementRef;
   // context = this.canvas.getContext('2d');
-  videoHeight: number = 0;
-  videoWidth: number = 0;
-  constraints = {
-    video: {
-      facingMode: "environment",
-      width: { ideal: 2000 },
-      height: { ideal: 2000 }
-    }
-  };
-  constructor(private renderer: Renderer2) {
-  }
-  openCamera() {
-    if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-      navigator.mediaDevices.getUserMedia(this.constraints).then(this.attachVideo.bind(this)).catch(this.handleError);
-    } else {
-      alert('Sorry, camera not available.');
-    }
-  }
-  handleError(error) {
-    console.log('Error: ', error);
+  // videoHeight: number = 0;
+  // videoWidth: number = 0;
+  // constraints = {
+  //   video: {
+  //     facingMode: "environment",
+  //     width: { ideal: 2000 },
+  //     height: { ideal: 2000 }
+  //   }
+  // };
+
+  public diagnoses = [];
+  public src='';
+  constructor(private renderer: Renderer2,
+              private dataService: DataService,
+              private http: HttpClient,
+              private sanitizer: DomSanitizer) {
   }
 
-  attachVideo(stream) {
-    this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
-    this.renderer.listen(this.video.nativeElement, 'play', (event) => {
-      this.videoHeight = this.video.nativeElement.videoHeight;
-      this.videoWidth = this.video.nativeElement.videoWidth;
+  ngOnInit() {
+    // {responseType:'blob',}
+    // this.http.get('/api/customer/test',{responseType:'blob',}).subscribe(data => {
+    //   console.log(data);
+    //   this.src = URL.createObjectURL(data);
+    //   console.log(this.src);
+    // });
+
+    this.dataService.getAllDiagnoses().subscribe(data => {
+      this.diagnoses = data;
     });
-  }
 
-  leaveVideo(stream) {
-    stream.getTracks()[0].stop();
-  }
-
-  snap() {
-    this.renderer.setProperty(this.canvas.nativeElement, 'width', this.videoWidth);
-    this.renderer.setProperty(this.canvas.nativeElement, 'height', this.videoHeight);
-    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0);
 
   }
+
+  ngAfterViewInit(): void {
+
+  }
+  // openCamera() {
+  //   if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+  //     navigator.mediaDevices.getUserMedia(this.constraints).then(this.attachVideo.bind(this)).catch(this.handleError);
+  //   } else {
+  //     alert('Sorry, camera not available.');
+  //   }
+  // }
+  // handleError(error) {
+  //   console.log('Error: ', error);
+  // }
+  //
+  // attachVideo(stream) {
+  //   this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
+  //   this.renderer.listen(this.video.nativeElement, 'play', (event) => {
+  //     this.videoHeight = this.video.nativeElement.videoHeight;
+  //     this.videoWidth = this.video.nativeElement.videoWidth;
+  //   });
+  // }
+  //
+  // leaveVideo(stream) {
+  //   stream.getTracks()[0].stop();
+  // }
+  //
+  // snap() {
+  //   this.renderer.setProperty(this.canvas.nativeElement, 'width', this.videoWidth);
+  //   this.renderer.setProperty(this.canvas.nativeElement, 'height', this.videoHeight);
+  //   this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0);
+  //
+  // }
 
   // show() {
   //   // console.log(this.canvas.nativeElement.toDataURL());
@@ -85,13 +112,7 @@ export class TestComponent implements OnInit, AfterViewInit {
 
 
 
-  ngOnInit() {
 
-  }
-
-  ngAfterViewInit(): void {
-
-  }
 
 
 //   openCamera() {

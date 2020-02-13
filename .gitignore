@@ -31,4 +31,4 @@ speed-measure-plugin*.json
 !.vscode/extensions.json
 .history/*
 
-**/front/src/assets/customer/tongue
+**/server/public/customer/tongue

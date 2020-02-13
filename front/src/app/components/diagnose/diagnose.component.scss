@@ -1,7 +1,14 @@
 #delay {
   text-decoration: overline;
 }
-
+//.delay:before {
+//  content: '|';
+//  color: lightgray;
+//  vertical-align: center;
+//}
+.delay {
+  border-left: solid 1.5px lightgray;
+}
 #box-profile {
   z-index: 20;
   top: 120px;

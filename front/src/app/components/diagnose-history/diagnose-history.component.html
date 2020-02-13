@@ -1,1 +1,23 @@
-<p>diagnose-history works!</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Thumbnail</th>
+      <th>Date</th>
+      <th>Result</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let diagnose of diagnoses" class="py-1">
+      <td class="imgTd">
+        <img [src]="'http://127.0.0.1:3000/customer/tongue/result_box/'+diagnose.img | trustUrl" width="80px" height="80px">
+      </td>
+      <td>{{diagnose.time | date:'medium'}}</td>
+      <td>{{diagnose.result}}</td>
+      <td>
+        <button class="btn btn-sm btn-info mr-2">Detail</button>
+        <button class="btn btn-sm btn-danger" (click)="removeDiagnose(diagnose.img)">Remove</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
