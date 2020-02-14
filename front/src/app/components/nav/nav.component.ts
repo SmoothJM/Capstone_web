@@ -5,6 +5,7 @@ import { DataService } from "../../services/data.service";
 import { Router } from '@angular/router';
 import {MessageService} from '../../services/message.service';
 import {Message} from '../../model/message.model';
+import {BadgeService} from '../../services/badge.service';
 // import * as $ from 'jquery';
 declare var $:any;
 
@@ -27,7 +28,8 @@ export class NavComponent implements OnInit {
   constructor(private fb:FormBuilder,
               private dataService: DataService,
               private router: Router,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private badgeService: BadgeService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -96,6 +98,7 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
+    this.badgeService.beZero();
     this.correct = false;
     this.userSession = '';
     this.dataService.logout().subscribe(_ => {

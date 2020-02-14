@@ -96,16 +96,9 @@ router.delete('/diagnose', (req, res) => {
 
 // Return all diagnoses
 router.get('/diagnose', (req, res) => {
-    // let email = req.session.user['email'];
-    let email = 'deng5945@uwlax.edu';
+    let email = req.session.user['email'];
     diagnoseModel.findAllDiagnose({email: email}, (err, result) => {
         if (err) throw err;
-        // result.forEach((diagnose, index) => {
-        //     fs.readFile('public/customer/tongue/result_box/'+diagnose['img'],'utf8', (err, data) => {
-        //         if(err) console.log(err);
-        //         console.log(index, data);
-        //     });
-        // });
         res.json(result);
     });
 });

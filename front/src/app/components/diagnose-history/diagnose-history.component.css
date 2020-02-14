@@ -10,3 +10,27 @@ th {
   padding: 5px 5px;
 }
 
+#modal-detail {
+  overflow: hidden;
+}
+
+.box {
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  height: 100%;
+  flex-direction:column;
+}
+
+.empty {
+  color: lightgray;
+  font-size: 10em;
+}
+.p1 {
+  color: lightgray;
+  font-size: 5em;
+}
+.p2 {
+  color: lightgray;
+  font-size: 2em;
+}

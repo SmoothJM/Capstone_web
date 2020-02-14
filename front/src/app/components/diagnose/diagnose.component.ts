@@ -8,6 +8,7 @@ import {DoctorModel} from '../../model/doctor.model';
 import {Router} from '@angular/router';
 import {MessageService} from '../../services/message.service';
 import {Message} from '../../model/message.model';
+import {BadgeService} from '../../services/badge.service';
 
 declare var $: any;
 
@@ -48,7 +49,8 @@ export class DiagnoseComponent implements OnInit {
               private doctorService: DoctorService,
               private router: Router,
               private messageService: MessageService,
-              private renderer: Renderer2) {
+              private renderer: Renderer2,
+              private badgeService: BadgeService) {
   }
 
 
@@ -149,6 +151,7 @@ export class DiagnoseComponent implements OnInit {
       // this.diabetesLevel = data.result;
       this.messageService.reportMessage(new Message('Your diagnose is done, please check the result' +
         ' in Diagnose History.'));
+      this.badgeService.reportBadgeCount(this.badgeService.originBadgeCount);
       setTimeout(() => {
         this.messageService.reportMessage(new Message(''));
       }, 3000);
@@ -178,7 +181,15 @@ export class DiagnoseComponent implements OnInit {
   changeImg(event) {
     this.uploaded = false;
     this.tongueImg = event.target.files[0] as File;
+    let imgSize = this.tongueImg.size;
     this.fileName = event.target.value.split('\\')[event.target.value.split('\\').length-1];
+    if (imgSize > 1024 * 1024 * 3) {
+      this.uploaded = true;
+      this.messageService.reportMessage(new Message('Photo size may not exceed 3MB.', true));
+      setTimeout(() => {
+        this.messageService.reportMessage(new Message(''));
+      }, 3000);
+    }
   }
 
   get doctors(): DoctorModel[] {

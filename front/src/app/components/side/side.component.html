@@ -35,7 +35,7 @@
     </a>
     <a class="my-2 p-2" (click)="toggleCollapse()">
       <i class="fas fa-history pr-3"></i>
-      Check History
+      Check History<span *ngIf="badge>0" class="badge badge-pill badge-info">{{badge}}</span>
       <i class="fas fa-angle-right pt-1" *ngIf="!collapse" style="float: right;"></i>
       <i class="fas fa-angle-down pt-1" *ngIf="collapse" style="float: right"></i>
     </a>
@@ -48,7 +48,7 @@
       <a class=" my-1 ml-4 p-1" routerLink="/main/history/diagnose" routerLinkActive="actived"
          style="font-size:16px">
         <i class="fas fa-book-medical pr-3"></i>
-        Diagnose History
+        Diagnose History<span *ngIf="badge>0" class="badge badge-pill badge-info">{{badge}}</span>
       </a>
     </div>
     <a class=" my-2 p-2" routerLink="/main/chat" routerLinkActive="actived">
