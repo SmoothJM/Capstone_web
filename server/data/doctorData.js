@@ -8,5 +8,19 @@ module.exports.getDoctors = function (cal) {
     });
 };
 
+module.exports.getDoctor = function (condition, cal) {
+    DoctorModel.findOne(condition, (err, result) => {
+        if (err) throw err;
+        cal(err, result);
+    });
+};
+
+module.exports.updateDoctor = function (condition, doctor, cal) {
+    DoctorModel.updateOne(condition, doctor, (err, result) => {
+        if (err) throw err;
+        cal(result);
+    });
+};
+
 
 

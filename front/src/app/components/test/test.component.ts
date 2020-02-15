@@ -5,16 +5,81 @@ import {DoctorModel} from '../../model/doctor.model';
 import {DoctorService} from '../../services/doctor.service';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
+import {NgbDateStruct, NgbCalendar,
+  NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 
 declare var $: any;
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  styleUrls: ['./test.component.scss'],
+
 })
 export class TestComponent implements OnInit, AfterViewInit {
+  hoveredDate: NgbDate;
+  fromDate: NgbDate;
+  toDate: NgbDate;
+  model: NgbDateStruct;
+  date: {year: number, month: number};
 
+  selectToday() {
+    this.model = this.calendar.getToday();
+  }
+
+
+  public diagnoses = [];
+  public src='';
+  constructor(private renderer: Renderer2,
+              private dataService: DataService,
+              private http: HttpClient,
+              private sanitizer: DomSanitizer,
+              private calendar: NgbCalendar,
+              public formatter: NgbDateParserFormatter) {
+  }
+  // onDateSelection(date: NgbDate) {
+  //   if (!this.fromDate && !this.toDate) {
+  //     this.fromDate = date;
+  //   } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+  //     this.toDate = date;
+  //   } else {
+  //     this.toDate = null;
+  //     this.fromDate = date;
+  //   }
+  // }
+  //
+  // isHovered(date: NgbDate) {
+  //   return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  // }
+  //
+  // isInside(date: NgbDate) {
+  //   return date.after(this.fromDate) && date.before(this.toDate);
+  // }
+  //
+  // isRange(date: NgbDate) {
+  //   return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
+  // }
+  //
+  // validateInput(currentValue: NgbDate, input: string): NgbDate {
+  //   const parsed = this.formatter.parse(input);
+  //   return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  // }
+  ngOnInit() {
+    // {responseType:'blob',}
+    // this.http.get('/api/customer/test',{responseType:'blob',}).subscribe(data => {
+    //   console.log(data);
+    //   this.src = URL.createObjectURL(data);
+    //   console.log(this.src);
+    // });
+
+    // this.dataService.getAllDiagnoses().subscribe(data => {
+    //   this.diagnoses = data;
+    // });
+  }
+
+  ngAfterViewInit(): void {
+
+  }
   // @ViewChild('video', {static: true}) video: ElementRef;
   // @ViewChild('canvas', {static: true}) canvas: ElementRef;
   // context = this.canvas.getContext('2d');
@@ -27,33 +92,6 @@ export class TestComponent implements OnInit, AfterViewInit {
   //     height: { ideal: 2000 }
   //   }
   // };
-
-  public diagnoses = [];
-  public src='';
-  constructor(private renderer: Renderer2,
-              private dataService: DataService,
-              private http: HttpClient,
-              private sanitizer: DomSanitizer) {
-  }
-
-  ngOnInit() {
-    // {responseType:'blob',}
-    // this.http.get('/api/customer/test',{responseType:'blob',}).subscribe(data => {
-    //   console.log(data);
-    //   this.src = URL.createObjectURL(data);
-    //   console.log(this.src);
-    // });
-
-    this.dataService.getAllDiagnoses().subscribe(data => {
-      this.diagnoses = data;
-    });
-
-
-  }
-
-  ngAfterViewInit(): void {
-
-  }
   // openCamera() {
   //   if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
   //     navigator.mediaDevices.getUserMedia(this.constraints).then(this.attachVideo.bind(this)).catch(this.handleError);

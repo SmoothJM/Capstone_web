@@ -24,6 +24,7 @@ import {ManagerDoctorComponent} from './components/manager-doctor/manager-doctor
 const routes: Routes = [
   {
     path: 'main', component: MainComponent, children: [
+      {path: '', redirectTo:'overview', pathMatch: 'full'},
       {path: 'overview', component: OverviewComponent},
       {path: 'diagnose', component: DiagnoseComponent},
       {path: 'appointment', component: AppointmentComponent},
@@ -35,6 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'doctor', component: DoctorMainComponent, children: [
+      {path: '', redirectTo:'overview', pathMatch: 'full'},
       {path: 'overview', component: OverviewComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'appointment', component: AppointmentDoctorComponent},
@@ -45,6 +47,7 @@ const routes: Routes = [
   },
   {
     path: 'admin', component: AdminMainComponent, children: [
+      {path: '', redirectTo:'overview', pathMatch: 'full'},
       {path: 'overview', component: OverviewComponent},
       {path: 'customer', component: ManagerCustomerComponent},
       {path: 'doctor', component: ManagerDoctorComponent},

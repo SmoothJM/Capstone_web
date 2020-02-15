@@ -5,3 +5,33 @@
 .card {
   margin-bottom: 50px;
 }
+
+td {
+  vertical-align: middle;
+  text-align: center;
+}
+th {
+  text-align: center;
+}
+
+thead {
+  border-bottom: 2px solid lightgray;
+}
+
+tbody>tr {
+  border-bottom: 1px solid lightgray;
+}
+
+tbody tr:last-child {
+  border-bottom: 0;
+}
+
+h5>small {
+  color: darkgray;
+  font-size: 13px;
+}
+.empty {
+  text-align: center;
+  color: lightgray;
+  font-size: 3em;
+}

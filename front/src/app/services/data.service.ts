@@ -19,7 +19,7 @@ export class DataService {
   getAccount(user: LoginModel): Observable<boolean> {
     return this.sendRequest<boolean>('post',this.basicURL + '/login', user);
   }
-  getSession(): Observable<string> {
+  getSession(): Observable<any> {
     return this.sendRequest('get',this.basicURL+'/sess');
   }
   logout(): Observable<any> {

@@ -1,19 +1,77 @@
 <div class="page-header mb-4">
   <h2>Welcome Back <small>Overview dashboard</small></h2>
 </div>
-<div class="card main-shadow">
-  <h5 class="card-header">
-    Diagnose Records
-  </h5>
-  <div class="card-body">
-    None
+<div *ngIf="user.role == 0">
+  <div class="card main-shadow">
+    <h5 class="card-header">
+      Diagnose Records<small> Only display the latest three diagnoses</small>
+    </h5>
+    <div class="card-body py-0">
+      <table class="table table-hover table-borderless" *ngIf="!emptyDiagnose">
+        <thead>
+        <tr>
+          <th>Thumbnail</th>
+          <th>Date</th>
+          <th>Result</th>
+        </tr>
+        </thead>
+        <tbody class="">
+        <tr *ngFor="let diagnose of diagnoses">
+          <td class="imgTd">
+            <img [src]="boxImg+diagnose.img | trustUrl" width="80px" height="80px">
+          </td>
+          <td>{{diagnose.time | date:'medium'}}</td>
+          <td>{{diagnose.result}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <p *ngIf="emptyDiagnose" class="empty"><i class="fas fa-box-open"></i><br>No record</p>
+    </div>
+  </div>
+  <div class="card main-shadow">
+    <h5 class="card-header">
+      Appointment Calendar
+    </h5>
+    <div class="card-body">
+      <p *ngIf="emptyAppointment" class="empty"><i class="fas fa-box-open"></i><br>No record</p>
+    </div>
   </div>
 </div>
-<div class="card main-shadow">
-  <h5 class="card-header">
-    Appointment Calendar
-  </h5>
-  <div class="card-body">
-    None
+
+<div *ngIf="user.role == 1">
+  <div class="card main-shadow">
+    <h5 class="card-header">
+      Doctor overview
+    </h5>
+    <div class="card-body">
+      None
+    </div>
+  </div>
+  <div class="card main-shadow">
+    <h5 class="card-header">
+      Appointment Calendar
+    </h5>
+    <div class="card-body">
+      None
+    </div>
+  </div>
+</div>
+
+<div *ngIf="user.role == 2">
+  <div class="card main-shadow">
+    <h5 class="card-header">
+      Admin overview
+    </h5>
+    <div class="card-body">
+      None
+    </div>
+  </div>
+  <div class="card main-shadow">
+    <h5 class="card-header">
+      Appointment Calendar
+    </h5>
+    <div class="card-body">
+      None
+    </div>
   </div>
 </div>

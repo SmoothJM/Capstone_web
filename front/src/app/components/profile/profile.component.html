@@ -58,6 +58,133 @@
   </div>
 
   <div class="card-body" *ngIf="role==1">
-    doctor profile
+    <form #formDoc='ngForm' (ngSubmit)="submitDoc(formDoc)">
+      <div class="form-group">
+        <label for="emailDoc"><strong>Email:</strong></label>
+        <input id="emailDoc" #emailDoc='ngModel' name="emailDoc" class="form-control" type="text"
+               [(ngModel)]="doctor.email" readonly>
+      </div>
+      <div class="form-group">
+        <label for="usernameDoc"><strong>Username:</strong></label>
+        <input id="usernameDoc" #usernameDoc='ngModel' name="usernameDoc" class="form-control" type="text"
+               placeholder="Name you want to show on the website."
+               [(ngModel)]="doctor.username" required pattern="^[a-zA-Z0-9_]{4,16}$">
+        <ul class="bg-danger text-white mt-2" *ngIf="usernameDoc.dirty && usernameDoc.invalid">
+          <li *ngIf="usernameDoc.errors?.required">You must enter an username.</li>
+          <li *ngIf="usernameDoc.errors?.pattern">Username can only include letters, number and underline.</li>
+          <li *ngIf="usernameDoc.errors?.pattern">Username is at least length of 4, less than 16.</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label for="addrDoc"><strong>Office Address:</strong></label>
+        <input id="addrDoc" #addrDoc='ngModel' name="addrDoc" class="form-control" type="text"
+               placeholder="Show your office address."
+               [(ngModel)]="doctor.addr" required pattern="^[^\<|\>]*">
+        <ul class="bg-danger text-white mt-2" *ngIf="addrDoc.dirty && addrDoc.invalid">
+          <li *ngIf="addrDoc.errors?.required">You must enter an username.</li>
+          <li *ngIf="addrDoc.errors?.pattern">Please don't enter '<' or '>'.</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label><strong>Gender:</strong></label><br>
+        <input id="gender1Doc" name="genderDoc" type="radio" value="male" [checked]="doctor.gender == 'male'"
+               [(ngModel)]="doctor.gender">
+        <label for="gender1Doc"><i class="fas fa-mars"></i><br>Male</label>
+        <input id="gender2Doc" name="genderDoc" type="radio" value="female" [checked]="doctor.gender == 'female'"
+               [(ngModel)]="doctor.gender">
+        <label for="gender2Doc"><i class="fas fa-venus"></i><br>Female</label>
+        <input id="gender3Doc" name="genderDoc" type="radio" value="secret" [checked]="doctor.gender == 'secret'"
+               [(ngModel)]="doctor.gender">
+        <label for="gender3Doc"><i class="fas fa-mask"></i><br>Secret</label>
+      </div>
+
+      <label><strong>Schedule Calendar:</strong></label><small style="color: darkgrey"> Select your disabled
+      date</small><br>
+      <div class="form-inline m-2">
+        <div class="form-group hidden">
+          <div class="input-group">
+
+            <input name="datepicker"
+                   class="form-control"
+                   ngbDatepicker
+                   #datepicker="ngbDatepicker"
+                   [autoClose]="'outside'"
+                   (dateSelect)="onDateSelection($event)"
+                   [displayMonths]="2"
+                   [dayTemplate]="t"
+                   outsideDays="hidden"
+                   [startDate]="fromDate">
+            <ng-template #t let-date let-focused="focused">
+        <span class="custom-day"
+              [class.focused]="focused"
+              [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)"
+              (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+            </ng-template>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input #dpFromDate
+                   class="form-control" placeholder="yyyy-mm-dd"
+                   name="dpFromDate"
+                   [value]="formatter.format(fromDate)"
+                   (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+                <i class="far fa-calendar-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group ml-2">
+          <div class="input-group">
+            <input #dpToDate
+                   class="form-control" placeholder="yyyy-mm-dd"
+                   name="dpToDate"
+                   [value]="formatter.format(toDate)"
+                   (input)="toDate = validateInput(toDate, dpToDate.value)">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+                <i class="far fa-calendar-alt"></i>
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-info ml-4" (click)="addSchedule()" type="button"
+          [disabled]="!fromDate || !toDate">Add</button>
+        </div>
+        <table class="table table-borderless table-hover" *ngIf="schedule.length>0">
+          <thead>
+            <tr><th>From</th><th>To</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of schedule; let key = index">
+              <td>{{s.from | date: 'mediumDate'}}</td>
+              <td>{{s.to | date: 'mediumDate'}}</td>
+              <td>
+                <button class="btn btn-sm btn-danger" type="button" (click)="removeSchedule(key)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="form-group">
+        <label for="descDoc"><strong>Description:</strong></label>
+        <textarea id="descDoc" #descDoc='ngModel' name="descDoc" class="form-control" rows="5" [(ngModel)]="doctor.desc"
+                  pattern="[^\<|\>]*"
+                  placeholder="Display your information."></textarea>
+        <ul class="bg-danger text-white mt-2" *ngIf="descDoc.dirty && descDoc.invalid">
+          <li *ngIf="descDoc.errors?.pattern">Please don't enter '<' or '>'</li>
+        </ul>
+      </div>
+      <button type="submit" style="float: right" [disabled]="formDoc.invalid"
+              class="btn btn-info">Save
+      </button>
+    </form>
   </div>
 </div>
