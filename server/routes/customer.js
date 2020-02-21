@@ -8,6 +8,7 @@ const fs = require('fs');
 const customerModel = require('../data/customerData');
 const userModel = require('../data/userData');
 const diagnoseModel = require('../data/diagnoseData');
+const appointmentModel = require('../data/appointmentData');
 
 
 const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
@@ -28,6 +29,12 @@ let upload = multer({storage: storage});
 router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
     const file = req.file;
     const img_name = file.filename;
+    let levels = {
+        'Healthy': 1,
+        'Mild': 2,
+        'Moderate': 3,
+        'Severe': 4
+    };
     // console.log(file);
     // console.log(img_name);
     exec('python ' + MODEL_DIR + 'od_predict.py ' + img_name, function (error, stdout, stderr) {
@@ -47,25 +54,32 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
                 stdo = String(stdo);
                 stdo = stdo.replace('\r\n', '');
                 let date = new Date().setHours(new Date().getHours() - 6);
-                diagnoseModel.insertDiagnose({
-                    email: req.session.user['email'],
-                    username: req.session.user['username'],
-                    result: stdo,
-                    img: img_name,
-                    time: new Date()
-                }, (err, result) => {
-                    if (err) throw err;
-                });
-                res.json({
-                    flag: true,
-                    result: stdo
+                diagnoseModel.findAllDiagnose({email: req.session.user['email']}, (error, results) => {
+                    if (error) throw error;
+                    if (results.length > 0) {
+                        stdo = results[0].result;
+                        console.log(results[0].result);
+                    }
+                    diagnoseModel.insertDiagnose({
+                        email: req.session.user['email'],
+                        username: req.session.user['username'],
+                        result: stdo,
+                        img: img_name,
+                        time: new Date()
+                    }, (err, result) => {
+                        if (err) throw err;
+                    });
+                    res.json({
+                        flag: true,
+                        result: stdo
+                    });
                 });
             });
         } else {
-            fs.unlink(TONGUE_DIR+'/'+img_name, err => {
+            fs.unlink(TONGUE_DIR + '/' + img_name, err => {
                 if (err) console.log(err);
             });
-            fs.unlink(TONGUE_DIR+'/result_whole/'+img_name, err => {
+            fs.unlink(TONGUE_DIR + '/result_whole/' + img_name, err => {
                 if (err) console.log(err);
             });
             res.json({
@@ -82,13 +96,13 @@ router.delete('/diagnose', (req, res) => {
         if (err) throw err;
         res.json(result);
     });
-    fs.unlink(TONGUE_DIR+'/'+req.body['img'], err => {
+    fs.unlink(TONGUE_DIR + '/' + req.body['img'], err => {
         if (err) console.log(err);
     });
-    fs.unlink(TONGUE_DIR+'/result_whole/'+req.body['img'], err => {
+    fs.unlink(TONGUE_DIR + '/result_whole/' + req.body['img'], err => {
         if (err) console.log(err);
     });
-    fs.unlink(TONGUE_DIR+'/result_box/'+req.body['img'], err => {
+    fs.unlink(TONGUE_DIR + '/result_box/' + req.body['img'], err => {
         if (err) console.log(err);
     });
 
@@ -136,7 +150,7 @@ router.post('/', (req, res) => {
     res.json({message: 'Add customer success!'});
 });
 
-// get
+// get customer
 router.get('/', (req, res) => {
     let email = req.session.user ? req.session.user['email'] : '';
     customerModel.findCustomer({email: email}, (err, result) => {
@@ -168,5 +182,25 @@ router.put('/', (req, res) => {
     });
 });
 
+// Add new appointment
+router.post('/appointment', (req, res) => {
+    appointmentModel.addAppointment(req.body, (err, result) => {
+        if(err) throw err;
+    });
+    res.json('Got ya!');
+});
+
+// Get latest appointment status
+router.get('/appointment', (req, res) => {
+   let cusEmail = req.session.user.email;
+   appointmentModel.getLastAppointment({cusEmail}, (err, result) => {
+      if (err) throw err;
+      if (result) {
+          res.json(result.status === 'Waiting' || result.status === 'Accepted');
+      } else {
+          res.json(false);
+      }
+   });
+});
 
 module.exports = router;

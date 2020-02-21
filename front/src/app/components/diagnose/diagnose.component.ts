@@ -78,6 +78,7 @@ export class DiagnoseComponent implements OnInit {
     console.log('Error: ', error);
   }
   closeCam() {
+    this.canvas.nativeElement.getContext('2d').clearRect(0,0,this.videoWidth,this.videoHeight);
     this.currentStream.getTracks().forEach(function (track) {
       track.stop();
     });

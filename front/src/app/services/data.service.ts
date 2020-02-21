@@ -4,6 +4,7 @@ import {Observable, ObservedValueOf, throwError} from 'rxjs';
 import { LoginModel } from "../model/login.model";
 import { CustomerModel } from '../model/customer.model';
 import {Diagnose} from '../model/diagnose.model';
+import {AppointmentModel} from '../model/appointment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,12 @@ export class DataService {
   removeDiagnose(img: string): Observable<any> {
     return this.sendRequest('delete', this.customerURL+'/diagnose', {img: img});
   }
-
+  addAppointment(appointment: AppointmentModel): Observable<any> {
+    return this.sendRequest('post', this.customerURL+'/appointment', appointment);
+  }
+  getLastAppointment(): Observable<boolean> {
+    return this.sendRequest('get', this.customerURL+'/appointment');
+  }
 
   /**
    * Total request function.

@@ -1,1 +1,50 @@
-<p>appointment works!</p>
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title m-0">Your Doctor</h5>
+  </div>
+  <div class="card-body">
+    <table >
+      <tr>
+        <td rowspan="2">
+          <img src="{{doctor.photo}}" class="rounded-circle" width="80" height="80">
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><strong>Name: </strong> {{doctor.username}}</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><strong>Email: </strong> {{doctor.email}}</td>
+
+      </tr>
+      <tr>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><strong>Office location:</strong> {{doctor.addr}}</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><strong>Gender: </strong> {{doctor.gender}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="calendar-tips mt-5">
+  <span class="calendar-divider"></span>
+  <span class="calendar-tips">Select one day you and your doctor available</span>
+  <span class="calendar-divider"></span>
+</div>
+
+<div class="row">
+  <div class="col-7">
+    <ngb-datepicker [displayMonths]="displayMonths" [navigation]="navigation"
+                    [showWeekNumbers]="showWeekNumbers" [outsideDays]="outsideDays"
+                    [minDate]="today"
+                    [markDisabled]="disabledDate"
+                    [(ngModel)]="selectDate">
+    </ngb-datepicker>
+  </div>
+  <div class="col align-self-center">
+    <ngb-timepicker [(ngModel)]="selectTime"></ngb-timepicker>
+  </div>
+  <div class="col align-self-end">
+    <button class="btn btn-info" *ngIf="!uncompletedAppointment" (click)="confirmAppointment()" [disabled]="!selectDate">Confirm</button>
+    <button class="btn btn-danger" *ngIf="uncompletedAppointment"  (click)="confirmAppointment()" disabled>
+      Uncompleted Appointment
+    </button>
+  </div>
+</div>
