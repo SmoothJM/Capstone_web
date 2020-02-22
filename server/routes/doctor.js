@@ -52,6 +52,8 @@ router.get('/appointment', (req, res) => {
         res.json(result);
     });
 });
+
+// Update one appointment status by id
 router.put('/appointment', (req, res) => {
    let id = req.body.id;
    let status = req.body.status;

@@ -152,7 +152,7 @@ export class DiagnoseComponent implements OnInit {
       // this.diabetesLevel = data.result;
       this.messageService.reportMessage(new Message('Your diagnose is done, please check the result' +
         ' in Diagnose History.'));
-      this.badgeService.reportBadgeCount(this.badgeService.originBadgeCount);
+      this.badgeService.reportDiaBadgeCount(this.badgeService.originDiaBadgeCount);
       setTimeout(() => {
         this.messageService.reportMessage(new Message(''));
       }, 3000);

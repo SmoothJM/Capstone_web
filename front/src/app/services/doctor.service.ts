@@ -26,7 +26,7 @@ export class DoctorService {
   getAppointments(): Observable<AppointmentModel[]> {
     return this.sendRequest('get', this.doctorUrl + '/appointment');
   }
-  updateAppointmentsStatus(thing): Observable<any> {
+  updateAppointmentStatus(thing): Observable<any> {
     return this.sendRequest('put', this.doctorUrl + '/appointment', thing);
   }
 

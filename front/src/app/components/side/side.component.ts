@@ -12,6 +12,8 @@ export class SideComponent implements OnInit {
   public role: string = '';
   public collapse: boolean = false;
   public badge: number = 0;
+  public diaBadge: number = 0;
+  public appBadge: number = 0;
 
   constructor(private dataService: DataService,
               private badgeService: BadgeService) {
@@ -19,12 +21,21 @@ export class SideComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.badgeService.badgeCount.subscribe(m => {
-      this.badge = m;
+    this.badgeService.diaBadgeCount.subscribe(m => {
+      this.diaBadge = m;
+      this.calcBadgeCount();
+    });
+    this.badgeService.appBadgeCount.subscribe(m => {
+      this.appBadge = m;
+      this.calcBadgeCount();
     });
     this.dataService.getSession().subscribe(data => {
       this.role = data['role'];
     });
+  }
+
+  calcBadgeCount() {
+    this.badge = this.appBadge + this.diaBadge;
   }
 
   toggleCollapse() {

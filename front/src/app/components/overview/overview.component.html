@@ -28,11 +28,35 @@
       <p *ngIf="emptyDiagnose" class="empty"><i class="fas fa-box-open"></i><br>No record</p>
     </div>
   </div>
-  <div class="card main-shadow">
+  <div class="card main-shadow text-white"
+       [class.bg-warning]="lastAppointment.status=='Waiting'"
+       [class.bg-success]="lastAppointment.status=='Accepted'"
+       [class.bg-danger]="lastAppointment.status=='Rejected'"
+       [class.bg-info]="lastAppointment.status=='Done'">
     <h5 class="card-header">
-      Appointment Calendar
+      Last Appointment View
     </h5>
     <div class="card-body">
+      <table class="table table-borderless text-white" *ngIf="!emptyAppointment">
+        <thead>
+          <tr>
+            <th>Doctor</th>
+            <th>Email</th>
+            <th>Appointment Date</th>
+            <th>Apply Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{bindDoctor.username}}</td>
+            <td><a class="bindDoctor">{{bindDoctor.email}}</a></td>
+            <td>{{lastAppointment.appointmentDate | date: 'medium'}}</td>
+            <td>{{lastAppointment.applyDate | date: 'medium'}}</td>
+            <td>{{lastAppointment.status}}</td>
+          </tr>
+        </tbody>
+      </table>
       <p *ngIf="emptyAppointment" class="empty"><i class="fas fa-box-open"></i><br>No record</p>
     </div>
   </div>

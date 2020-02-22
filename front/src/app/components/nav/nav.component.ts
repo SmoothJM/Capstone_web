@@ -98,7 +98,7 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    this.badgeService.beZero();
+    this.badgeService.beDiaZero();
     this.correct = false;
     this.userSession = '';
     this.dataService.logout().subscribe(_ => {

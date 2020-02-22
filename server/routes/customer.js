@@ -9,6 +9,7 @@ const customerModel = require('../data/customerData');
 const userModel = require('../data/userData');
 const diagnoseModel = require('../data/diagnoseData');
 const appointmentModel = require('../data/appointmentData');
+const doctorModel = require('../data/doctorData');
 
 
 const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
@@ -196,11 +197,20 @@ router.get('/appointment', (req, res) => {
    appointmentModel.getLastAppointment({cusEmail}, (err, result) => {
       if (err) throw err;
       if (result) {
-          res.json(result.status === 'Waiting' || result.status === 'Accepted');
-      } else {
-          res.json(false);
+          res.json(result);
       }
    });
+});
+
+// Get all appointments for this customer
+router.get('/allAppointments', (req, res) => {
+    let cusEmail = req.session.user.email;
+    appointmentModel.getAppointments({cusEmail}, (err, result) => {
+       if (err) throw err;
+       if(result) {
+           res.json(result);
+       }
+    });
 });
 
 // Get customer by email from front end
@@ -215,7 +225,18 @@ router.get('/email/:email', (req, res) => {
            res.json('Cannot find this customer.');
        }
    });
+});
 
+// Get bind doctor
+router.get('/doctor/:email', (req, res) => {
+   doctorModel.getDoctor(req.params, (err, result) => {
+      if (err) throw err;
+      if(result) {
+           result =  result.toObject();
+           delete result.password;
+           res.json(result);
+       }
+   });
 });
 
 module.exports = router;

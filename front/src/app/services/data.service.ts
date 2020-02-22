@@ -5,6 +5,7 @@ import { LoginModel } from "../model/login.model";
 import { CustomerModel } from '../model/customer.model';
 import {Diagnose} from '../model/diagnose.model';
 import {AppointmentModel} from '../model/appointment.model';
+import {DoctorModel} from '../model/doctor.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,11 +54,17 @@ export class DataService {
   addAppointment(appointment: AppointmentModel): Observable<any> {
     return this.sendRequest('post', this.customerURL+'/appointment', appointment);
   }
-  getLastAppointment(): Observable<boolean> {
+  getLastAppointment(): Observable<any> {
     return this.sendRequest('get', this.customerURL+'/appointment');
   }
   getCustomerByEmail(cusEmail: string): Observable<CustomerModel> {
     return this.sendRequest('get', this.customerURL+'/email/' +cusEmail);
+  }
+  getBindDoctor(docEmail: string): Observable<DoctorModel> {
+    return this.sendRequest('get', this.customerURL + '/doctor/'+docEmail);
+  }
+  getAllAppointments(): Observable<AppointmentModel[]> {
+    return this.sendRequest('get', this.customerURL+'/allAppointments');
   }
 
   /**

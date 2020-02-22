@@ -6,26 +6,45 @@ import {Observable, Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class BadgeService {
-  count: number = 0;
-  private subject = new Subject<number>();
+  diaCount: number = 0;
+  appCount: number = 0;
 
-  reportBadgeCount(badgeCount: number) {
-    this.subject.next(badgeCount);
+  private diaSubject = new Subject<number>();
+  private appSubject = new Subject<number>();
+
+  reportDiaBadgeCount(badgeCount: number) {
+    this.diaSubject.next(badgeCount);
   }
 
-  get badgeCount(): Observable<number> {
-    return this.subject;
+  get diaBadgeCount(): Observable<number> {
+    return this.diaSubject;
   }
 
-  get originBadgeCount(): number {
-    this.count += 1;
-    return this.count;
+  get originDiaBadgeCount(): number {
+    this.diaCount += 1;
+    return this.diaCount;
   }
 
-  beZero() {
-    this.count = 0;
+  beDiaZero() {
+    this.diaCount = 0;
   }
 
-  constructor() {
+  constructor() {  }
+
+  reportAppBadgeCount(badgeCount: number) {
+    this.appSubject.next(badgeCount);
+  }
+
+  get appBadgeCount(): Observable<number> {
+    return this.appSubject;
+  }
+
+  get originAppBadgeCount(): number {
+    this.appCount += 1;
+    return this.appCount;
+  }
+
+  beAppZero() {
+    this.appCount = 0;
   }
 }

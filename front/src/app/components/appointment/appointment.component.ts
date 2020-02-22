@@ -3,13 +3,11 @@ import {DoctorModel} from '../../model/doctor.model';
 import {CustomerModel} from '../../model/customer.model';
 import {DataService} from '../../services/data.service';
 import {DoctorService} from '../../services/doctor.service';
-import {
-  NgbDateStruct, NgbCalendar,
-  NgbDate, NgbDateParserFormatter
-} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateStruct, NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import {AppointmentModel} from '../../model/appointment.model';
 import {MessageService} from '../../services/message.service';
 import {Message} from '../../model/message.model';
+import {BadgeService} from '../../services/badge.service';
 
 @Component({
   selector: 'app-appointment',
@@ -36,29 +34,35 @@ export class AppointmentComponent implements OnInit {
   };
   public disabledDate;
   public uncompletedAppointment: boolean = false;
+  public empty: boolean = false;
 
   constructor(private dataService: DataService,
               private doctorService: DoctorService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private badgeService: BadgeService) {
   }
 
   ngOnInit() {
     this.dataService.getCustomer().subscribe(data => {
       this.customer = data;
-      this.doctorService.getDoctor(this.customer.docEmail).subscribe(doc => {
-        this.doctor = doc;
-        let schedule = this.doctor.schedule;
-        for (let i = 0; i < schedule.length; i += 2) {
-          let from = schedule[i];
-          let to = schedule[i+1];
-          this.schedules.push({from,to});
-        }
-        this.disabledDate = (date: NgbDate, current: {month: number, year: number}) => this.checkDate(date)
-      });
+      if (this.customer.docEmail) {
+        this.doctorService.getDoctor(this.customer.docEmail).subscribe(doc => {
+          this.doctor = doc;
+          let schedule = this.doctor.schedule;
+          for (let i = 0; i < schedule.length; i += 2) {
+            let from = schedule[i];
+            let to = schedule[i+1];
+            this.schedules.push({from,to});
+          }
+          this.disabledDate = (date: NgbDate, current: {month: number, year: number}) => this.checkDate(date)
+        });
+      } else {
+        this.empty = true;
+      }
     });
 
     this.dataService.getLastAppointment().subscribe(data => {
-      this.uncompletedAppointment = data;
+      this.uncompletedAppointment = data.status === 'Waiting' || data.status === 'Accepted';
     });
   }
 
@@ -90,6 +94,7 @@ export class AppointmentComponent implements OnInit {
       this.appointment.status = 'Waiting';
       this.dataService.addAppointment(this.appointment).subscribe(_ => { });
       this.messageService.reportMessage(new Message('New appointment almost done! Waiting for doctor\'s reply'));
+      this.badgeService.reportAppBadgeCount(this.badgeService.originAppBadgeCount);
       setTimeout(() => {
         this.messageService.reportMessage(new Message(''));
       }, 3000);

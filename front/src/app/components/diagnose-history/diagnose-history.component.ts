@@ -32,8 +32,8 @@ export class DiagnoseHistoryComponent implements OnInit {
       this.diagnosesInit = data;
       if (data.length<=0) this.empty = true;
     });
-    this.badgeService.beZero();
-    this.badgeService.reportBadgeCount(0);
+    this.badgeService.beDiaZero();
+    this.badgeService.reportDiaBadgeCount(0);
     this.dataService.getCustomer().subscribe(data => {
       this.customer = data;
       this.customer.birthday = this.customer.birthday

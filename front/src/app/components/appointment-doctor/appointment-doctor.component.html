@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let app of appointments">
+    <tr *ngFor="let app of apps">
       <td><a data-toggle="modal" data-target="#modal-detail" (click)="getCustomer(app.cusEmail)">{{app.cusEmail}}</a></td>
       <td>{{app.appointmentDate | date: 'medium'}}</td>
       <td>{{app.applyDate | date: 'medium'}}</td>
@@ -27,6 +27,18 @@
   </tbody>
 </table>
 
+<div class="btn-group m-3" style="float:right;" *ngIf="empty">
+  <button class="btn btn-outline-info" (click)="previousPage()"
+          [disabled]="selectedPage == 1">Previous
+  </button>
+  <button *ngFor="let page of pageNumbers" (click)="changePage(page)"
+          class="btn btn-outline-info" [class.active]="page==selectedPage">
+    {{page}}
+  </button>
+  <button class="btn btn-outline-info" (click)="nextPage()"
+          [disabled]="selectedPage == pageNumbers[pageNumbers.length-1] || pageNumbers.length == 1">Next
+  </button>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" #modalDetail id="modal-detail" tabindex="-1" role="dialog">

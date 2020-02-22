@@ -13,6 +13,9 @@ export class AppointmentDoctorComponent implements OnInit {
 
   public appointments = [];
   public customer: CustomerModel = new CustomerModel();
+  public appointmentPerPage: number = 8;
+  public selectedPage: number = 1;
+  public empty: boolean = true;
 
   constructor(private doctorService: DoctorService,
               private dataService: DataService) { }
@@ -21,9 +24,30 @@ export class AppointmentDoctorComponent implements OnInit {
     this.getAppointments();
   }
 
+  changePage(newPage: number) {
+    this.selectedPage = newPage;
+  }
+  get pageNumbers(): number[] {
+    return Array(Math.ceil(this.appointments.length / this.appointmentPerPage)).fill(0)
+      .map((x, i) => i + 1);
+  }
+  previousPage() {
+    this.changePage(this.selectedPage-1);
+  }
+
+  nextPage() {
+    this.changePage(this.selectedPage+1);
+  }
+
+  get apps() {
+    let pageIndex = (this.selectedPage - 1) * this.appointmentPerPage;
+    return this.appointments.slice(pageIndex, pageIndex + this.appointmentPerPage);
+  }
+
   getAppointments() {
     this.doctorService.getAppointments().subscribe(data => {
       this.appointments = data;
+      if(this.appointments.length<1) this.empty = false;
       // console.log(this.appointments)
     });
   }
@@ -36,21 +60,21 @@ export class AppointmentDoctorComponent implements OnInit {
   accept(id: string) {
     let status = 'Accepted';
     let thing = {id, status};
-    this.doctorService.updateAppointmentsStatus(thing).subscribe(data => {
+    this.doctorService.updateAppointmentStatus(thing).subscribe(data => {
       this.getAppointments();
     });
   }
   deny(id: string) {
     let status = 'Rejected';
     let thing = {id, status};
-    this.doctorService.updateAppointmentsStatus(thing).subscribe(data => {
+    this.doctorService.updateAppointmentStatus(thing).subscribe(data => {
       this.getAppointments();
     });
   }
   complete(id: string) {
     let status = 'Done';
     let thing = {id, status};
-    this.doctorService.updateAppointmentsStatus(thing).subscribe(data => {
+    this.doctorService.updateAppointmentStatus(thing).subscribe(data => {
       this.getAppointments();
     });
   }
