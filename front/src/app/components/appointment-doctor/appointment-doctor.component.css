@@ -1,0 +1,28 @@
+td {
+  vertical-align: middle;
+
+}
+.action {
+  text-align: center;
+}
+i {
+  font-size: 28px;
+  cursor: not-allowed;
+}
+a {
+  cursor: pointer;
+
+}
+a:hover {
+  text-decoration: underline;
+}
+
+#modal-detail {
+  overflow: hidden;
+}
+
+
+
+
+
+

@@ -1,1 +1,72 @@
-<p>appointment-doctor works!</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Appointment Date</th>
+      <th>Apply Date</th>
+      <th>Status</th>
+      <th class="action">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let app of appointments">
+      <td><a data-toggle="modal" data-target="#modal-detail" (click)="getCustomer(app.cusEmail)">{{app.cusEmail}}</a></td>
+      <td>{{app.appointmentDate | date: 'medium'}}</td>
+      <td>{{app.applyDate | date: 'medium'}}</td>
+      <td [class.text-warning]="app.status=='Waiting'"
+          [class.text-success]="app.status=='Accepted'"
+          [class.text-danger]="app.status=='Rejected'"
+          [class.text-info]="app.status=='Done'">{{app.status}}</td>
+      <td class="action">
+        <button class="btn btn-sm btn-success mr-2" *ngIf="app.status == 'Waiting'" (click)="accept(app._id)">Accept</button>
+        <button class="btn btn-sm btn-outline-danger" *ngIf="app.status == 'Waiting'" (click)="deny(app._id)">Deny</button>
+        <button class="btn btn-sm btn-info" *ngIf="app.status == 'Accepted'" (click)="complete(app._id)">Complete</button>
+        <i *ngIf="app.status == 'Rejected' || app.status == 'Done'" class="fas fa-ban"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" #modalDetail id="modal-detail" tabindex="-1" role="dialog">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-login">Basic Information of {{customer.username}}</h5>
+        <a class="close" data-dismiss="modal">
+          <i class="fas fa-times-circle" style="color: red; cursor: pointer"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <strong>Username: </strong>{{customer.username}}
+            </div>
+            <div class="col">
+              <strong>Gender: </strong>{{customer.gender}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <strong>Email: </strong>{{customer.email}}
+            </div>
+            <div class="col">
+              <strong>Birthday: </strong>{{customer.birthday | date}}
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="row">
+            <div class="col">
+              <strong>Description: </strong><br>
+              <p *ngIf="customer.desc">{{customer.desc}}</p>
+              <p *ngIf="!customer.desc">None</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

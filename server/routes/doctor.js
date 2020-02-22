@@ -2,7 +2,12 @@ const express = require('express');
 const router = express.Router();
 const doctorModel = require('../data/doctorData');
 const userModel = require('../data/userData');
+const appointmentModel = require('../data/appointmentData');
 
+
+
+
+// Return all doctors
 router.get('/', (req, res) => {
     doctorModel.getDoctors((err, result) => {
         if (err) throw err;
@@ -10,6 +15,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// Update doctor's profile
 router.put('/', (req, res) => {
     let doctor = req.body;
     let email = doctor['email'];
@@ -24,7 +30,8 @@ router.put('/', (req, res) => {
     });
 });
 
-router.get('/:email', (req, res) => {
+// Return one doctor by email
+router.get('/docEmail/:email', (req, res) => {
     doctorModel.getDoctor(req.params, (err, result) => {
         if (err) throw err;
         if(result) {
@@ -36,6 +43,24 @@ router.get('/:email', (req, res) => {
         }
     });
 });
+
+// Return all appointments for this doctor
+router.get('/appointment', (req, res) => {
+    let email = req.session.user.email;
+    appointmentModel.getAppointments({'docEmail':email}, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+router.put('/appointment', (req, res) => {
+   let id = req.body.id;
+   let status = req.body.status;
+   appointmentModel.updateAppointmentStatus(id, {status:status}, (err, result) => {
+      // if (err) console.log(err);
+      res.json(result);
+   });
+});
+
 
 
 module.exports = router;

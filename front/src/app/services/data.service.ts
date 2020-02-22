@@ -56,6 +56,9 @@ export class DataService {
   getLastAppointment(): Observable<boolean> {
     return this.sendRequest('get', this.customerURL+'/appointment');
   }
+  getCustomerByEmail(cusEmail: string): Observable<CustomerModel> {
+    return this.sendRequest('get', this.customerURL+'/email/' +cusEmail);
+  }
 
   /**
    * Total request function.
@@ -66,9 +69,7 @@ export class DataService {
   private sendRequest<T>(verb: string, url: string, body?: any): Observable<T> {
     let headerOptions = new HttpHeaders();
     headerOptions = headerOptions.set( 'Access-Key', '<secret>');
-    headerOptions = headerOptions.set( 'Application-Name', ['BTD system', 'Jim']);
-    // headerOptions = headerOptions.set('withCredentials','true');
-
+    headerOptions = headerOptions.set( 'Application-Name', ['BTD system', 'Jim'])
     return this.http.request<T>(verb, url, {
       body: body,
       headers: headerOptions

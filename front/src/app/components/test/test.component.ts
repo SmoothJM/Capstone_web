@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {NgbDateStruct, NgbCalendar,
   NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {Data} from '@angular/router';
 
 declare var $: any;
 
@@ -35,8 +36,27 @@ export class TestComponent implements OnInit, AfterViewInit {
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private calendar: NgbCalendar,
-              public formatter: NgbDateParserFormatter) {
+              public formatter: NgbDateParserFormatter,
+              private doctorService: DoctorService) {
   }
+
+  test() {
+    this.doctorService.getAppointments().subscribe(data => {
+      console.log(data);
+    })
+
+  }
+
+
+
+
+
+
+
+
+
+
+
   // onDateSelection(date: NgbDate) {
   //   if (!this.fromDate && !this.toDate) {
   //     this.fromDate = date;

@@ -57,8 +57,8 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
                 diagnoseModel.findAllDiagnose({email: req.session.user['email']}, (error, results) => {
                     if (error) throw error;
                     if (results.length > 0) {
-                        stdo = results[0].result;
-                        console.log(results[0].result);
+                        stdo = results[results.length-1].result;
+                        // console.log(results[0].result);
                     }
                     diagnoseModel.insertDiagnose({
                         email: req.session.user['email'],
@@ -201,6 +201,21 @@ router.get('/appointment', (req, res) => {
           res.json(false);
       }
    });
+});
+
+// Get customer by email from front end
+router.get('/email/:email', (req, res) => {
+   customerModel.findCustomer(req.params, (err, result) => {
+       if (err) throw err;
+       if(result) {
+           result =  result.toObject();
+           delete result.password;
+           res.json(result);
+       } else {
+           res.json('Cannot find this customer.');
+       }
+   });
+
 });
 
 module.exports = router;

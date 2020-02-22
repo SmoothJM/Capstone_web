@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DoctorModel} from '../model/doctor.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
+import {AppointmentModel} from '../model/appointment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,25 @@ export class DoctorService {
   getDoctors(): Observable<DoctorModel[]> {
     return this.sendRequest('get', this.doctorUrl);
   }
-
   getDoctor(email: string): Observable<DoctorModel> {
-    return this.sendRequest('get', this.doctorUrl + '/'+email);
+    return this.sendRequest('get', this.doctorUrl + '/docEmail/'+email);
   }
-
   updateDoctor(doctor: DoctorModel): Observable<any> {
     return this.sendRequest('put', this.doctorUrl, doctor);
   };
+  getAppointments(): Observable<AppointmentModel[]> {
+    return this.sendRequest('get', this.doctorUrl + '/appointment');
+  }
+  updateAppointmentsStatus(thing): Observable<any> {
+    return this.sendRequest('put', this.doctorUrl + '/appointment', thing);
+  }
 
+  /**
+   * Total request function.
+   * @param verb
+   * @param url
+   * @param body
+   */
   private sendRequest<T>(verb: string, url: string, body?: any): Observable<T> {
     let headerOptions = new HttpHeaders();
     headerOptions = headerOptions.set('Access-Key', '<secret>');

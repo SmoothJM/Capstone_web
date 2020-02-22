@@ -82,6 +82,7 @@ export class AppointmentComponent implements OnInit {
       let finalDate = new Date(this.selectDate.year, this.selectDate.month-1,
         this.selectDate.day, this.selectTime.hour, this.selectTime.minute);
       let now = new Date(Date.now());
+      // console.log(now);
       this.appointment.docEmail = this.doctor.email;
       this.appointment.cusEmail = this.customer.email;
       this.appointment.applyDate = now;
