@@ -46,9 +46,18 @@ export class AppointmentDoctorComponent implements OnInit {
 
   getAppointments() {
     this.doctorService.getAppointments().subscribe(data => {
-      this.appointments = data;
+      this.appointments = [];
+      data.forEach((ele, index) => {
+        if(ele.status == 'Waiting') this.appointments.push(ele);
+      });
+      data.forEach((ele, index) => {
+        if(ele.status == 'Accepted') this.appointments.push(ele);
+      });
+      data.forEach((ele, index) => {
+        if(ele.status == 'Done' || ele.status == 'Rejected') this.appointments.push(ele);
+      });
+
       if(this.appointments.length<1) this.empty = false;
-      // console.log(this.appointments)
     });
   }
   getCustomer(email: string) {

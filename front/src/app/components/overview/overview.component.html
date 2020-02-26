@@ -29,6 +29,7 @@
     </div>
   </div>
   <div class="card main-shadow text-white"
+       [class.text-white]="!emptyDiagnose"
        [class.bg-warning]="lastAppointment.status=='Waiting'"
        [class.bg-success]="lastAppointment.status=='Accepted'"
        [class.bg-danger]="lastAppointment.status=='Rejected'"
@@ -39,22 +40,22 @@
     <div class="card-body">
       <table class="table table-borderless text-white" *ngIf="!emptyAppointment">
         <thead>
-          <tr>
-            <th>Doctor</th>
-            <th>Email</th>
-            <th>Appointment Date</th>
-            <th>Apply Date</th>
-            <th>Status</th>
-          </tr>
+        <tr>
+          <th>Doctor</th>
+          <th>Email</th>
+          <th>Appointment Date</th>
+          <th>Apply Date</th>
+          <th>Status</th>
+        </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{{bindDoctor.username}}</td>
-            <td><a class="bindDoctor">{{bindDoctor.email}}</a></td>
-            <td>{{lastAppointment.appointmentDate | date: 'medium'}}</td>
-            <td>{{lastAppointment.applyDate | date: 'medium'}}</td>
-            <td>{{lastAppointment.status}}</td>
-          </tr>
+        <tr>
+          <td>{{bindDoctor.username}}</td>
+          <td><a class="bindDoctor">{{bindDoctor.email}}</a></td>
+          <td>{{lastAppointment.appointmentDate | date: 'medium'}}</td>
+          <td>{{lastAppointment.applyDate | date: 'medium'}}</td>
+          <td>{{lastAppointment.status}}</td>
+        </tr>
         </tbody>
       </table>
       <p *ngIf="emptyAppointment" class="empty"><i class="fas fa-box-open"></i><br>No record</p>
@@ -62,40 +63,54 @@
   </div>
 </div>
 
+
 <div *ngIf="user.role == 1">
-  <div class="card main-shadow">
-    <h5 class="card-header">
-      Doctor overview
-    </h5>
-    <div class="card-body">
-      None
+  <div class="row justify-content-start">
+    <div class="col-8">
+      <chart [type]="type" [data]="dataBind" *ngIf="customers.length>0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="customers.length<=0"></chart>
+    </div>
+    <div class="col align-self-center text-center">
+      <h5 style="color: #473C8B">
+        Customer-bound Doctor Distribution
+      </h5>
     </div>
   </div>
-  <div class="card main-shadow">
-    <h5 class="card-header">
-      Appointment Calendar
-    </h5>
-    <div class="card-body">
-      None
+  <div class="row justify-content-end mt-4">
+    <div class="col align-self-center text-center">
+      <h5 style="color: #473C8B">
+        Appointments Distribution
+      </h5>
+    </div>
+    <div class="col-8">
+      <chart [type]="type" [data]="dataApp" *ngIf="apps.length>0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="apps.length<=0"></chart>
     </div>
   </div>
 </div>
 
+
 <div *ngIf="user.role == 2">
-  <div class="card main-shadow">
-    <h5 class="card-header">
-      Admin overview
-    </h5>
-    <div class="card-body">
-      None
+  <div class="row justify-content-start">
+    <div class="col-8">
+      <chart [type]="type" [data]="dataCusSex" *ngIf="customers.length>0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="customers.length<=0"></chart>
+    </div>
+    <div class="col align-self-center text-center">
+      <h5 style="color: #473C8B">
+        Customer Gender Distribution
+      </h5>
     </div>
   </div>
-  <div class="card main-shadow">
-    <h5 class="card-header">
-      Appointment Calendar
-    </h5>
-    <div class="card-body">
-      None
+  <div class="row justify-content-end mt-4">
+    <div class="col align-self-center text-center">
+      <h5 style="color: #473C8B">
+        Doctor Gender Distribution
+      </h5>
+    </div>
+    <div class="col-8">
+      <chart [type]="type" [data]="dataDocSex" *ngIf="doctors.length>0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="doctors.length<=0"></chart>
     </div>
   </div>
 </div>

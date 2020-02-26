@@ -21,3 +21,10 @@ module.exports.updateCustomer = function (condition, customer, cal) {
         cal(result);
     });
 };
+
+module.exports.getCustomers = function (condition, cal) {
+    CustomerModel.find(condition, (err, results) => {
+        if(err) throw err;
+        cal(err, results);
+    })
+};

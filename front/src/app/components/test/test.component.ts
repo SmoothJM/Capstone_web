@@ -1,14 +1,18 @@
-import {AfterViewInit, Component, ElementRef,
-  Renderer2,OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit, Component, ElementRef,
+  Renderer2, OnInit, ViewChild
+} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {DoctorModel} from '../../model/doctor.model';
 import {DoctorService} from '../../services/doctor.service';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
-import {NgbDateStruct, NgbCalendar,
-  NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDateStruct, NgbCalendar,
+  NgbDate, NgbDateParserFormatter
+} from '@ng-bootstrap/ng-bootstrap';
 import {Data} from '@angular/router';
-
+// import {Chart} from 'chart.js/dist/Chart.js'
 declare var $: any;
 
 @Component({
@@ -22,15 +26,18 @@ export class TestComponent implements OnInit, AfterViewInit {
   fromDate: NgbDate;
   toDate: NgbDate;
   model: NgbDateStruct;
-  date: {year: number, month: number};
+  date: { year: number, month: number };
+
+
+
 
   selectToday() {
     this.model = this.calendar.getToday();
   }
 
-
   public diagnoses = [];
-  public src='';
+  public src = '';
+
   constructor(private renderer: Renderer2,
               private dataService: DataService,
               private http: HttpClient,
@@ -39,24 +46,34 @@ export class TestComponent implements OnInit, AfterViewInit {
               public formatter: NgbDateParserFormatter,
               private doctorService: DoctorService) {
   }
+  type = 'doughnut';
+  data = {
+    labels: ["Bind you", "Bind other", "Non bind"],
+    datasets: [
+      {
+        label: "My First dataset",
+        data: [30, 50, 20],
+        backgroundColor:['yellow','orange','red']
+      }
+    ]
+  };
+  options = {
+    // responsive: true,
+    // maintainAspectRatio: false
+  };
+  ngOnInit() {
+    // {responseType:'blob',}
+    // this.http.get('/api/customer/test',{responseType:'blob',}).subscribe(data => {
+    //   console.log(data);
+    //   this.src = URL.createObjectURL(data);
+    //   console.log(this.src);
+    // });
 
-  test() {
-    this.doctorService.getAppointments().subscribe(data => {
-      console.log(data);
-    })
+    // this.dataService.getAllDiagnoses().subscribe(data => {
+    //   this.diagnoses = data;
+    // });
 
   }
-
-
-
-
-
-
-
-
-
-
-
   // onDateSelection(date: NgbDate) {
   //   if (!this.fromDate && !this.toDate) {
   //     this.fromDate = date;
@@ -84,22 +101,15 @@ export class TestComponent implements OnInit, AfterViewInit {
   //   const parsed = this.formatter.parse(input);
   //   return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   // }
-  ngOnInit() {
-    // {responseType:'blob',}
-    // this.http.get('/api/customer/test',{responseType:'blob',}).subscribe(data => {
-    //   console.log(data);
-    //   this.src = URL.createObjectURL(data);
-    //   console.log(this.src);
-    // });
 
-    // this.dataService.getAllDiagnoses().subscribe(data => {
-    //   this.diagnoses = data;
-    // });
-  }
 
   ngAfterViewInit(): void {
 
+    // this.renderer.setProperty(this.pie.nativeElement, 'width', this.videoWidth);
+    // this.renderer.setProperty(this.pie.nativeElement, 'height', this.videoHeight);
+
   }
+
   // @ViewChild('video', {static: true}) video: ElementRef;
   // @ViewChild('canvas', {static: true}) canvas: ElementRef;
   // context = this.canvas.getContext('2d');
@@ -164,13 +174,6 @@ export class TestComponent implements OnInit, AfterViewInit {
   //   }
   //   return new Blob([ia], {type: mimeString});
   // }
-
-
-
-
-
-
-
 
 
 //   openCamera() {

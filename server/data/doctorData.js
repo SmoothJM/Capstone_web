@@ -22,5 +22,3 @@ module.exports.updateDoctor = function (condition, doctor, cal) {
     });
 };
 
-
-

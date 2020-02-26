@@ -47,3 +47,32 @@
   color: lightgray;
   font-size: 2em;
 }
+.time-tips {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2%;
+}
+/*.btn-tips {*/
+/*  margin: 5% 0 2% 0 ;*/
+/*}*/
+.timeTips {
+  font-size: 15px;
+  color: #9AaAaA;
+  text-align: center;
+  display: inline;
+}
+.time-divider {
+  width: 25px;
+  height: 2px;
+  overflow: hidden;
+  background: #e9ecef;
+  margin: 5px;
+}
+
+.alert {
+  padding: 0;
+  font-size: 20px;
+  text-align: center;
+}

@@ -6,6 +6,7 @@ const session = require('express-session');
 const customer = require('./routes/customer');
 const login = require('./routes/login');
 const doctor = require('./routes/doctor');
+const admin = require('./routes/admin');
 
 const app = express();
 app.use(express.static(__dirname + '/public'));
@@ -21,6 +22,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+app.use('/api/admin', admin);
 app.use('/api/customer', customer);
 app.use('/api/doctor', doctor);
 app.use('/api', login);

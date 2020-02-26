@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DoctorModel} from '../../model/doctor.model';
 import {CustomerModel} from '../../model/customer.model';
 import {DataService} from '../../services/data.service';
@@ -36,6 +36,7 @@ export class AppointmentComponent implements OnInit {
   public uncompletedAppointment: boolean = false;
   public empty: boolean = false;
 
+
   constructor(private dataService: DataService,
               private doctorService: DoctorService,
               private messageService: MessageService,
@@ -62,9 +63,12 @@ export class AppointmentComponent implements OnInit {
     });
 
     this.dataService.getLastAppointment().subscribe(data => {
-      this.uncompletedAppointment = data.status === 'Waiting' || data.status === 'Accepted';
+      if(data) {
+        this.uncompletedAppointment = data.status === 'Waiting' || data.status === 'Accepted';
+      }
     });
   }
+
 
   checkDate(date?: NgbDate): boolean {
     let flag = false;
@@ -86,7 +90,6 @@ export class AppointmentComponent implements OnInit {
       let finalDate = new Date(this.selectDate.year, this.selectDate.month-1,
         this.selectDate.day, this.selectTime.hour, this.selectTime.minute);
       let now = new Date(Date.now());
-      // console.log(now);
       this.appointment.docEmail = this.doctor.email;
       this.appointment.cusEmail = this.customer.email;
       this.appointment.applyDate = now;

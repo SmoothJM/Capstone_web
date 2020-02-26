@@ -198,6 +198,8 @@ router.get('/appointment', (req, res) => {
       if (err) throw err;
       if (result) {
           res.json(result);
+      } else {
+          res.json(null);
       }
    });
 });

@@ -51,7 +51,7 @@
       <div class="modal-body pb-1">
         <div class="container-fluid">
           <div class="row">
-            <div class="col pb-3" style="border-bottom: solid 1.5px lightgrey">
+            <div class="col pb-3" style="border-bottom: solid 1.5px lightgrey" *ngIf="selectedDiagnose.img">
               <img [src]="wholeImg+selectedDiagnose.img | trustUrl" width="330px" height="330px">
               <img [src]="boxImg+selectedDiagnose.img | trustUrl" width="330px" height="330px"
               style="float: right">

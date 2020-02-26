@@ -31,7 +31,7 @@
   </div>
 
   <div class="row">
-    <div class="col-7">
+    <div class="col-6">
       <ngb-datepicker [displayMonths]="displayMonths" [navigation]="navigation"
                       [showWeekNumbers]="showWeekNumbers" [outsideDays]="outsideDays"
                       [minDate]="today"
@@ -39,8 +39,19 @@
                       [(ngModel)]="selectDate">
       </ngb-datepicker>
     </div>
-    <div class="col align-self-center">
-      <ngb-timepicker [(ngModel)]="selectTime"></ngb-timepicker>
+    <div class="offset-1 col-3 align-self-center">
+      <div style="margin: auto 25%">
+        <ngb-timepicker #timePicker [(ngModel)]="selectTime"></ngb-timepicker>
+      </div>
+      <div class="time-tips">
+        <span class="time-divider"></span>
+        <span class="timeTips">One hour appointment</span>
+        <span class="time-divider"></span>
+      </div>
+      <div class="alert alert-info">
+        Till: {{selectTime.hour+1}} : {{selectTime.minute | number : '2.0'}}
+      </div>
+
     </div>
     <div class="col align-self-end">
       <button class="btn btn-info" *ngIf="!uncompletedAppointment" (click)="confirmAppointment()" [disabled]="!selectDate">Confirm</button>
