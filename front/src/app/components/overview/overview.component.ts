@@ -54,54 +54,65 @@ export class OverviewComponent implements OnInit {
 
     this.dataService.getSession().subscribe(data => {
       this.user = data;
-    });
 
-    this.adminService.getAllCustomers().subscribe(data => {
-      if (data) {
-        this.customers = data;
-        this.customers.forEach((ele, index) => {
-          if (ele.docEmail) {
-            if (ele.docEmail == this.user.email) {
-              this.bind.bindYou += 1;
-            } else if (ele.docEmail != this.user.email) {
-              this.bind.bindOther += 1;
-            }
-          } else {
-            this.bind.notBind += 1;
+      if(this.user.role == 1) {
+        this.adminService.getAllCustomers().subscribe(data => {
+          if (data) {
+            this.customers = data;
+            this.customers.forEach((ele, index) => {
+              if (ele.docEmail) {
+                if (ele.docEmail == this.user.email) {
+                  this.bind.bindYou += 1;
+                } else if (ele.docEmail != this.user.email) {
+                  this.bind.bindOther += 1;
+                }
+              } else {
+                this.bind.notBind += 1;
+              }
+
+              if (ele.gender == 'male') {
+                this.cusSex.male += 1;
+              } else if (ele.gender == 'female') {
+                this.cusSex.female += 1;
+              } else if (ele.gender == 'secret') {
+                this.cusSex.secret += 1;
+              }
+            });
+
           }
-
-          if (ele.gender == 'male') this.cusSex.male += 1;
-          else if (ele.gender == 'female') this.cusSex.female += 1;
-          else if (ele.gender == 'secret') this.cusSex.secret += 1;
+          this.dataBind = {
+            labels: ['Bound you', 'Bound others', 'Not bound'],
+            datasets: [
+              {
+                label: 'Customer-bound Doctor Distribution',
+                data: [this.bind.bindYou, this.bind.bindOther, this.bind.notBind],
+                backgroundColor: ['#FF6384', '#43CD80', '#6c757d']
+              }]
+          };
+          this.dataCusSex = {
+            labels: ['Male', 'Female', 'Secret'],
+            datasets: [
+              {
+                label: 'Customer Gender Distribution',
+                data: [this.cusSex.male, this.cusSex.female, this.cusSex.secret],
+                backgroundColor: ['#02a3fe', '#ec49a6', '#8272CE']
+              }]
+          };
         });
-
       }
-      this.dataBind = {
-        labels: ['Bound you', 'Bound others', 'Not bound'],
-        datasets: [
-          {
-            label: 'Customer-bound Doctor Distribution',
-            data: [this.bind.bindYou, this.bind.bindOther, this.bind.notBind],
-            backgroundColor: ['#FF6384', '#43CD80', '#6c757d']
-          }]
-      };
-      this.dataCusSex = {
-        labels: ['Male', 'Female', 'Secret'],
-        datasets: [
-          {
-            label: 'Customer Gender Distribution',
-            data: [this.cusSex.male, this.cusSex.female, this.cusSex.secret],
-            backgroundColor: ['#02a3fe', '#ec49a6', '#8272CE']
-          }]
-      };
     });
-
     this.adminService.getAllDoctors().subscribe(data => {
-      if(data) this.doctors = data;
+      if (data) {
+        this.doctors = data;
+      }
       this.doctors.forEach((ele, index) => {
-        if (ele.gender == 'male') this.docSex.male += 1;
-        else if (ele.gender == 'female') this.docSex.female += 1;
-        else if (ele.gender == 'secret') this.docSex.secret += 1;
+        if (ele.gender == 'male') {
+          this.docSex.male += 1;
+        } else if (ele.gender == 'female') {
+          this.docSex.female += 1;
+        } else if (ele.gender == 'secret') {
+          this.docSex.secret += 1;
+        }
       });
       this.dataDocSex = {
         labels: ['Male', 'Female', 'Secret'],
