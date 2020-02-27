@@ -3,6 +3,7 @@ const router = express.Router();
 const doctorModel = require('../data/doctorData');
 const userModel = require('../data/userData');
 const appointmentModel = require('../data/appointmentData');
+const customerModel = require('../data/customerData');
 
 
 
@@ -63,6 +64,11 @@ router.put('/appointment', (req, res) => {
    });
 });
 
-
+// Get diagnoses of customer who bound this doctor
+router.get('/diagnose/:docEmail', (req, res) => {
+    customerModel.test(req.params, (a,b) => {
+        res.json(b);
+    });
+});
 
 module.exports = router;

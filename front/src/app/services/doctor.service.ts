@@ -3,6 +3,7 @@ import {DoctorModel} from '../model/doctor.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {AppointmentModel} from '../model/appointment.model';
+import {Diagnose} from '../model/diagnose.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,9 @@ export class DoctorService {
   }
   updateAppointmentStatus(thing): Observable<any> {
     return this.sendRequest('put', this.doctorUrl + '/appointment', thing);
+  }
+  getDiagnosesByDocEmail(docEmail): Observable<any> {
+    return this.sendRequest('get', this.doctorUrl + '/diagnose/' + docEmail);
   }
 
   /**
