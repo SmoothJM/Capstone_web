@@ -1,19 +1,4 @@
-<!--<ul>-->
-<!--  <li *ngFor="let cus of sideList">-->
-<!--    <a style="cursor:pointer" (click)="selectCustomer(cus.email)">{{cus.username}}</a>-->
-<!--  </li>-->
 
-<!--</ul>-->
-<!--<hr class="my-3">-->
-<!--<ul>-->
-<!--  <li *ngFor="let dia of dias">-->
-<!--    <a style="cursor: pointer" (click)="selectDiagnose(dia)">{{dia.img}}</a>-->
-<!--  </li>-->
-<!--</ul>-->
-<!--<hr class="my-3">-->
-<!--<p>-->
-<!--  {{selectedDia | json}}-->
-<!--</p>-->
 <div class="card card-shadow" *ngIf="sideList.length>0">
   <div class="card-header">
     <h5 class="mb-0">Browse Your Patients' Diagnose Reports</h5>
@@ -23,7 +8,7 @@
       <div class="row">
         <div class="col-sm-3 side p-0">
           <ul class="p-0 my-0">
-            <li class="my-8" *ngFor="let cus of sideList">
+            <li class="my-8 pl-1" *ngFor="let cus of sideList">
               <a class="p-1" [class.active]='selectedCus.email == cus.email'
                  (click)="selectCustomer(cus.email)">{{cus.username}}
                 <p class="m-0"><small>{{cus.email}}</small></p>
@@ -59,22 +44,9 @@
                 <button class="btn btn-info" data-toggle="modal" data-target="#modal-detail"
                         (click)="selectDiagnose(dia)">Detail</button>
               </td>
-
             </tr>
             </tbody>
           </table>
-<!--          <div class="btn-group m-3" style="float:right;" *ngIf="selectedCus.email">-->
-<!--            <button class="btn btn-outline-info" (click)="previousPage()"-->
-<!--                    [disabled]="selectedPage == 1">Previous-->
-<!--            </button>-->
-<!--            <button *ngFor="let page of pageNumbers" (click)="changePage(page)"-->
-<!--                    class="btn btn-outline-info" [class.active]="page==selectedPage">-->
-<!--              {{page}}-->
-<!--            </button>-->
-<!--            <button class="btn btn-outline-info" (click)="nextPage()"-->
-<!--                    [disabled]="selectedPage == pageNumbers[pageNumbers.length-1] || pageNumbers.length == 1">Next-->
-<!--            </button>-->
-<!--          </div>-->
         </div>
       </div>
     </div>
@@ -133,7 +105,7 @@
 
 
 
-<div class="box" *ngIf="sideList.length<=0">
+<div class="box" *ngIf="emptyCus">
   <i class="fas fa-inbox empty"></i>
   <p class="p1">
     Whoops!

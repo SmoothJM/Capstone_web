@@ -68,7 +68,7 @@
   <div class="row justify-content-start">
     <div class="col-8">
       <chart [type]="type" [data]="dataBind" *ngIf="customers.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="customers.length<=0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyCus"></chart>
     </div>
     <div class="col align-self-center text-center">
       <h5 style="color: #473C8B">
@@ -84,7 +84,7 @@
     </div>
     <div class="col-8">
       <chart [type]="type" [data]="dataApp" *ngIf="apps.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="apps.length<=0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyApp"></chart>
     </div>
   </div>
 </div>
@@ -94,7 +94,7 @@
   <div class="row justify-content-start">
     <div class="col-8">
       <chart [type]="type" [data]="dataCusSex" *ngIf="customers.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="customers.length<=0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyCus"></chart>
     </div>
     <div class="col align-self-center text-center">
       <h5 style="color: #473C8B">
@@ -110,7 +110,7 @@
     </div>
     <div class="col-8">
       <chart [type]="type" [data]="dataDocSex" *ngIf="doctors.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="doctors.length<=0"></chart>
+      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyDoc"></chart>
     </div>
   </div>
 </div>

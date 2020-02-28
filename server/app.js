@@ -7,8 +7,10 @@ const customer = require('./routes/customer');
 const login = require('./routes/login');
 const doctor = require('./routes/doctor');
 const admin = require('./routes/admin');
+const chat = require('./routes/chat');
 
 const app = express();
+const basicURL = '/api';
 app.use(express.static(__dirname + '/public'));
 app.use(session({
     secret: 'BTD secret',
@@ -22,10 +24,11 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use('/api/admin', admin);
-app.use('/api/customer', customer);
-app.use('/api/doctor', doctor);
-app.use('/api', login);
+app.use(basicURL + '/admin', admin);
+app.use(basicURL + '/chat', chat);
+app.use(basicURL + '/customer', customer);
+app.use(basicURL + '/doctor', doctor);
+app.use(basicURL, login);
 
 app.listen(3000, '127.0.0.1');
 

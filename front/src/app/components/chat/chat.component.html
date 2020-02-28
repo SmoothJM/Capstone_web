@@ -1,1 +1,59 @@
-<p>chat works!</p>
+
+
+<div class="card card-shadow" *ngIf="customers.length>0">
+  <div class="card-header">
+    <h5 class="mb-0">Message Your Patients</h5>
+  </div>
+  <div class="card-body p-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-3 side p-0">
+          <ul class="p-0 my-0">
+            <li class="pl-0" *ngFor="let cus of customers">
+              <a class="p-2" [class.active]='selectedCus.email == cus.email'
+                 (click)="selectCus(cus)">{{cus.username}}
+                <p class="m-0"><small>{{cus.email}}</small></p>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-9 p-0">
+          <div class="box" *ngIf="!selectedCus.email">
+            <i class="fas fa-user-injured ii"></i>
+            <p class="p2">
+              Select one patient and message he/she
+            </p>
+          </div>
+          <h5 class="py-2 pl-2 m-0" style="background: #f5f5f5;" *ngIf="selectedCus.email">
+            {{selectedCus.username}}  <small>{{selectedCus.email}}</small>
+          </h5>
+          <hr class="my-0">
+          <div id="message-content" #content *ngIf="selectedCus.email">
+            <ul *ngFor="let c of chatHistory" class="m-0 pb-2 px-0">
+              <li [class.content-box-right]="c.from == doctor.email">{{c.time | date : 'MM/d/yyyy, H:m:s'}}</li>
+              <li class="content-box card-shadow" [class.content-box-right]="c.from == doctor.email">
+                {{c.content}}
+              </li>
+            </ul>
+          </div>
+          <div class="px-2 pt-2" *ngIf="selectedCus.email">
+            <textarea id="message-edit" [formControl]="message" (keyup)="keySend($event)" pattern="[^\<|\>]*" required></textarea>
+            <button *ngIf="selectedCus.email" [disabled]="message.invalid" (click)="btnSend()" class="btn btn-sm btn-outline-info">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="bg-danger text-white mt-2" *ngIf="message.dirty && message.invalid">
+  <li style="list-style: initial" *ngIf="message.errors?.pattern">Please don't enter '<' or '>'</li>
+</ul>
+<div class="box" *ngIf="empty">
+  <i class="fas fa-inbox empty"></i>
+  <p class="p1">
+    Whoops!
+  </p>
+  <p class="p2">
+    There is no customer bound you.
+  </p>
+</div>

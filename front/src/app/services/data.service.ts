@@ -6,6 +6,7 @@ import { CustomerModel } from '../model/customer.model';
 import {Diagnose} from '../model/diagnose.model';
 import {AppointmentModel} from '../model/appointment.model';
 import {DoctorModel} from '../model/doctor.model';
+import {ChatModel} from '../model/chat.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,7 @@ export class DataService {
   getAllAppointments(): Observable<AppointmentModel[]> {
     return this.sendRequest('get', this.customerURL+'/allAppointments');
   }
+
 
   /**
    * Total request function.

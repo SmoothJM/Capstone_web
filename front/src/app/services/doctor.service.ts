@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {AppointmentModel} from '../model/appointment.model';
 import {Diagnose} from '../model/diagnose.model';
+import {CustomerModel} from '../model/customer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,9 @@ export class DoctorService {
   }
   getDiagnosesByDocEmail(docEmail): Observable<any> {
     return this.sendRequest('get', this.doctorUrl + '/diagnose/' + docEmail);
+  }
+  getCustomersBoundThisDoctor(): Observable<CustomerModel[]> {
+    return this.sendRequest('get', this.doctorUrl + '/customer')
   }
 
   /**

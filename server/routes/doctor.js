@@ -71,4 +71,14 @@ router.get('/diagnose/:docEmail', (req, res) => {
     });
 });
 
+// Get all customers who bound this doctor
+router.get('/customer', (req, res) => {
+    let docEmail = req.session.user.email;
+    customerModel.getCustomers({docEmail}, (err, results) => {
+       if (err) throw err;
+       if(results) res.json(results);
+       else res.json(null);
+    });
+});
+
 module.exports = router;

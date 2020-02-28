@@ -19,7 +19,7 @@ export class OverviewComponent implements OnInit {
   public wholeImg = 'http://127.0.0.1:3000/customer/tongue/';
   public boxImg = this.wholeImg + 'result_box/';
   public emptyDiagnose: boolean = false;
-  public emptyAppointment: boolean = true;
+  public emptyAppointment: boolean = false;
   public bindDoctor: DoctorModel = new DoctorModel();
   public lastAppointment: AppointmentModel = new AppointmentModel();
   public type = 'doughnut';
@@ -34,6 +34,9 @@ export class OverviewComponent implements OnInit {
   public dataApp = {};
   public dataCusSex = {};
   public dataDocSex = {};
+  public emptyCus: boolean = false;
+  public emptyApp: boolean = false;
+  public emptyDoc: boolean = false;
 
   public dataEmpty = {
     labels: ['Empty'],
@@ -51,14 +54,13 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.dataService.getSession().subscribe(data => {
       this.user = data;
-
-      if(this.user.role == 1) {
+      if (this.user.role == 1) {
         this.adminService.getAllCustomers().subscribe(data => {
           if (data) {
             this.customers = data;
+            if(this.customers.length<=0) this.emptyCus = true;
             this.customers.forEach((ele, index) => {
               if (ele.docEmail) {
                 if (ele.docEmail == this.user.email) {
@@ -69,16 +71,7 @@ export class OverviewComponent implements OnInit {
               } else {
                 this.bind.notBind += 1;
               }
-
-              if (ele.gender == 'male') {
-                this.cusSex.male += 1;
-              } else if (ele.gender == 'female') {
-                this.cusSex.female += 1;
-              } else if (ele.gender == 'secret') {
-                this.cusSex.secret += 1;
-              }
             });
-
           }
           this.dataBind = {
             labels: ['Bound you', 'Bound others', 'Not bound'],
@@ -89,6 +82,22 @@ export class OverviewComponent implements OnInit {
                 backgroundColor: ['#FF6384', '#43CD80', '#6c757d']
               }]
           };
+        });
+      } else if (this.user.role == 2) {
+        this.adminService.getAllCustomers().subscribe(data => {
+          if (data) {
+            this.customers = data;
+            if(this.customers.length<=0) this.emptyCus = true;
+            this.customers.forEach((ele, index) => {
+              if (ele.gender == 'male') {
+                this.cusSex.male += 1;
+              } else if (ele.gender == 'female') {
+                this.cusSex.female += 1;
+              } else if (ele.gender == 'secret') {
+                this.cusSex.secret += 1;
+              }
+            });
+          }
           this.dataCusSex = {
             labels: ['Male', 'Female', 'Secret'],
             datasets: [
@@ -104,7 +113,7 @@ export class OverviewComponent implements OnInit {
     this.adminService.getAllDoctors().subscribe(data => {
       if (data) {
         this.doctors = data;
-      }
+      } else this.emptyDoc = true;
       this.doctors.forEach((ele, index) => {
         if (ele.gender == 'male') {
           this.docSex.male += 1;
@@ -139,7 +148,7 @@ export class OverviewComponent implements OnInit {
             this.app.done += 1;
           }
         });
-      }
+      } else this.emptyApp = true;
       this.dataApp = {
         labels: ['Waiting', 'Accepted', 'Rejected', 'Done'],
         datasets: [

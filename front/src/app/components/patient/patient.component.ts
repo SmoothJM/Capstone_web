@@ -18,8 +18,8 @@ export class PatientComponent implements OnInit {
   public selectedDia: Diagnose = new Diagnose();
   public selectedDias: Diagnose[] = [];
   public origin = [];
-  public emptyCus: boolean = true;
-  public emptyDia: boolean = true;
+  public emptyCus: boolean = false;
+  public emptyDia: boolean = false;
   // public diagnosesPerPage: number = 8;
   // public selectedPage: number = 1;
   public wholeImg = 'http://127.0.0.1:3000/customer/tongue/';
@@ -46,6 +46,7 @@ export class PatientComponent implements OnInit {
             }
           }
         }
+        if(this.sideList.length<=0) this.emptyCus = true;
       });
     });
   }

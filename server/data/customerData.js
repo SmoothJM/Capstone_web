@@ -44,30 +44,4 @@ module.exports.test = function (condition, cal) {
             "cusDia.time": 1
         }).unwind("cusDia")
         .exec(cal);
-
-
-//   ([
-//       {$lookup:{
-//               from: "diagnose",
-//               localField:"email",
-//               foreignField:"email",
-//               as:"cusDia"
-//           }
-//       },
-//       {$match:
-//               {"docEmail":"li@btd.com"}
-//       },
-//       {$unwind:"$cusDia"},
-//       {$project:{
-//               _id:0,
-//               "cusDia.username":1,
-//               "cusDia.email":1,
-//               "cusDia.result":1,
-//               "cusDia.img":1
-//           }
-//       }
-//   ], (err, result) => {
-//      if (err) throw err;
-//      cal(result);
-//   });
 };
