@@ -9,8 +9,8 @@ module.exports.findHistory = function (condition, cal) {
     });
 };
 
-module.exports.addHistory = function (condition, chat, cal) {
-    ChatModel.insert(condition, chat, (err, result) => {
+module.exports.addHistory = function (chat, cal) {
+    ChatModel.create(chat, (err, result) => {
         if(err) throw err;
         cal(result);
     });

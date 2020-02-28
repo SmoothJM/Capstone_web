@@ -15,7 +15,7 @@ export class AppointmentDoctorComponent implements OnInit {
   public customer: CustomerModel = new CustomerModel();
   public appointmentPerPage: number = 8;
   public selectedPage: number = 1;
-  public empty: boolean = true;
+  public empty: boolean = false;
 
   constructor(private doctorService: DoctorService,
               private dataService: DataService) { }
@@ -57,7 +57,7 @@ export class AppointmentDoctorComponent implements OnInit {
         if(ele.status == 'Done' || ele.status == 'Rejected') this.appointments.push(ele);
       });
 
-      if(this.appointments.length<1) this.empty = false;
+      if(this.appointments.length<1) this.empty = true;
     });
   }
   getCustomer(email: string) {
@@ -69,21 +69,21 @@ export class AppointmentDoctorComponent implements OnInit {
   accept(id: string) {
     let status = 'Accepted';
     let thing = {id, status};
-    this.doctorService.updateAppointmentStatus(thing).subscribe(data => {
+    this.doctorService.updateAppointmentStatus(thing).subscribe(_ => {
       this.getAppointments();
     });
   }
   deny(id: string) {
     let status = 'Rejected';
     let thing = {id, status};
-    this.doctorService.updateAppointmentStatus(thing).subscribe(data => {
+    this.doctorService.updateAppointmentStatus(thing).subscribe(_ => {
       this.getAppointments();
     });
   }
   complete(id: string) {
     let status = 'Done';
     let thing = {id, status};
-    this.doctorService.updateAppointmentStatus(thing).subscribe(data => {
+    this.doctorService.updateAppointmentStatus(thing).subscribe(_ => {
       this.getAppointments();
     });
   }

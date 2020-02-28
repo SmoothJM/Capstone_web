@@ -45,10 +45,20 @@ export class ChatComponent implements OnInit {
     });
   }
 
+
   selectCus(c: CustomerModel) {
     this.selectedCus = c;
+    this.getChatHistory();
+  }
+
+  getChatHistory() {
     this.chatService.getChatHistory(this.doctor.email, this.selectedCus.email).subscribe(data => {
       this.chatHistory = data;
+      if (this.content) {
+        setTimeout(() => {
+          this.content.nativeElement.scrollTo(this.content.nativeElement.scrollWidth,this.content.nativeElement.scrollHeight);
+        },0);
+      }
     });
   }
 
@@ -56,9 +66,12 @@ export class ChatComponent implements OnInit {
     this.event = e;
     let msg = this.message.value.trim().replace(/^\s+|\s+$/g, '');
     if (this.message.valid && e.which == 13 && msg) {
-      console.log(msg);
-      e.preventDefault();
-      this.message.setValue('');
+      let chat = new ChatModel(this.doctor.email, this.selectedCus.email,msg,new Date(Date.now()));
+      this.chatService.addChatHistory(chat).subscribe(_ => {
+        this.getChatHistory();
+        e.preventDefault();
+        this.message.setValue('');
+      });
     } else if (e.which == 13) {
       e.preventDefault();
       this.message.setValue('');
@@ -68,7 +81,10 @@ export class ChatComponent implements OnInit {
   btnSend(m?: any) {
     let msg = this.message.value.trim().replace(/^\s+|\s+$/g, '');
     if (this.message.valid && msg) {
-      console.log(msg);
+      let chat = new ChatModel(this.doctor.email, this.selectedCus.email,msg,new Date(Date.now()));
+      this.chatService.addChatHistory(chat).subscribe(_ => {
+        this.getChatHistory();
+      });
     }
     this.event.preventDefault();
     this.message.setValue('');

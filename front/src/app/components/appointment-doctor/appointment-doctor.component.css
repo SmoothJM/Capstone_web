@@ -22,7 +22,26 @@ a:hover {
 }
 
 
+.box {
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  height: 100%;
+  flex-direction:column;
+}
+.p1 {
+  color: lightgray;
+  font-size: 5em;
+}
+.p2 {
+  color: lightgray;
+  font-size: 2em;
+}
 
 
+.empty {
+  color: lightgray;
+  font-size: 10em;
+}
 
 

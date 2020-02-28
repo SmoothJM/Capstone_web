@@ -60,7 +60,9 @@ export class OverviewComponent implements OnInit {
         this.adminService.getAllCustomers().subscribe(data => {
           if (data) {
             this.customers = data;
-            if(this.customers.length<=0) this.emptyCus = true;
+            if (this.customers.length <= 0) {
+              this.emptyCus = true;
+            }
             this.customers.forEach((ele, index) => {
               if (ele.docEmail) {
                 if (ele.docEmail == this.user.email) {
@@ -87,7 +89,9 @@ export class OverviewComponent implements OnInit {
         this.adminService.getAllCustomers().subscribe(data => {
           if (data) {
             this.customers = data;
-            if(this.customers.length<=0) this.emptyCus = true;
+            if (this.customers.length <= 0) {
+              this.emptyCus = true;
+            }
             this.customers.forEach((ele, index) => {
               if (ele.gender == 'male') {
                 this.cusSex.male += 1;
@@ -113,7 +117,9 @@ export class OverviewComponent implements OnInit {
     this.adminService.getAllDoctors().subscribe(data => {
       if (data) {
         this.doctors = data;
-      } else this.emptyDoc = true;
+      } else {
+        this.emptyDoc = true;
+      }
       this.doctors.forEach((ele, index) => {
         if (ele.gender == 'male') {
           this.docSex.male += 1;
@@ -135,7 +141,7 @@ export class OverviewComponent implements OnInit {
     });
 
     this.doctorService.getAppointments().subscribe(data => {
-      if (data) {
+      if (data.length>0) {
         this.apps = data;
         this.apps.forEach((ele, index) => {
           if (ele.status == 'Waiting') {
@@ -148,7 +154,9 @@ export class OverviewComponent implements OnInit {
             this.app.done += 1;
           }
         });
-      } else this.emptyApp = true;
+      } else {
+        this.emptyApp = true;
+      }
       this.dataApp = {
         labels: ['Waiting', 'Accepted', 'Rejected', 'Done'],
         datasets: [

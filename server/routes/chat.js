@@ -6,7 +6,6 @@ const chatModel = require('../data/chatData');
 router.get('/:from/:to', (req, res) => {
     let e1 = req.params.from;
     let e2 = req.params.to;
-
     let condition = [
         {from: e1, to: e2},
         {from: e2, to: e1}
@@ -20,6 +19,9 @@ router.get('/:from/:to', (req, res) => {
 
 // Add one history into DB
 router.post('/', (req, res) => {
+    chatModel.addHistory(req.body, (err, result) => {
+       if (err) console.log('');
+    });
     res.json(req.body);
 });
 

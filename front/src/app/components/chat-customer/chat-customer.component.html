@@ -1,0 +1,41 @@
+<div class="card card-shadow" *ngIf="customer.docEmail">
+  <div class="card-header">
+    <h5 class="mb-0">Message Your Doctor</h5>
+    {{doctor.username}}  <small>{{doctor.email}}</small>
+  </div>
+  <div class="card-body p-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 p-0">
+          <div id="message-content" #content>
+            <ul *ngFor="let c of chatHistory" class="m-0 pb-2 pl-1 pr-2" [class.content-right]="c.from == customer.email"
+                [class.content-left]="c.from == doctor.email">
+              <li>{{c.time | date : 'MM/d/yyyy, H:m:s'}}</li>
+              <li class="card-shadow"
+                  [class.content-box-right]="c.from == customer.email"
+                  [class.content-box-left]="c.from == doctor.email">
+                {{c.content}}
+              </li>
+            </ul>
+          </div>
+          <div class="px-2 pt-2">
+            <textarea id="message-edit" [formControl]="message" (keyup)="keySend($event)" pattern="[^\<|\>]*" required></textarea>
+            <button [disabled]="message.invalid" (click)="btnSend()" class="btn btn-sm btn-outline-info">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="bg-danger text-white mt-2" *ngIf="message.dirty && message.invalid">
+  <li style="list-style: initial" *ngIf="message.errors?.pattern">Please don't enter '<' or '>'</li>
+</ul>
+<div *ngIf="!customer.docEmail" class="box">
+  <i class="fas fa-inbox empty"></i>
+  <p class="p1">
+    Whoops!
+  </p>
+  <p class="p2">
+    Select one doctor as your doctor first in Take Diagnose part.
+  </p>
+</div>

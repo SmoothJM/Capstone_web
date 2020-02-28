@@ -3,30 +3,6 @@
   0px 6px 10px 0px rgba(0, 0, 0, 0.14),
   0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
-
-.side {
-  background: #eceae8;
-  overflow: auto;
-  height: 541px;
-}
-
-a {
-  display: block;
-  text-decoration:none;
-  color: black;
-  /*border-radius: 3px;*/
-  transition-duration: 0.1s;
-  cursor: pointer;
-}
-a:hover {
-  background: #dedbda;
-  box-shadow: 0px 2px 2px 2px rgba(0,0,0,.2);
-}
-.active {
-  background: #c6c5c5 !important;
-  color: #0069AB !important;
-  box-shadow: 0px 2px 2px 2px rgba(0,0,0,.2);
-}
 .box {
   display: flex;
   align-items:center;
@@ -36,10 +12,6 @@ a:hover {
 }
 li {
   list-style: none;
-}
-.empty {
-  color: lightgray;
-  font-size: 10em;
 }
 .p1 {
   color: lightgray;
@@ -51,10 +23,6 @@ li {
 }
 small {
   color: #999999;
-}
-.ii {
-  color: lightgray;
-  font-size: 8em;
 }
 
 #message-content {
@@ -89,7 +57,7 @@ button {
   border-radius: 4px;
   margin:5px 0 10px 10px;
   position: relative;
-  max-width: 550px;
+  max-width: 650px;
   text-align: justify;
 }
 
@@ -100,7 +68,7 @@ button {
   border-radius: 4px;
   margin:5px 10px 10px 0px;
   position: relative;
-  max-width: 550px;
+  max-width: 650px;
   text-align: justify;
 }
 .content-box-left::after{
@@ -126,3 +94,26 @@ button {
   text-align: right;
   align-self: flex-end
 }
+
+
+.empty {
+  color: lightgray;
+  font-size: 10em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

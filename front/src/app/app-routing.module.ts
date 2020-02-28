@@ -18,6 +18,7 @@ import {ResearchComponent} from './components/research/research.component';
 import {PatientComponent} from './components/patient/patient.component';
 import {InfoComponent} from './components/info/info.component';
 import {ChatComponent} from './components/chat/chat.component';
+import {ChatCustomerComponent} from './components/chat-customer/chat-customer.component';
 import {ManagerCustomerComponent} from './components/manager-customer/manager-customer.component';
 import {ManagerDoctorComponent} from './components/manager-doctor/manager-doctor.component';
 
@@ -31,7 +32,7 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent},
       {path: 'history/appointment', component: AppointmentHistoryComponent},
       {path: 'history/diagnose', component: DiagnoseHistoryComponent},
-      {path: 'chat', component: ChatComponent},
+      {path: 'chat/customer', component: ChatCustomerComponent},
     ], canActivate: [LoginGuard]
   },
   {
