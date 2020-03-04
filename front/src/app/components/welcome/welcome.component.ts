@@ -13,6 +13,11 @@ export class WelcomeComponent implements OnInit {
   public doctors1: DoctorModel[];
   public doctors2: DoctorModel[];
   public doctors3: DoctorModel[];
+  public cites = [
+    'http://www.cae.cn/cae/html/main/colys/71145511.html',
+    'http://www.cae.cn/cae/html/main/colys/71795027.html',
+    'https://baike.baidu.com/item/%E6%9D%8E%E6%96%87%E4%BA%AE/24300481#viewPageContent'
+  ];
 
   constructor(private doctorService: DoctorService) { }
 

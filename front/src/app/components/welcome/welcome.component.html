@@ -68,7 +68,12 @@
           the tongue is the seed of the heart, and the tongue is coated by the stomach chi.
           The human viscera are connected to the tongue by meridians.
           Therefore, traditional Chinese medicine can help diagnose and
-          identify the body condition of patients by observing the color and shape of the tongue.</p>
+          identify the body condition of patients by observing the color and shape of the tongue.
+          <a href="https://www.verywellhealth.com/tongue-diagnosis-in-traditional-chinese-medicine-3867931"
+           class="ml-3 cite">
+            <i class="fas fa-share-square"></i>
+          </a>
+        </p>
       </div>
       <div class="row">
         <div class="col-12">
@@ -102,7 +107,7 @@
       <div class="carousel-inner p-4">
         <div class="carousel-item active">
           <div class="row justify-content-center">
-            <div class="col-4" *ngFor="let doc1 of doctors1">
+            <div class="col-4" *ngFor="let doc1 of doctors1, let i=index">
               <div class="card slide-shadow mb-5">
                 <div class="card-header">
                   <table>
@@ -111,7 +116,7 @@
                         <img src="{{doc1.photo}}" class="rounded-circle" width="80" height="80">
                       </td>
                       <td>&nbsp;&nbsp;&nbsp;</td>
-                      <td><strong>{{doc1.username}}: </strong> <a> {{doc1.email}}</a></td>
+                      <td><strong>{{doc1.username}}: </strong> <a class="docEmail"> {{doc1.email}}</a></td>
                     </tr>
                     <tr>
                       <td>&nbsp;&nbsp;&nbsp;</td>
@@ -121,7 +126,12 @@
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">Introduction</h5>
-                  <div class="card-text">{{doc1.desc}}</div>
+                  <div class="card-text">
+                    {{doc1.desc}}
+                    <a [href]="cites[i]" class="ml-3 cite">
+                      <i class="fas fa-share-square"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,7 +148,7 @@
                         <img src="{{doc2.photo}}" class="rounded-circle" width="80" height="80">
                       </td>
                       <td>&nbsp;&nbsp;&nbsp;</td>
-                      <td><strong>{{doc2.username}}: </strong> <a> {{doc2.email}}</a></td>
+                      <td><strong>{{doc2.username}}: </strong> <a class="docEmail"> {{doc2.email}}</a></td>
                     </tr>
                     <tr>
                       <td>&nbsp;&nbsp;&nbsp;</td>
@@ -165,7 +175,7 @@
                         <img src="{{doc3.photo}}" class="rounded-circle" width="80" height="80">
                       </td>
                       <td>&nbsp;&nbsp;&nbsp;</td>
-                      <td><strong>{{doc3.username}}: </strong> <a> {{doc3.email}}</a></td>
+                      <td><strong>{{doc3.username}}: </strong> <a class="docEmail"> {{doc3.email}}</a></td>
                     </tr>
                     <tr>
                       <td>&nbsp;&nbsp;&nbsp;</td>
@@ -196,8 +206,6 @@
 </div>
 
 
-
-
 <div class="container-fluid py-5">
   <div class="row align-items-center">
     <div class="col-1"></div>
@@ -219,7 +227,7 @@
   </div>
 </div>
 
-<div  style="background-color: #EDEDED"  class="container-fluid py-3">
+<div style="background-color: #EDEDED" class="container-fluid py-3">
   <div class="row align-items-center">
     <div class="col-1"></div>
     <div class="col-5 text-center">
@@ -238,7 +246,7 @@
           <td><i class="fab fa-snapchat-square"></i></td>
           <td><i class="fab fa-facebook-square"></i></td>
           <td><i class="fab fa-github"></i></td>
-<!--          <i class="fab fa-instagram"></i>-->
+          <!--          <i class="fab fa-instagram"></i>-->
         </tr>
       </table>
     </div>

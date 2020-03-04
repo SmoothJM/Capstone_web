@@ -4,16 +4,21 @@
 .card:hover {
   transform: scale(1.05);
 }
-
-a {
+.card-text {
+  text-align: justify;
+}
+.docEmail {
   color: darkgray;
   font-size: small;
   cursor: pointer;
 }
-a:hover {
+.docEmail:hover {
   color: darkgray;
   font-size: small;
   text-decoration: underline;
+}
+.cite{
+  color: black;
 }
 .slide-shadow {
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
