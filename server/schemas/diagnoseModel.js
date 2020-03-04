@@ -6,7 +6,8 @@ let diagnoseSchema = Schema({
    username: String,
    result: String,
    img: String,
-   time: Date
+   time: Date,
+   percentage: Number
 });
 
 let DiagnoseSchema = mongoose.model('diagnose',diagnoseSchema,'diagnose');

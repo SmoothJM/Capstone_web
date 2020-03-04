@@ -29,7 +29,7 @@ module.exports.updateAppointmentStatus = function (condition, status, cal) {
     });
 };
 
-// module.exports.test = function(condition, cal) {
+// module.exports.getDiagnosesByDocEmail = function(condition, cal) {
 //   AppointmentModel.aggregate([
 //       {$lookup:{
 //               from: "customer",

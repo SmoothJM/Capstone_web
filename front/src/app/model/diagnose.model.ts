@@ -3,6 +3,7 @@ export class Diagnose {
               public username?: string,
               public result?: string,
               public img?: string,
-              public time?: string) {
+              public time?: string,
+              public percentage?: number) {
   }
 }

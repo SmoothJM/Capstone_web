@@ -12,7 +12,9 @@ import {
   NgbDate, NgbDateParserFormatter
 } from '@ng-bootstrap/ng-bootstrap';
 import {Data} from '@angular/router';
-// import {Chart} from 'chart.js/dist/Chart.js'
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+// import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Label } from 'ng2-charts';
 declare var $: any;
 
 @Component({
@@ -28,6 +30,23 @@ export class TestComponent implements OnInit, AfterViewInit {
   model: NgbDateStruct;
   date: { year: number, month: number };
 
+  barChartOptions: ChartOptions = {
+    scales:{
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  };
+
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [];
+  barChartLabels: Label[] = ['Apple', 'Banana', 'Kiwifruit', 'Blueberry', 'Orange', 'Grapes'];
+  barChartData: ChartDataSets[] = [
+    { data: [60, 37, 60, 70, 46, 33], label: 'Best Fruits' }
+  ];
 
 
 
@@ -46,17 +65,17 @@ export class TestComponent implements OnInit, AfterViewInit {
               public formatter: NgbDateParserFormatter,
               private doctorService: DoctorService) {
   }
-  type = 'doughnut';
-  data = {
-    labels: ["Bind you", "Bind other", "Non bind"],
-    datasets: [
-      {
-        label: "My First dataset",
-        data: [30, 50, 20],
-        backgroundColor:['yellow','orange','red']
-      }
-    ]
-  };
+  // type = 'doughnut';
+  // data = {
+  //   labels: ["Bind you", "Bind other", "Non bind"],
+  //   datasets: [
+  //     {
+  //       label: "My First dataset",
+  //       data: [30, 50, 20],
+  //       backgroundColor:['yellow','orange','red']
+  //     }
+  //   ]
+  // };
   options = {
     // responsive: true,
     // maintainAspectRatio: false

@@ -66,7 +66,7 @@ router.put('/appointment', (req, res) => {
 
 // Get diagnoses of customer who bound this doctor
 router.get('/diagnose/:docEmail', (req, res) => {
-    customerModel.test(req.params, (a,b) => {
+    customerModel.getDiagnosesByDocEmail(req.params, (a, b) => {
         res.json(b);
     });
 });

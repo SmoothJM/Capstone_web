@@ -28,7 +28,7 @@ module.exports.getCustomers = function (condition, cal) {
         cal(err, results);
     })
 };
-module.exports.test = function (condition, cal) {
+module.exports.getDiagnosesByDocEmail = function (condition, cal) {
     CustomerModel.aggregate().lookup({
         from: "diagnose",
         localField: "email",
@@ -41,7 +41,8 @@ module.exports.test = function (condition, cal) {
             "cusDia.email": 1,
             "cusDia.result": 1,
             "cusDia.img": 1,
-            "cusDia.time": 1
+            "cusDia.time": 1,
+            "cusDia.percentage": 1
         }).unwind("cusDia")
         .exec(cal);
 };

@@ -7,6 +7,8 @@ import {AppointmentModel} from '../../model/appointment.model';
 import {CustomerModel} from '../../model/customer.model';
 import {DoctorService} from '../../services/doctor.service';
 import {AdminService} from '../../services/admin.service';
+import {ChartOptions, ChartType, ChartDataSets} from 'chart.js';
+import {Label} from 'ng2-charts';
 
 @Component({
   selector: 'app-overview',
@@ -22,7 +24,6 @@ export class OverviewComponent implements OnInit {
   public emptyAppointment: boolean = false;
   public bindDoctor: DoctorModel = new DoctorModel();
   public lastAppointment: AppointmentModel = new AppointmentModel();
-  public type = 'doughnut';
   private bind = {bindYou: 0, bindOther: 0, notBind: 0};
   private app = {wait: 0, accept: 0, reject: 0, done: 0};
   private cusSex = {male: 0, female: 0, secret: 0};
@@ -30,23 +31,19 @@ export class OverviewComponent implements OnInit {
   public apps: AppointmentModel[] = [];
   public customers: CustomerModel[] = [];
   public doctors: DoctorModel[] = [];
-  public dataBind = {};
-  public dataApp = {};
-  public dataCusSex = {};
-  public dataDocSex = {};
   public emptyCus: boolean = false;
   public emptyApp: boolean = false;
   public emptyDoc: boolean = false;
-
-  public dataEmpty = {
-    labels: ['Empty'],
-    datasets: [
-      {
-        label: 'Empty',
-        data: [1],
-        backgroundColor: ['#6c757d']
-      }]
-  };
+  public barChartOptions: ChartOptions = {scales: {yAxes: [{ticks: {beginAtZero: true}}]}};
+  bindLabels: Label[] = ['Bound you', 'Bound others', 'Not bound'];
+  appLabels: Label[] = ['Waiting', 'Accepted', 'Rejected', 'Done'];
+  sexLabels: Label[] = ['Male', 'Female', 'Secret'];
+  barChartType: ChartType = 'bar';
+  barChartLegend = false;
+  bindData: ChartDataSets[] = [{data: [0, 0, 0]}];
+  appData: ChartDataSets[] = [{data: [0, 0, 0, 0]}];
+  sexCusData: ChartDataSets[] = [{data: [0, 0, 0]}];
+  sexDocData: ChartDataSets[] = [{data: [0, 0, 0]}];
 
   constructor(private dataService: DataService,
               private doctorService: DoctorService,
@@ -75,15 +72,14 @@ export class OverviewComponent implements OnInit {
               }
             });
           }
-          this.dataBind = {
-            labels: ['Bound you', 'Bound others', 'Not bound'],
-            datasets: [
-              {
-                label: 'Customer-bound Doctor Distribution',
-                data: [this.bind.bindYou, this.bind.bindOther, this.bind.notBind],
-                backgroundColor: ['#FF6384', '#43CD80', '#6c757d']
-              }]
-          };
+          this.bindData = [
+            {
+              data: [this.bind.bindYou, this.bind.bindOther, this.bind.notBind],
+              backgroundColor: ['#FF6384', '#43CD80', '#6c757d'],
+              maxBarThickness: 80,
+              hoverBackgroundColor:['#FF6384c0', '#43CD80c0', '#6c757dc0']
+            }
+          ];
         });
       } else if (this.user.role == 2) {
         this.adminService.getAllCustomers().subscribe(data => {
@@ -92,7 +88,7 @@ export class OverviewComponent implements OnInit {
             if (this.customers.length <= 0) {
               this.emptyCus = true;
             }
-            this.customers.forEach((ele, index) => {
+            this.customers.forEach((ele) => {
               if (ele.gender == 'male') {
                 this.cusSex.male += 1;
               } else if (ele.gender == 'female') {
@@ -102,15 +98,14 @@ export class OverviewComponent implements OnInit {
               }
             });
           }
-          this.dataCusSex = {
-            labels: ['Male', 'Female', 'Secret'],
-            datasets: [
-              {
-                label: 'Customer Gender Distribution',
-                data: [this.cusSex.male, this.cusSex.female, this.cusSex.secret],
-                backgroundColor: ['#02a3fe', '#ec49a6', '#8272CE']
-              }]
-          };
+          this.sexCusData = [
+            {
+              data: [this.cusSex.male, this.cusSex.female, this.cusSex.secret],
+              backgroundColor: ['#02a3fe', '#ec49a6', '#8272CE'],
+              maxBarThickness: 80,
+              hoverBackgroundColor:['#02a3fec0', '#ec49a6c0', '#8272CEc0']
+            }
+          ];
         });
       }
     });
@@ -129,19 +124,18 @@ export class OverviewComponent implements OnInit {
           this.docSex.secret += 1;
         }
       });
-      this.dataDocSex = {
-        labels: ['Male', 'Female', 'Secret'],
-        datasets: [
-          {
-            label: 'Doctor Gender Distribution',
-            data: [this.docSex.male, this.docSex.female, this.docSex.secret],
-            backgroundColor: ['#02a3fe', '#ec49a6', '#8272CE']
-          }]
-      };
+      this.sexDocData = [
+        {
+          data: [this.docSex.male, this.docSex.female, this.docSex.secret],
+          backgroundColor: ['#02a3fe', '#ec49a6', '#8272CE'],
+          maxBarThickness: 80,
+          hoverBackgroundColor:['#02a3fec0', '#ec49a6c0', '#8272CEc0']
+        }
+      ];
     });
 
     this.doctorService.getAppointments().subscribe(data => {
-      if (data.length>0) {
+      if (data.length > 0) {
         this.apps = data;
         this.apps.forEach((ele, index) => {
           if (ele.status == 'Waiting') {
@@ -157,15 +151,14 @@ export class OverviewComponent implements OnInit {
       } else {
         this.emptyApp = true;
       }
-      this.dataApp = {
-        labels: ['Waiting', 'Accepted', 'Rejected', 'Done'],
-        datasets: [
-          {
-            label: 'Appointments Distribution',
-            data: [this.app.wait, this.app.accept, this.app.reject, this.app.done],
-            backgroundColor: ['#ffc107', '#28a745', '#dc3545', '#17a2b8']
-          }]
-      };
+      this.appData = [
+        {
+          data: [this.app.wait, this.app.accept, this.app.reject, this.app.done],
+          backgroundColor: ['#ffc107', '#28a745', '#dc3545', '#17a2b8'],
+          maxBarThickness: 80,
+          hoverBackgroundColor:['#ffc107c0', '#28a745c0', '#dc3545c0', '#17a2b8c0']
+        }
+      ];
     });
 
 

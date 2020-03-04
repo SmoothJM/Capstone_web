@@ -12,8 +12,10 @@ const appointmentModel = require('../data/appointmentData');
 const doctorModel = require('../data/doctorData');
 
 
-const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
-const TONGUE_DIR = 'C:/Users/14534/WebstormProjects/capstone/server/public/customer/tongue';
+// const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
+// const TONGUE_DIR = 'C:/Users/14534/WebstormProjects/capstone/server/public/customer/tongue';
+const MODEL_DIR = 'public/keras-yolo3-master/final_model/';
+const TONGUE_DIR = 'public/customer/tongue';
 
 const storage = multer.diskStorage({
     destination: (req, file, callBack) => {
@@ -30,12 +32,7 @@ let upload = multer({storage: storage});
 router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
     const file = req.file;
     const img_name = file.filename;
-    let levels = {
-        'Healthy': 1,
-        'Mild': 2,
-        'Moderate': 3,
-        'Severe': 4
-    };
+    let levels = ['Healthy', 'Mild', 'Moderate', 'Severe'];
     // console.log(file);
     // console.log(img_name);
     exec('python ' + MODEL_DIR + 'od_predict.py ' + img_name, function (error, stdout, stderr) {
@@ -54,19 +51,27 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
                 }
                 stdo = String(stdo);
                 stdo = stdo.replace('\r\n', '');
-                let date = new Date().setHours(new Date().getHours() - 6);
+                stdo = stdo.replace('[', '');
+                stdo = stdo.replace(']', '');
+                let arr = stdo.split(', ').map(ele => {
+                    return Number(ele);
+                });
+                let percentage = Math.max(...arr);
+                let level = levels[arr.indexOf(percentage)];
+                console.log(percentage.toFixed(2));
                 diagnoseModel.findAllDiagnose({email: req.session.user['email']}, (error, results) => {
                     if (error) throw error;
                     if (results.length > 0) {
-                        stdo = results[results.length-1].result;
+                        level = results[results.length-1].result;
                         // console.log(results[0].result);
                     }
                     diagnoseModel.insertDiagnose({
                         email: req.session.user['email'],
                         username: req.session.user['username'],
-                        result: stdo,
+                        result: level,
                         img: img_name,
-                        time: new Date()
+                        time: new Date(),
+                        percentage: percentage
                     }, (err, result) => {
                         if (err) throw err;
                     });

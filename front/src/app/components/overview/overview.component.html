@@ -67,8 +67,16 @@
 <div *ngIf="user.role == 1">
   <div class="row justify-content-start">
     <div class="col-8">
-      <chart [type]="type" [data]="dataBind" *ngIf="customers.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyCus"></chart>
+      <canvas baseChart
+              [datasets]="bindData"
+              [labels]="bindLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+      >
+      </canvas>
+<!--      <chart [type]="type" [data]="dataBind" *ngIf="customers.length>0"></chart>-->
+<!--      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyCus"></chart>-->
     </div>
     <div class="col align-self-center text-center">
       <h5 style="color: #473C8B">
@@ -83,8 +91,16 @@
       </h5>
     </div>
     <div class="col-8">
-      <chart [type]="type" [data]="dataApp" *ngIf="apps.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyApp"></chart>
+      <canvas baseChart
+              [datasets]="appData"
+              [labels]="appLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+      >
+      </canvas>
+<!--      <chart [type]="type" [data]="dataApp" [options]="option" *ngIf="apps.length>0"></chart>-->
+<!--      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyApp"></chart>-->
     </div>
   </div>
 </div>
@@ -93,8 +109,16 @@
 <div *ngIf="user.role == 2">
   <div class="row justify-content-start">
     <div class="col-8">
-      <chart [type]="type" [data]="dataCusSex" *ngIf="customers.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyCus"></chart>
+      <canvas baseChart
+              [datasets]="sexCusData"
+              [labels]="sexLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+      >
+      </canvas>
+<!--      <chart [type]="type" [data]="dataCusSex" *ngIf="customers.length>0"></chart>-->
+<!--      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyCus"></chart>-->
     </div>
     <div class="col align-self-center text-center">
       <h5 style="color: #473C8B">
@@ -109,8 +133,16 @@
       </h5>
     </div>
     <div class="col-8">
-      <chart [type]="type" [data]="dataDocSex" *ngIf="doctors.length>0"></chart>
-      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyDoc"></chart>
+      <canvas baseChart
+              [datasets]="sexDocData"
+              [labels]="sexLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+      >
+      </canvas>
+<!--      <chart [type]="type" [data]="dataDocSex" *ngIf="doctors.length>0"></chart>-->
+<!--      <chart [type]="type" [data]="dataEmpty" *ngIf="emptyDoc"></chart>-->
     </div>
   </div>
 </div>

@@ -6,7 +6,7 @@
   "scripts": {
     "node": "supervisor",
     "start": "supervisor app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "getDiagnosesByDocEmail": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

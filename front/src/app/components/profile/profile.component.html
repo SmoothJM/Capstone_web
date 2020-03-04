@@ -154,7 +154,7 @@
             </div>
           </div>
           <button class="btn btn-info ml-4" (click)="addSchedule()" type="button"
-          [disabled]="!fromDate || !toDate">Add</button>
+          [disabled]="!fromDate || !toDate">Block</button>
         </div>
         <table class="table table-borderless table-hover" *ngIf="schedule.length>0">
           <thead>
@@ -165,7 +165,7 @@
               <td>{{s.from | date: 'mediumDate'}}</td>
               <td>{{s.to | date: 'mediumDate'}}</td>
               <td>
-                <button class="btn btn-sm btn-danger" type="button" (click)="removeSchedule(key)">Remove</button>
+                <button class="btn btn-sm btn-danger" type="button" (click)="removeSchedule(key)">Clear</button>
               </td>
             </tr>
           </tbody>

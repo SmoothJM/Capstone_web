@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartModule } from 'angular2-chartjs';
+import { ChartsModule } from 'ng2-charts';
 
 import { LoginGuard } from './guards/login.guard';
 import { MessageService } from './services/message.service';
@@ -81,7 +82,8 @@ import { ChatCustomerComponent } from './components/chat-customer/chat-customer.
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule,
-    ChartModule
+    ChartModule,
+    ChartsModule
   ],
   providers: [
     LoginGuard,
