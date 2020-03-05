@@ -30,7 +30,10 @@ input:focus {
   overflow: auto;
   height: 550px;
 }
-
+.content {
+  height: 550px;
+  overflow: auto;
+}
 li {
   list-style: none;
 }

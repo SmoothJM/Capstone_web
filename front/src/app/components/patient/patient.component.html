@@ -21,7 +21,7 @@
             </li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col content">
           <div class="box" *ngIf="!selectedCus.email">
             <i class="fas fa-user-injured ii"></i>
             <p class="p2">
@@ -54,6 +54,10 @@
             </tr>
             </tbody>
           </table>
+          <hr  *ngIf="selectedCus.email">
+          <button  *ngIf="selectedCus.email" class="btn btn-dark btn-lg mb-3" style="float: right" (click)="toMessage(selectedCus)">
+            <i class="fas fa-envelope-open-text"></i>  Message
+          </button>
         </div>
       </div>
     </div>

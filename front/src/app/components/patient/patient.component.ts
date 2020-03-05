@@ -5,6 +5,8 @@ import {LoginModel} from '../../model/login.model';
 import {Diagnose} from '../../model/diagnose.model';
 import {CustomerModel} from '../../model/customer.model';
 import {FormControl} from '@angular/forms';
+import {ForwardService} from '../../services/forward.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-patient',
@@ -27,7 +29,9 @@ export class PatientComponent implements OnInit {
   public searchValue = new FormControl('');
 
   constructor(private doctorService: DoctorService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private forwardService: ForwardService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -36,21 +40,28 @@ export class PatientComponent implements OnInit {
       this.doctor = data;
       this.doctorService.getDiagnosesByDocEmail(this.doctor.email).subscribe(data => {
         data.forEach(ele => {
-          this.origin.push(ele.cusDia);
+          this.origin.push(ele.cusDia); //origin stores all diagnoses of a customer who bound this doctor
           set.add(ele.cusDia.email);
         });
         for (let ele of set) {
           for (let e of this.origin) {
-            if (e.email == ele) {
+            if (e.email == ele) { // originSide stores those customers who bound the doctor
               this.originSide.push({email: ele, username: e.username});
               break;
             }
           }
         }
-        this.matchSide=this.origin;
-        if(this.originSide.length<=0) this.emptyCus = true;
+        this.matchSide = this.originSide;
+        if (this.originSide.length <= 0) {
+          this.emptyCus = true;
+        }
       });
     });
+  }
+
+  toMessage(e: CustomerModel) {
+    this.forwardService.sc = e;
+    this.router.navigateByUrl('/doctor/chat');
   }
 
   selectCustomer(email: string) {
@@ -63,23 +74,27 @@ export class PatientComponent implements OnInit {
           this.selectedDias.push(ele);
         }
       });
-      this.selectedDias = this.selectedDias.slice(0,5);
+      this.selectedDias = this.selectedDias.slice(0, 5);
     });
   }
 
   selectDiagnose(d: Diagnose) {
     this.selectedDia = d;
   }
+
   ifEnter(e: any) {
-    if(e.which == 13) this.search();
+    if (e.which == 13) {
+      this.search();
+    }
   }
+
   search() {
-    if(this.searchValue.value) {
+    if (this.searchValue.value) {
       this.matchSide = [];
       let msg = this.searchValue.value.trim().replace(/^\s+|\s+$/g, '');
-      let reg = new RegExp(msg);
+      let reg = new RegExp(msg, 'i');
       this.originSide.forEach(ele => {
-        if(reg.test(ele.username)) {
+        if (reg.test(ele.username)) {
           this.matchSide.push(ele);
         }
       });

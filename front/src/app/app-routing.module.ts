@@ -44,6 +44,7 @@ const routes: Routes = [
       {path: 'research', component: ResearchComponent},
       {path: 'patient', component: PatientComponent},
       {path: 'chat', component: ChatComponent},
+      // {path: 'chat/:selectCus', component: ChatComponent},
     ], canActivate: [LoginGuard]
   },
   {

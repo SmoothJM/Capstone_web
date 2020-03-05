@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {LoginModel} from '../../model/login.model';
 import {Diagnose} from '../../model/diagnose.model';
 import {CustomerModel} from '../../model/customer.model';
@@ -9,13 +9,15 @@ import {Message} from '../../model/message.model';
 import {MessageService} from '../../services/message.service';
 import {ChatService} from '../../services/chat.service';
 import {ChatModel} from '../../model/chat.model';
+import {ForwardService} from '../../services/forward.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewInit {
 
   public doctor: LoginModel = new LoginModel();
   public customers: CustomerModel[] = [];
@@ -26,18 +28,19 @@ export class ChatComponent implements OnInit {
   public chatHistory: ChatModel[] = [];
   public searchValue = new FormControl('');
   public matchCus: CustomerModel[] = [];
-
   @ViewChild('content', {static: false}) content;
 
   constructor(private doctorService: DoctorService,
               private dataService: DataService,
-              private chatService: ChatService) {
-
+              private chatService: ChatService,
+              private forwardService: ForwardService) {
   }
 
   ngOnInit() {
     this.dataService.getSession().subscribe(data => {
+      this.selectedCus = this.forwardService.sc;
       this.doctor = data;
+      this.getChatHistory();
     });
     this.doctorService.getCustomersBoundThisDoctor().subscribe(data => {
       this.customers = data;
@@ -47,15 +50,16 @@ export class ChatComponent implements OnInit {
       }
     });
   }
-
+  ngAfterViewInit() {
+  }
 
   selectCus(c: CustomerModel) {
     this.selectedCus = c;
     this.getChatHistory();
   }
 
-  getChatHistory() {
-    this.chatService.getChatHistory(this.doctor.email, this.selectedCus.email).subscribe(data => {
+   getChatHistory() {
+     this.chatService.getChatHistory(this.doctor.email, this.selectedCus.email).subscribe(data => {
       this.chatHistory = data;
       if (this.content) {
         setTimeout(() => {
@@ -101,7 +105,7 @@ export class ChatComponent implements OnInit {
     if(this.searchValue.value) {
       this.matchCus = [];
       let msg = this.searchValue.value.trim().replace(/^\s+|\s+$/g, '');
-      let reg = new RegExp(msg);
+      let reg = new RegExp(msg,'i');
       this.customers.forEach(ele => {
         if(reg.test(ele.username)) {
           this.matchCus.push(ele);

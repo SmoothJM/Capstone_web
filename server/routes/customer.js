@@ -58,7 +58,6 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
                 });
                 let percentage = Math.max(...arr);
                 let level = levels[arr.indexOf(percentage)];
-                console.log(percentage.toFixed(2));
                 diagnoseModel.findAllDiagnose({email: req.session.user['email']}, (error, results) => {
                     if (error) throw error;
                     if (results.length > 0) {
