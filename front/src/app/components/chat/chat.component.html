@@ -8,8 +8,13 @@
     <div class="container">
       <div class="row">
         <div class="col-3 side p-0">
+          <div class="search-box">
+            <i class="fas fa-search glass"></i>
+            <input class="search m-1 pl-4" type="search"  placeholder="Search" [formControl]="searchValue" (keyup)="ifEnter($event)">
+            <button class="btn btn-sm btn-outline-secondary search-btn" (click)="search()">Search</button>
+          </div>
           <ul class="p-0 my-0">
-            <li class="pl-0" *ngFor="let cus of customers">
+            <li class="pl-1" *ngFor="let cus of matchCus">
               <a class="p-2" [class.active]='selectedCus.email == cus.email'
                  (click)="selectCus(cus)">{{cus.username}}
                 <p class="m-0"><small>{{cus.email}}</small></p>
@@ -41,7 +46,7 @@
           </div>
           <div class="px-2 pt-2" *ngIf="selectedCus.email">
             <textarea id="message-edit" [formControl]="message" (keyup)="keySend($event)" pattern="[^\<|\>]*" required></textarea>
-            <button *ngIf="selectedCus.email" [disabled]="message.invalid" (click)="btnSend()" class="btn btn-sm btn-outline-info">Send</button>
+            <button *ngIf="selectedCus.email" [disabled]="message.invalid" (click)="btnSend()" class="btn btn-sm btn-outline-info btn-right">Send</button>
           </div>
         </div>
       </div>

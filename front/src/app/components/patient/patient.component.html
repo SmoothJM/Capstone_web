@@ -1,5 +1,5 @@
 
-<div class="card card-shadow" *ngIf="sideList.length>0">
+<div class="card card-shadow" *ngIf="originSide.length>0">
   <div class="card-header">
     <h5 class="mb-0">Browse Your Patients' Diagnose Reports</h5>
   </div>
@@ -7,8 +7,13 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 side p-0">
+          <div class="search-box">
+            <i class="fas fa-search glass"></i>
+            <input class="search m-1 pl-4" type="search" [formControl]="searchValue" (keyup)="ifEnter($event)" placeholder="Search">
+            <button class="btn btn-sm btn-outline-secondary search-btn" (click)="search()">Search</button>
+          </div>
           <ul class="p-0 my-0">
-            <li class="my-8 pl-1" *ngFor="let cus of sideList">
+            <li class=" pl-1" *ngFor="let cus of matchSide">
               <a class="p-1 list-a" [class.active]='selectedCus.email == cus.email'
                  (click)="selectCustomer(cus.email)">{{cus.username}}
                 <p class="m-0"><small>{{cus.email}}</small></p>

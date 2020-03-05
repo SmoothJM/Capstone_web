@@ -24,6 +24,8 @@ export class ChatComponent implements OnInit {
   public message = new FormControl('');
   public event: any;
   public chatHistory: ChatModel[] = [];
+  public searchValue = new FormControl('');
+  public matchCus: CustomerModel[] = [];
 
   @ViewChild('content', {static: false}) content;
 
@@ -39,6 +41,7 @@ export class ChatComponent implements OnInit {
     });
     this.doctorService.getCustomersBoundThisDoctor().subscribe(data => {
       this.customers = data;
+      this.matchCus = data;
       if (this.customers.length <= 0) {
         this.empty = true;
       }
@@ -90,4 +93,22 @@ export class ChatComponent implements OnInit {
     this.message.setValue('');
   }
 
+
+  ifEnter(e: any) {
+    if(e.which == 13) this.search();
+  }
+  search() {
+    if(this.searchValue.value) {
+      this.matchCus = [];
+      let msg = this.searchValue.value.trim().replace(/^\s+|\s+$/g, '');
+      let reg = new RegExp(msg);
+      this.customers.forEach(ele => {
+        if(reg.test(ele.username)) {
+          this.matchCus.push(ele);
+        }
+      });
+    } else {
+      this.matchCus = this.customers;
+    }
+  }
 }

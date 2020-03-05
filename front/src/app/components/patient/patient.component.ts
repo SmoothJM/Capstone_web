@@ -4,6 +4,7 @@ import {DataService} from '../../services/data.service';
 import {LoginModel} from '../../model/login.model';
 import {Diagnose} from '../../model/diagnose.model';
 import {CustomerModel} from '../../model/customer.model';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-patient',
@@ -13,17 +14,17 @@ import {CustomerModel} from '../../model/customer.model';
 export class PatientComponent implements OnInit {
 
   public doctor: LoginModel = new LoginModel();
-  public sideList: Diagnose[] = [];
+  public originSide: Diagnose[] = [];
+  public matchSide: Diagnose[] = [];
   public selectedCus: CustomerModel = new CustomerModel();
   public selectedDia: Diagnose = new Diagnose();
   public selectedDias: Diagnose[] = [];
   public origin = [];
   public emptyCus: boolean = false;
   public emptyDia: boolean = false;
-  // public diagnosesPerPage: number = 8;
-  // public selectedPage: number = 1;
   public wholeImg = 'http://127.0.0.1:3000/customer/tongue/';
   public boxImg = this.wholeImg + 'result_box/';
+  public searchValue = new FormControl('');
 
   constructor(private doctorService: DoctorService,
               private dataService: DataService) {
@@ -41,12 +42,13 @@ export class PatientComponent implements OnInit {
         for (let ele of set) {
           for (let e of this.origin) {
             if (e.email == ele) {
-              this.sideList.push({email: ele, username: e.username});
+              this.originSide.push({email: ele, username: e.username});
               break;
             }
           }
         }
-        if(this.sideList.length<=0) this.emptyCus = true;
+        this.matchSide=this.origin;
+        if(this.originSide.length<=0) this.emptyCus = true;
       });
     });
   }
@@ -67,6 +69,23 @@ export class PatientComponent implements OnInit {
 
   selectDiagnose(d: Diagnose) {
     this.selectedDia = d;
+  }
+  ifEnter(e: any) {
+    if(e.which == 13) this.search();
+  }
+  search() {
+    if(this.searchValue.value) {
+      this.matchSide = [];
+      let msg = this.searchValue.value.trim().replace(/^\s+|\s+$/g, '');
+      let reg = new RegExp(msg);
+      this.originSide.forEach(ele => {
+        if(reg.test(ele.username)) {
+          this.matchSide.push(ele);
+        }
+      });
+    } else {
+      this.matchSide = this.originSide;
+    }
   }
 
   // changePage(newPage: number) {
