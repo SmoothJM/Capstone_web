@@ -37,7 +37,7 @@
             <ul *ngFor="let c of chatHistory" class="m-0 pb-2 pl-1 pr-2" [class.content-right]="c.from == doctor.email"
                 [class.content-left]="c.from != doctor.email">
               <li>{{c.time | date : 'MM/d/yyyy, H:m:s'}}</li>
-              <li class="card-shadow">
+              <li class="card-shadow"
                   [class.content-box-right]="c.from == doctor.email"
                   [class.content-box-left]="c.from != doctor.email">
                 {{c.content}}

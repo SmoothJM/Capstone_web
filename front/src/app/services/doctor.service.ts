@@ -5,6 +5,7 @@ import {Observable, throwError} from 'rxjs';
 import {AppointmentModel} from '../model/appointment.model';
 import {Diagnose} from '../model/diagnose.model';
 import {CustomerModel} from '../model/customer.model';
+import {ResearchModel} from '../model/research.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,15 @@ export class DoctorService {
   }
   getCustomersBoundThisDoctor(): Observable<CustomerModel[]> {
     return this.sendRequest('get', this.doctorUrl + '/customer')
+  }
+  getAllResearches(): Observable<ResearchModel[]> {
+    return this.sendRequest('get', this.doctorUrl + '/research');
+  }
+  insertResearch(r: ResearchModel): Observable<any> {
+    return this.sendRequest('post', this.doctorUrl + '/research', r);
+  }
+  removeResearch(p: string): Observable<any> {
+    return this.sendRequest('delete', this.doctorUrl + '/research', p);
   }
 
   /**

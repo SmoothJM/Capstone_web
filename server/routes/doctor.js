@@ -4,8 +4,7 @@ const doctorModel = require('../data/doctorData');
 const userModel = require('../data/userData');
 const appointmentModel = require('../data/appointmentData');
 const customerModel = require('../data/customerData');
-
-
+const researchModel = require('../data/researchData');
 
 
 // Return all doctors
@@ -22,7 +21,7 @@ router.put('/', (req, res) => {
     let email = doctor['email'];
     delete doctor['email'];
     delete doctor['_id'];
-    doctorModel.updateDoctor({email:email}, doctor, (err, result) => {
+    doctorModel.updateDoctor({email: email}, doctor, (err, result) => {
         if (err) console.log('');
         res.json('Saved changes.');
     });
@@ -35,7 +34,7 @@ router.put('/', (req, res) => {
 router.get('/docEmail/:email', (req, res) => {
     doctorModel.getDoctor(req.params, (err, result) => {
         if (err) throw err;
-        if(result) {
+        if (result) {
             result = result.toObject();
             delete result.password;
             res.json(result);
@@ -48,7 +47,7 @@ router.get('/docEmail/:email', (req, res) => {
 // Return all appointments for this doctor
 router.get('/appointment', (req, res) => {
     let email = req.session.user.email;
-    appointmentModel.getAppointments({'docEmail':email}, (err, result) => {
+    appointmentModel.getAppointments({'docEmail': email}, (err, result) => {
         if (err) throw err;
         res.json(result);
     });
@@ -56,12 +55,12 @@ router.get('/appointment', (req, res) => {
 
 // Update one appointment status by id
 router.put('/appointment', (req, res) => {
-   let id = req.body.id;
-   let status = req.body.status;
-   appointmentModel.updateAppointmentStatus(id, {status:status}, (err, result) => {
-      // if (err) console.log(err);
-      res.json(result);
-   });
+    let id = req.body.id;
+    let status = req.body.status;
+    appointmentModel.updateAppointmentStatus(id, {status: status}, (err, result) => {
+        // if (err) console.log(err);
+        res.json(result);
+    });
 });
 
 // Get diagnoses of customer who bound this doctor
@@ -75,10 +74,33 @@ router.get('/diagnose/:docEmail', (req, res) => {
 router.get('/customer', (req, res) => {
     let docEmail = req.session.user.email;
     customerModel.getCustomers({docEmail}, (err, results) => {
-       if (err) throw err;
-       if(results) res.json(results);
-       else res.json(null);
+        if (err) throw err;
+        if (results) res.json(results);
+        else res.json(null);
     });
+});
+
+// Get all research papers of this doctor
+router.get('/research', (req, res) => {
+    let docEmail = req.session.user.email;
+    researchModel.findResearch({email: docEmail}, (err, results) => {
+        if (err) throw err;
+        if (results) {
+            res.json(results);
+        } else res.json(null);
+    });
+});
+
+// Insert a new research paper
+router.post('/research', (req, res) => {
+    let docEmail = req.session.user.email;
+    res.json(req.body);
+});
+
+// Delete a research paper
+router.delete('/research', (req, res) => {
+   let docEmail = req.session.user.email;
+   res.json(req.body);
 });
 
 module.exports = router;

@@ -16,7 +16,6 @@ import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { DiagnoseComponent } from './components/diagnose/diagnose.component';
-import { LoginComponent } from './components/login/login.component';
 import { TestComponent } from './components/test/test.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -36,18 +35,17 @@ import { DiagnoseHistoryComponent } from './components/diagnose-history/diagnose
 import { AppointmentDoctorComponent } from './components/appointment-doctor/appointment-doctor.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { ResearchComponent } from './components/research/research.component';
-import { InfoComponent } from './components/info/info.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ManagerDoctorComponent } from './components/manager-doctor/manager-doctor.component';
 import { ManagerCustomerComponent } from './components/manager-customer/manager-customer.component';
 import { TrustUrlPipePipe } from './guards/trust-url-pipe.pipe';
 import { ChatCustomerComponent } from './components/chat-customer/chat-customer.component';
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiagnoseComponent,
-    LoginComponent,
     TestComponent,
     NavComponent,
     FooterComponent,
@@ -67,12 +65,12 @@ import { ChatCustomerComponent } from './components/chat-customer/chat-customer.
     AppointmentDoctorComponent,
     PatientComponent,
     ResearchComponent,
-    InfoComponent,
     ChatComponent,
     ManagerDoctorComponent,
     ManagerCustomerComponent,
     TrustUrlPipePipe,
-    ChatCustomerComponent
+    ChatCustomerComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
