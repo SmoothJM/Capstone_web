@@ -21,3 +21,10 @@ module.exports.insertResearch = function (research, cal) {
         cal (err, result);
     });
 };
+
+module.exports.updateResearch = function (condition, research, cal) {
+    ResearchModel.findByIdAndUpdate(condition, research, (err, result) => {
+        if (err) throw err;
+        cal(result);
+    });
+};

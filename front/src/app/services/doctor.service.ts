@@ -47,6 +47,9 @@ export class DoctorService {
   removeResearch(p: string): Observable<any> {
     return this.sendRequest('delete', this.doctorUrl + '/research', {paper:p});
   }
+  updateResearch(r: any): Observable<any> {
+    return this.sendRequest('put', this.doctorUrl + '/research', r);
+  }
 
   /**
    * Total request function.

@@ -129,4 +129,33 @@ router.delete('/research', (req, res) => {
     });
 });
 
+// Update a research
+router.put('/research',upload.single('paper'), (req, res) => {
+    if(req.file){
+        researchModel.updateResearch(req.body.id, {
+            title: req.body.title,
+            author: req.body.author,
+            abstract: req.body.abstract,
+            issueDate: new Date(),
+            paper: req.file.filename,
+            category: req.body.category,
+        }, (err, result) => {
+            // if(err) throw err;
+            console.log(result);
+            res.json(result);
+        });
+    } else {
+        researchModel.updateResearch(req.body.id, {
+            title: req.body.title,
+            author: req.body.author,
+            abstract: req.body.abstract,
+            issueDate: new Date(),
+            category: req.body.category,
+        }, (err, result) => {
+            // if(err) throw err;
+            res.json(result);
+        });
+    }
+});
+
 module.exports = router;

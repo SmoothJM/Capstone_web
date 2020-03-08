@@ -18,14 +18,20 @@ export class ResearchComponent implements OnInit {
   public newResearch: ResearchModel = new ResearchModel();
   public researches: ResearchModel[] = [];
   public selectedResearch: ResearchModel = new ResearchModel();
-  public fileName: string = 'Select the paper';
-  public paperFile: File;
+  public cFileName: string = 'Select the paper';
+  public cPaperFile: File;
+  public mFileName: string = 'Select the paper';
+  public mPaperFile: File;
+  public mPaperChanged: boolean = false;
   public categories: string[] = [];
   public paperFolder: string = 'http://127.0.0.1:3000/doctor/research/';
   public isPdf: boolean = false;
-  public newCategory: string = '';
+  public ismPdf: boolean = true;
+  public cNewCategory: string = '';
+  public mNewCategory: string = '';
   public selectPage: number = 1;
   public researchPerPage: number = 8;
+  public id: string = '';
 
 
   constructor(private fb: FormBuilder,
@@ -67,43 +73,75 @@ export class ResearchComponent implements OnInit {
   }
 
   changeFile(e: any) {
-    this.paperFile = e.target.files[0];
-    this.fileName = this.paperFile.name;
-    let type = this.fileName.split('.')[this.fileName.split('.').length-1];
+    this.cPaperFile = e.target.files[0];
+    this.cFileName = this.cPaperFile.name;
+    let type = this.cFileName.split('.')[this.cFileName.split('.').length-1];
     if(type != 'pdf') {
       alert('Only accept PDF file.');
       this.isPdf = false;
     } else {
       this.isPdf = true;
     }
-
   }
 
+  modifyFile(e: any) {
+    this.mPaperChanged = true;
+    this.mPaperFile = e.target.files[0];
+    this.mFileName = this.mPaperFile.name;
+    let type = this.mFileName.split('.')[this.mFileName.split('.').length-1];
+    if(type != 'pdf') {
+      alert('Only accept PDF file.');
+      this.ismPdf = false;
+    } else {
+      this.ismPdf = true;
+    }
+  }
   createNewPaper(cf: any) {
     if(confirm('Are you sure?')) {
-      if(this.newCategory) {
-        this.newResearch.category = this.newCategory;
-        this.newResearch.paper = this.fileName;
+      if(this.cNewCategory) {
+        this.newResearch.category = this.cNewCategory;
+        this.newResearch.paper = this.cFileName;
       }
       const fd = new FormData();
-      fd.append('paper', this.paperFile);
+      fd.append('paper', this.cPaperFile);
       fd.append('title', this.newResearch.title);
       fd.append('author', this.newResearch.author);
       fd.append('abstract', this.newResearch.abstract);
       fd.append('category', this.newResearch.category);
       this.doctorService.insertResearch(fd).subscribe(_ => {
+        this.cPaperFile = null;
         this.getResearches();
         $('#modal-create').modal('hide')
       });
     }
   }
 
-  selectResearch(r: ResearchModel) {
-    this.selectedResearch = r;
+
+  modifyResearch(mf: any){
+    if(confirm('Are you sure?')) {
+      const fd = new FormData();
+      if(this.mNewCategory) {
+        this.selectedResearch.category = this.mNewCategory;
+      }
+      fd.append('id', this.id);
+      fd.append('title', this.selectedResearch.title);
+      fd.append('author', this.selectedResearch.author);
+      fd.append('abstract', this.selectedResearch.abstract);
+      fd.append('category', this.selectedResearch.category);
+      if(this.mPaperChanged) {
+        fd.append('paper', this.mPaperFile);
+      }
+      this.doctorService.updateResearch(fd).subscribe(_ => {
+        this.mPaperFile = null;
+        this.getResearches();
+        $('#modal-modify').modal('hide')
+      });
+    }
   }
 
-  modifyResearch(r: ResearchModel) {
-
+  selectResearch(r: any) {
+    this.selectedResearch = r;
+    this.id = r._id;
   }
 
   removeResearch(p: string) {

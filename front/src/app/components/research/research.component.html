@@ -51,7 +51,7 @@
 
 
 <!-- Modal Abstract -->
-<div class="modal fade" id="modal-abstract" data-backdrop="static" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal-abstract" style="overflow:hidden;" data-backdrop="static" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-size modal-dialog-scrollable modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -112,7 +112,7 @@
                 <div class="custom-file" style="margin-bottom: 16px">
                   <input type="file" accept=".pdf" (change)="changeFile($event)"
                          class="custom-file-input" id="uploadFile">
-                  <label class="custom-file-label" for="uploadFile">{{fileName}}</label>
+                  <label class="custom-file-label" for="uploadFile">{{cFileName}}</label>
                 </div>
                 <div class="form-group">
                   <label for="cCategory"><strong>Category:</strong></label><br>
@@ -120,7 +120,7 @@
                           [(ngModel)]="newResearch.category" style="width: 350px; display: inline">
                     <option *ngFor="let cate of categories" [value]="cate">{{cate}}</option>
                   </select> OR
-                  <input #cCateNew='ngModel' [(ngModel)]="newCategory" name="cCateNew" id="cCateNew"
+                  <input #cCateNew='ngModel' [(ngModel)]="cNewCategory" name="cCateNew" id="cCateNew"
                          class="form-control" type="text" pattern="^[a-zA-Z ]+$" placeholder="Add new category"
                          style="width: 350px; display: inline;transform: translateY(3px);">
                   <ul class="bg-danger text-white mt-2" *ngIf="cCateNew.dirty && cCateNew.invalid">
@@ -140,7 +140,7 @@
                 </div>
                 <button class="btn btn-info mb-3" style="float: right" type="submit"
                 [disabled]="cAbstract.invalid || !isPdf || cTitle.invalid
-                || cAuthor.invalid || (!newResearch.category && (!newCategory || cCateNew.invalid))">Create</button>
+                || cAuthor.invalid || (!newResearch.category && (!cNewCategory || cCateNew.invalid))">Create</button>
               </form>
             </div>
           </div>
@@ -163,7 +163,63 @@
       <div class="modal-body pb-1">
         <div class="container-fluid">
           <div class="row">
-            modify
+            <div class="col-12">
+              <form #modifyForm='ngForm' (ngSubmit)="modifyResearch(modifyForm)">
+                <div class="form-group">
+                  <label for="mTitle"><strong>Title:</strong></label>
+                  <input #mTitle='ngModel' id="mTitle" name="mTitle" class="form-control" type="text"
+                         [(ngModel)]="selectedResearch.title" required pattern="^[a-zA-Z0-9 ]+$">
+                  <ul class="bg-danger text-white mt-2" *ngIf="mTitle.dirty && mTitle.invalid">
+                    <li *ngIf="mTitle.errors?.required">You must enter title.</li>
+                    <li *ngIf="mTitle.errors?.pattern">Only contain letter and number.</li>
+                  </ul>
+                </div>
+                <div class="form-group">
+                  <label for="mAuthor"><strong>Author:</strong></label>
+                  <input #mAuthor='ngModel' id="mAuthor" name="mAuthor" class="form-control" type="text"
+                         [(ngModel)]="selectedResearch.author" required pattern="^[a-zA-Z ]+$">
+                  <ul class="bg-danger text-white mt-2" *ngIf="mAuthor.dirty && mAuthor.invalid">
+                    <li *ngIf="mAuthor.errors?.required">You must enter author.</li>
+                    <li *ngIf="mAuthor.errors?.pattern">Only contain letter and space.</li>
+                  </ul>
+                </div>
+                <p style="font-size: 16px; margin-bottom:8px">
+                  <strong>Paper:</strong>
+                </p>
+                <div class="custom-file" style="margin-bottom: 16px">
+                  <input type="file" accept=".pdf" (change)="modifyFile($event)"
+                         class="custom-file-input" id="modifyFile">
+                  <label class="custom-file-label" for="modifyFile">{{mFileName}}</label>
+                </div>
+                <div class="form-group">
+                  <label for="mCategory"><strong>Category:</strong></label><br>
+                  <select id="mCategory" #mCategory='ngModel' name="mCategory" class="custom-select"
+                          [(ngModel)]="selectedResearch.category" style="width: 350px; display: inline">
+                    <option *ngFor="let cate of categories" [value]="cate">{{cate}}</option>
+                  </select> OR
+                  <input #mCateNew='ngModel' [(ngModel)]="mNewCategory" name="mCateNew" id="mCateNew"
+                         class="form-control" type="text" pattern="^[a-zA-Z ]+$" placeholder="Add new category"
+                         style="width: 350px; display: inline;transform: translateY(3px);">
+                  <ul class="bg-danger text-white mt-2" *ngIf="mCateNew.dirty && mCateNew.invalid">
+                    <li *ngIf="mCateNew.errors?.pattern">Only contain letter and space.</li>
+                  </ul>
+                </div>
+                <div class="form-group">
+                  <label for="mAbstract"><strong>Abstract:</strong></label>
+                  <textarea id="mAbstract" #mAbstract='ngModel' name="mAbstract" class="form-control"
+                            rows="5" [(ngModel)]="selectedResearch.abstract" required
+                            pattern="[^\<|\>]*"
+                            placeholder="Display the abstract."></textarea>
+                  <ul class="bg-danger text-white mt-2" *ngIf="mAbstract.dirty && mAbstract.invalid">
+                    <li *ngIf="mAbstract.errors?.pattern">Please don't enter '<' or '>'</li>
+                    <li *ngIf="mAbstract.errors?.required">Paper must have abstract</li>
+                  </ul>
+                </div>
+                <button class="btn btn-info mb-3" style="float: right" type="submit"
+                        [disabled]="mAbstract.invalid || !ismPdf || mTitle.invalid
+                || mAuthor.invalid || (!selectedResearch.category && (!mNewCategory || mCateNew.invalid))">Modify</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

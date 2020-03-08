@@ -41,6 +41,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
       this.selectedCus = this.forwardService.sc;
       this.doctor = data;
       this.getChatHistory();
+      this.forwardService.sc = null;
     });
     this.doctorService.getCustomersBoundThisDoctor().subscribe(data => {
       this.customers = data;
