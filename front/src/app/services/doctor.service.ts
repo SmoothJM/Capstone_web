@@ -41,11 +41,11 @@ export class DoctorService {
   getAllResearches(): Observable<ResearchModel[]> {
     return this.sendRequest('get', this.doctorUrl + '/research');
   }
-  insertResearch(r: ResearchModel): Observable<any> {
+  insertResearch(r: any): Observable<any> {
     return this.sendRequest('post', this.doctorUrl + '/research', r);
   }
   removeResearch(p: string): Observable<any> {
-    return this.sendRequest('delete', this.doctorUrl + '/research', p);
+    return this.sendRequest('delete', this.doctorUrl + '/research', {paper:p});
   }
 
   /**
@@ -53,6 +53,7 @@ export class DoctorService {
    * @param verb
    * @param url
    * @param body
+   * @param params
    */
   private sendRequest<T>(verb: string, url: string, body?: any): Observable<T> {
     let headerOptions = new HttpHeaders();

@@ -1,42 +1,75 @@
 .box {
   display: flex;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
   height: 80%;
-  flex-direction:column;
+  flex-direction: column;
 }
+
 .empty {
   color: lightgray;
   font-size: 10em;
 }
+
 .p1 {
   color: lightgray;
   font-size: 5em;
 }
+
 .p2 {
   color: lightgray;
   font-size: 2em;
 }
 
-.btn-round{
+.btn-round {
   border-radius: 48px;
 }
-.modal{
-  overflow: hidden;
+
+.modal {
+  overflow: auto;
 }
 
 .modal-size {
   max-width: 520px;
   overflow: hidden;
 }
+
 small {
   color: #999999;
   font-size: 14px;
   cursor: pointer;
 }
+
 small:hover {
   text-decoration: underline;
 }
+
 .content-abstract {
   text-align: justify;
+}
+
+.link-abstract {
+  cursor: pointer;
+}
+
+.link-abstract:hover {
+  color: cornflowerblue;
+  text-decoration: underline;
+}
+.cell-center {
+  text-align: center;
+}
+input.ng-valid.ng-dirty {
+  border: 2px solid darkgreen;
+}
+
+input.ng-dirty.ng-invalid {
+  border: 2px solid darkred;
+}
+
+textarea.ng-valid.ng-dirty {
+  border: 2px solid darkgreen;
+}
+textarea.ng-dirty.ng-invalid {
+  border: 2px solid darkred;
 }

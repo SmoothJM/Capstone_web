@@ -5,6 +5,20 @@ const userModel = require('../data/userData');
 const appointmentModel = require('../data/appointmentData');
 const customerModel = require('../data/customerData');
 const researchModel = require('../data/researchData');
+const multer = require('multer');
+
+const RESEARCH_DIR = 'public/doctor/research/';
+
+const storage = multer.diskStorage({
+    destination: (req, file, callBack) => {
+        callBack(null, RESEARCH_DIR);
+    },
+    filename: (req, file, callBack) => {
+        callBack(null, file.fieldname + '-' + Date.now() + '.pdf');
+    }
+});
+
+let upload = multer({storage: storage});
 
 
 // Return all doctors
@@ -92,15 +106,27 @@ router.get('/research', (req, res) => {
 });
 
 // Insert a new research paper
-router.post('/research', (req, res) => {
-    let docEmail = req.session.user.email;
-    res.json(req.body);
+router.post('/research', upload.single('paper'), (req, res) => {
+    researchModel.insertResearch({
+        email: req.session.user.email,
+        title: req.body.title,
+        author: req.body.author,
+        abstract: req.body.abstract,
+        issueDate: new Date(),
+        paper: req.file.filename,
+        category: req.body.category,
+    }, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    });
 });
 
 // Delete a research paper
 router.delete('/research', (req, res) => {
-   let docEmail = req.session.user.email;
-   res.json(req.body);
+    researchModel.removeResearch(req.body, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    });
 });
 
 module.exports = router;

@@ -36,11 +36,11 @@ img {
   0px 6px 10px 0px rgba(0, 0, 0, 0.14),
   0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
-input.ng-valid.ng-dirty:not(#confirmPwd){
+input.ng-valid.ng-dirty {
   border: 2px solid darkgreen;
 }
 
-input.ng-dirty.ng-invalid:not(#confirmPwd) {
+input.ng-dirty.ng-invalid {
   border: 2px solid darkred;
 }
 

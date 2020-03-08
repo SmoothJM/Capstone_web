@@ -5,7 +5,7 @@ module.exports.findResearch = function (condition, cal) {
     ResearchModel.find(condition, (err, result) => {
         if (err) throw err;
         cal(err, result);
-    });
+    }).sort({_id:-1});
 };
 
 module.exports.removeResearch = function (condition, cal) {
