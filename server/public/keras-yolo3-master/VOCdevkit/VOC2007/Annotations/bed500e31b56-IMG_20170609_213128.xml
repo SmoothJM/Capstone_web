@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Picture</folder>
+	<filename>bed500e31b56-IMG_20170609_213128.jpg</filename>
+	<path>C:\Users\14534\Desktop\Capstone Project\Jianmu Deng\Object detection\Picture\bed500e31b56-IMG_20170609_213128.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1425</width>
+		<height>1389</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>tongue</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>565</xmin>
+			<ymin>284</ymin>
+			<xmax>1130</xmax>
+			<ymax>864</ymax>
+		</bndbox>
+	</object>
+</annotation>

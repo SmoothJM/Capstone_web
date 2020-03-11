@@ -32,5 +32,4 @@ speed-measure-plugin*.json
 .history/*
 
 **/server/public/customer/tongue
-**/server/public/keras-yolo3-master
 **/server/public/doctor/research
