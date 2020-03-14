@@ -33,3 +33,4 @@ speed-measure-plugin*.json
 
 **/server/public/doctor/research
 **/server/public/customer
+**/server/public/keras-yolo3-master
