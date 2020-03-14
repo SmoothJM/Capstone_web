@@ -32,3 +32,4 @@ speed-measure-plugin*.json
 .history/*
 
 **/server/public/doctor/research
+**/server/public/customer
