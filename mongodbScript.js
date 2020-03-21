@@ -30,16 +30,16 @@ db.user.insert({email :"mitch@btd.com",username:"Mitch",password:"202cb962ac5907
 db.user.insert({email:'admin@btd.com',username:'Admin',password:'202cb962ac59075b964b07152d234b70',status:0,role:2});
 
 // customer
-db.customer.insert({email:'deng5945@uwlax',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-11'),gender:'male',desc:'very healthy'});
-db.customer.insert({email:'deng594@uwlax',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-12'),gender:'male',desc:'very healthy'});
-db.customer.insert({email:'deng59@uwlax',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-13'),gender:'male',desc:'very healthy'});
-db.customer.insert({email:'deng5@uwlax',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-14'),gender:'male',desc:'very healthy'});
-db.customer.insert({email:'deng@uwlax',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-15'),gender:'male',desc:'very healthy'});
-db.customer.insert({email:'yali5945@uwlax',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-16'),gender:'female',desc:'very healthy'});
-db.customer.insert({email:'yali594@uwlax',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-17'),gender:'female',desc:'very healthy'});
-db.customer.insert({email:'yali59@uwlax',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-18'),gender:'female',desc:'very healthy'});
-db.customer.insert({email:'yali5@uwlax',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-19'),gender:'female',desc:'very healthy'});
-db.customer.insert({email:'yali@uwlax',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-20'),gender:'female',desc:'very healthy'});
+db.customer.insert({email:'deng5945@uwlax.com',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-11'),gender:'male',desc:'very healthy'});
+db.customer.insert({email:'deng594@uwlax.com',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-12'),gender:'male',desc:'very healthy'});
+db.customer.insert({email:'deng59@uwlax.com',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-13'),gender:'male',desc:'very healthy'});
+db.customer.insert({email:'deng5@uwlax.com',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-14'),gender:'male',desc:'very healthy'});
+db.customer.insert({email:'deng@uwlax.com',username:'Jianmu',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-05-15'),gender:'male',desc:'very healthy'});
+db.customer.insert({email:'yali5945@uwlax.com',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-16'),gender:'female',desc:'very healthy'});
+db.customer.insert({email:'yali594@uwlax.com',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-17'),gender:'female',desc:'very healthy'});
+db.customer.insert({email:'yali59@uwlax.com',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-18'),gender:'female',desc:'very healthy'});
+db.customer.insert({email:'yali5@uwlax.com',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-19'),gender:'female',desc:'very healthy'});
+db.customer.insert({email:'yali@uwlax.com',username:'Yali',password:'202cb962ac59075b964b07152d234b70',birthday:ISODate('1995-11-20'),gender:'female',desc:'very healthy'});
 // doctor
 db.doctor.insert(email : "zhong@btd.com",username: "Nanshan",password: "202cb962ac59075b964b07152d234b70",gender: "male",addr: "Main Hall 601",desc: "Excellent long-term diagnosis and treatment of common diseases of oral and maxillofacial infectious diseases, benign tumors, joint diseases and other common diseases, especially for the comprehensive treatment of oral head disease malignant tumors, congenital malformations and acquired defects Reconstruction and reconstruction create a precedent in China.",photo: "../assets/doctors/1.jpg",schedule : []);
 db.doctor.insert({email :"li@btd.com",username:"Lanjuan",password:"202cb962ac59075b964b07152d234b70",gender: "female",addr: "Main Hall 602",desc:"Good at surgical treatment of oral and maxillofacial-head and neck tumors; minimally invasive surgical treatment of multiple maxillofacial fractures, salivary gland disease, maxillofacial nerve disease; radical resection and defect repair of benign and malignant tumors of the maxillofacial region, orthognathic surgery, implant surgery, etc.",photo: "../assets/doctors/2.jpg",schedule : []});
