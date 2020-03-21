@@ -29,6 +29,7 @@ export class DiagnoseComponent implements OnInit {
   public snapped: boolean = false;
   public fileName: string = 'Select your local tongue photo';
   public uploaded: boolean = true;
+  public photoPath: string = 'http://127.0.0.1:3000/doctor/photo/';
 
   @ViewChild('video', {static: true}) video: ElementRef;
   @ViewChild('canvas', {static: true}) canvas: ElementRef;
@@ -219,8 +220,9 @@ export class DiagnoseComponent implements OnInit {
   ngOnInit() {
     this.doctorService.getDoctors().subscribe(data => {
       this.doctorsInit = data['doctors'];
+      this.addClickEvent();
     });
-    this.addClickEvent();
+
 
     this.uploadForm = this.fb.group({
       tongueImg: ['']

@@ -14,16 +14,30 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  // Get all customers
+  // Customer part
   getAllCustomers(): Observable<CustomerModel[]> {
     return this.sendRequest('get', this.adminUrl + '/customer');
   }
+  createCustomer(c: CustomerModel): Observable<any> {
+    return this.sendRequest('post', this.adminUrl + '/customer');
+  }
+  deleteCustomer(e: string): Observable<any> {
+    return this.sendRequest('delete', this.adminUrl + '/customer', {email:e});
+  }
 
-  // Get all doctors
+
+
+
+  // Doctor part
   getAllDoctors(): Observable<DoctorModel[]> {
     return this.sendRequest('get', this.adminUrl + '/doctor');
   }
-
+  createDoctor(c: DoctorModel): Observable<any> {
+    return this.sendRequest('post', this.adminUrl + '/doctor');
+  }
+  deleteDoctor(e: string): Observable<any> {
+    return this.sendRequest('delete', this.adminUrl + '/doctor');
+  }
   /**
    * Total request function.
    * @param verb

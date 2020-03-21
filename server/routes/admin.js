@@ -14,6 +14,15 @@ router.get('/customer', (req, res) => {
     });
 });
 
+// Delete a customer by email
+router.delete('/customer', (req, res) => {
+    customerModel.removeCustomer(req.body, (err, result) => {
+        if(err) throw err;
+        res.json('success');
+    });
+});
+
+
 // Get all doctors
 router.get('/doctor', (req, res) => {
     doctorModel.getDoctors((err, results) => {
@@ -23,6 +32,15 @@ router.get('/doctor', (req, res) => {
     });
 });
 
+// Delete a doctor by email
+router.delete('/doctor', (req, res) => {
+    res.json(req.body);
+});
+
+// Create a doctor
+router.post('/doctor', (req, res) => {
+    res.json(req.body);
+});
 
 module.exports = router;
 

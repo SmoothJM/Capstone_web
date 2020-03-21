@@ -6,8 +6,8 @@
     <div class="card-body">
       <table >
         <tr>
-          <td rowspan="2">
-            <img src="{{doctor.photo}}" class="rounded-circle" width="80" height="80">
+          <td rowspan="2" *ngIf="doctor.photo">
+            <img [src]="photoPath + doctor.photo" class="rounded-circle" width="80" height="80">
           </td>
           <td>&nbsp;&nbsp;&nbsp;</td>
           <td><strong>Name: </strong> {{doctor.username}}</td>

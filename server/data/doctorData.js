@@ -22,3 +22,10 @@ module.exports.updateDoctor = function (condition, doctor, cal) {
     });
 };
 
+module.exports.removeDoctor = function (condition, cal) {
+    DoctorModel.deleteOne(condition, (err, result) => {
+       if (err) throw err;
+       cal(err, result);
+    });
+};
+

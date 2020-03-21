@@ -20,8 +20,8 @@ export class OverviewComponent implements OnInit {
   public diagnoses: Diagnose[] = [];
   public wholeImg = 'http://127.0.0.1:3000/customer/tongue/';
   public boxImg = this.wholeImg + 'result_box/';
-  public emptyDiagnose: boolean = false;
-  public emptyAppointment: boolean = false;
+  public emptyDiagnose: boolean = true;
+  public emptyAppointment: boolean = true;
   public bindDoctor: DoctorModel = new DoctorModel();
   public lastAppointment: AppointmentModel = new AppointmentModel();
   private bind = {bindYou: 0, bindOther: 0, notBind: 0};
@@ -35,6 +35,7 @@ export class OverviewComponent implements OnInit {
   public emptyApp: boolean = false;
   public emptyDoc: boolean = false;
   public barChartOptions: ChartOptions = {scales: {yAxes: [{ticks: {beginAtZero: true}}]}};
+
   bindLabels: Label[] = ['Bound you', 'Bound others', 'Not bound'];
   appLabels: Label[] = ['Waiting', 'Accepted', 'Rejected', 'Done'];
   sexLabels: Label[] = ['Male', 'Female', 'Secret'];
@@ -164,8 +165,8 @@ export class OverviewComponent implements OnInit {
 
     this.dataService.getAllDiagnoses().subscribe(data => {
       this.diagnoses = data.slice(0, 3);
-      if (data.length < 1) {
-        this.emptyDiagnose = true;
+      if (data.length >= 1) {
+        this.emptyDiagnose = false;
       }
     });
 

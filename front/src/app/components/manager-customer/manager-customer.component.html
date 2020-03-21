@@ -1,1 +1,149 @@
-<p>manager-customer works!</p>
+<div *ngIf="!empty">
+  <table class="table table-hover table-sm">
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Username</th>
+      <th style="text-align: center">Gender</th>
+      <th>Birthday</th>
+      <th>Bind Doctor</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of customers">
+      <td>{{c.email}}</td>
+      <td>{{c.username}}</td>
+      <td *ngIf="c.gender == 'male'" class="center"><i class="fas fa-mars"></i></td>
+      <td *ngIf="c.gender == 'female'" class="center"><i class="fas fa-venus"></i></td>
+      <td *ngIf="c.gender == 'secret'" class="center"><i class="fas fa-mask"></i></td>
+      <td>{{c.birthday | date: 'mediumDate'}}</td>
+      <td>{{c.docEmail ? c.docEmail : 'Not Bound'}}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-danger" (click)="deleteCustomer(c.email)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="btn-group m-3" style="float:right;" *ngIf="!empty">
+  <button class="btn btn-outline-info" (click)="previousPage()"
+          [disabled]="selectPage == 1">Previous
+  </button>
+  <button *ngFor="let page of pageNumbers" (click)="changePage(page)"
+          class="btn btn-outline-info" [class.active]="page==selectPage">
+    {{page}}
+  </button>
+  <button class="btn btn-outline-info" (click)="nextPage()"
+          [disabled]="selectPage == pageNumbers[pageNumbers.length-1] || pageNumbers.length == 1">Next
+  </button>
+</div>
+
+<!--Create new customer modal-->
+<div class="modal fade" id="modal-create" style="overflow:hidden;" data-backdrop="static" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-create">Register a new member
+        </h5>
+        <a class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times-circle" style="color: red; cursor: pointer"></i>
+        </a>
+      </div>
+      <div class="modal-body px-4 pb-4" #modal>
+        <div *ngIf="message" class="text-white text-center" id="loginMessage"
+             [class.bg-danger]="successRegistered" [class.bg-success]="!successRegistered">
+          {{message}}
+        </div>
+          <form #form='ngForm' (ngSubmit)="submit(form)">
+            <div class="form-group">
+              <label for="emailc"><strong>Email:</strong></label>
+              <input id="emailc" #email='ngModel' name="emailc" class="form-control" type="text"
+                     placeholder="As your login account."
+                     [(ngModel)]="customer.email" required
+                     pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+              <ul class="bg-danger text-white mt-2" *ngIf="email.dirty && email.invalid">
+                <li *ngIf="email.errors?.required">You must enter an email address.</li>
+                <li *ngIf="email.errors?.pattern">Please enter correct email address format.</li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="usernamec"><strong>Username:</strong></label>
+              <input id="usernamec" #username='ngModel' name="usernamec" class="form-control" type="text"
+                     placeholder="Name you want to show on the website."
+                     [(ngModel)]="customer.username" required pattern="^[a-zA-Z0-9_]{4,16}$">
+              <ul class="bg-danger text-white mt-2" *ngIf="username.dirty && username.invalid">
+                <li *ngIf="username.errors?.required">You must enter an username.</li>
+                <li *ngIf="username.errors?.pattern">Username can only include letters, number and underline.</li>
+                <li *ngIf="username.errors?.pattern">Username is at least length of 4, less than 16.</li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="passwordc"><strong>Password:</strong></label>
+              <input id="passwordc" #password='ngModel' name="passwordc" class="form-control" type="password"
+                     placeholder="Enter your password."
+                     [(ngModel)]="customer.password" required
+                     pattern="^.*(?=.{6,20})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?]).*$">
+              <ul class="bg-danger text-white mt-2" *ngIf="password.dirty && password.invalid">
+                <li *ngIf="password.errors?.required">Please enter a password</li>
+                <li *ngIf="password.errors?.pattern">Password length is from 6 to 20, and should include at least an
+                  uppercase, a lowercase, a number and a special letter in:
+                  !@#$%^&*?
+                </li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="birthday"><strong>Date of birth:</strong></label>
+              <input id="birthday" #birthday='ngModel' name="birthday" class="form-control" type="date"
+                     placeholder="Enter your real birthday."
+                     [(ngModel)]="customer.birthday" required>
+              <ul class="bg-danger text-white mt-2" *ngIf="birthday.dirty && birthday.invalid">
+                <li *ngIf="birthday.errors?.required">Please enter your birthday</li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="gender"><strong>Gender:</strong></label>
+              <select id="gender" #gender='ngModel' name="gender" class="custom-select" required
+                      [(ngModel)]="customer.gender">
+                <option value="male" selected>Male</option>
+                <option value="female">Female</option>
+                <option value="secret">Secret</option>
+              </select>
+              <ul class="bg-danger text-white mt-2" *ngIf="gender.dirty && gender.invalid">
+                <li *ngIf="gender.errors?.required">Please select your gender</li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="desc"><strong>Description:</strong></label>
+              <textarea id="desc" #desc='ngModel' name="desc" class="form-control" rows="5" [(ngModel)]="customer.desc"
+                        pattern="[^\<|\>]*"
+                        placeholder="Tell us about your past medical history and your recent condition."></textarea>
+              <ul class="bg-danger text-white mt-2" *ngIf="desc.dirty && desc.invalid">
+                <li *ngIf="desc.errors?.pattern">Please don't enter '<' or '>'</li>
+              </ul>
+            </div>
+            <button type="reset" style="float: right" class="btn btn-secondary mx-2">Reset</button>
+            <button type="submit" style="float: right" [disabled]="form.invalid" class="btn btn-info">Register</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div *ngIf="empty" class="box">
+    <i class="far fa-sad-tear empty"></i>
+    <p class="p1">
+      Whoops!
+    </p>
+    <p class="p2">
+      We do not have any members.
+    </p>
+  </div>
+
+  <div style="text-align: center">
+    <button class="btn btn-lg btn-info btn-round py-1"
+            data-toggle="modal" data-target="#modal-create">Register a Member
+    </button>
+  </div>

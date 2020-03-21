@@ -92,7 +92,7 @@
     <div class="panel" *ngFor="let doctor of doctors">
       <div class="panel-head">
       <span>
-      <img src="{{doctor.photo}}" class="rounded-circle" width="60" height="60">
+      <img [src]="photoPath + doctor.photo" class="rounded-circle" width="60" height="60">
         {{doctor.username}}&nbsp;&nbsp;<small>{{doctor.email}}</small>
       </span>
         <i class="fas fa-angle-down"></i>

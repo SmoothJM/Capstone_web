@@ -27,6 +27,7 @@ export class AppointmentComponent implements OnInit {
   public selectDate: NgbDateStruct;
   public schedules = [];
   public date = new Date;
+  public photoPath: string = 'http://127.0.0.1:3000/doctor/photo/';
   public today: NgbDateStruct = {
     day: Number(this.date.toLocaleDateString().split('/')[1])+1,
     month: Number(this.date.toLocaleDateString().split('/')[0]),

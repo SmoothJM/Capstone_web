@@ -113,7 +113,7 @@
                   <table>
                     <tr>
                       <td rowspan="2">
-                        <img src="{{doc1.photo}}" class="rounded-circle" width="80" height="80">
+                        <img [src]="photoPath + doc1.photo" class="rounded-circle" width="80" height="80">
                       </td>
                       <td>&nbsp;&nbsp;&nbsp;</td>
                       <td><strong>{{doc1.username}}: </strong> <a class="docEmail"> {{doc1.email}}</a></td>
@@ -145,7 +145,7 @@
                   <table>
                     <tr>
                       <td rowspan="2">
-                        <img src="{{doc2.photo}}" class="rounded-circle" width="80" height="80">
+                        <img [src]="photoPath + doc2.photo" class="rounded-circle" width="80" height="80">
                       </td>
                       <td>&nbsp;&nbsp;&nbsp;</td>
                       <td><strong>{{doc2.username}}: </strong> <a class="docEmail"> {{doc2.email}}</a></td>
@@ -172,7 +172,7 @@
                   <table>
                     <tr>
                       <td rowspan="2">
-                        <img src="{{doc3.photo}}" class="rounded-circle" width="80" height="80">
+                        <img [src]="photoPath + doc3.photo" class="rounded-circle" width="80" height="80">
                       </td>
                       <td>&nbsp;&nbsp;&nbsp;</td>
                       <td><strong>{{doc3.username}}: </strong> <a class="docEmail"> {{doc3.email}}</a></td>

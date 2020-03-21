@@ -15,6 +15,13 @@ module.exports.addCustomer = function (customer, cal) {
     });
 };
 
+module.exports.removeCustomer = function (condition, cal) {
+    CustomerModel.deleteOne(condition, (err, result) => {
+        if (err) throw err;
+        cal(err, result);
+    });
+};
+
 module.exports.updateCustomer = function (condition, customer, cal) {
     CustomerModel.updateOne(condition, customer, (err, result) => {
         if (err) throw err;
@@ -26,7 +33,7 @@ module.exports.getCustomers = function (condition, cal) {
     CustomerModel.find(condition, (err, results) => {
         if (err) throw err;
         cal(err, results);
-    })
+    }).sort({_id: -1});
 };
 module.exports.getDiagnosesByDocEmail = function (condition, cal) {
     CustomerModel.aggregate().lookup({

@@ -13,6 +13,7 @@ export class WelcomeComponent implements OnInit {
   public doctors1: DoctorModel[];
   public doctors2: DoctorModel[];
   public doctors3: DoctorModel[];
+  public photoPath: string = 'http://127.0.0.1:3000/doctor/photo/';
   public cites = [
     'http://www.cae.cn/cae/html/main/colys/71145511.html',
     'http://www.cae.cn/cae/html/main/colys/71795027.html',
