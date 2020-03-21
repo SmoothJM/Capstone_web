@@ -40,7 +40,7 @@ import { ManagerDoctorComponent } from './components/manager-doctor/manager-doct
 import { ManagerCustomerComponent } from './components/manager-customer/manager-customer.component';
 import { TrustUrlPipePipe } from './guards/trust-url-pipe.pipe';
 import { ChatCustomerComponent } from './components/chat-customer/chat-customer.component';
-import { InfoComponent } from './components/info/info.component';
+
 
 @NgModule({
   declarations: [
@@ -69,8 +69,7 @@ import { InfoComponent } from './components/info/info.component';
     ManagerDoctorComponent,
     ManagerCustomerComponent,
     TrustUrlPipePipe,
-    ChatCustomerComponent,
-    InfoComponent
+    ChatCustomerComponent
   ],
   imports: [
     BrowserModule,

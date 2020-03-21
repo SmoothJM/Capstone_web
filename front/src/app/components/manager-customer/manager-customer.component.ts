@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AdminService} from '../../services/admin.service';
+import {CustomerModel} from '../../model/customer.model';
 
 @Component({
   selector: 'app-manager-customer',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagerCustomerComponent implements OnInit {
 
-  constructor() { }
+  public customers: CustomerModel[] = [];
+
+  constructor(private adminService: AdminService) {  }
 
   ngOnInit() {
+    this.adminService.getAllCustomers().subscribe(data => {
+      this.customers = data;
+      console.log(this.customers);
+    });
   }
 
 }

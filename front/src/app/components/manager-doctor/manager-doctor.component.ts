@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DoctorModel} from '../../model/doctor.model';
+import {AdminService} from '../../services/admin.service';
 
 @Component({
   selector: 'app-manager-doctor',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagerDoctorComponent implements OnInit {
 
-  constructor() { }
+  public doctors: DoctorModel[] = [];
+
+  constructor(private adminService: AdminService) { }
 
   ngOnInit() {
+    this.adminService.getAllDoctors().subscribe(data => {
+      this.doctors = data;
+      console.log(this.doctors);
+    });
   }
 
 }
