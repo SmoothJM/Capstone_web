@@ -1,0 +1,49 @@
+.box {
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  height: 81%;
+  flex-direction:column;
+}
+.center {
+   text-align: center;
+   font-size: 50px;
+ }
+.empty {
+  color: lightgray;
+  font-size: 10em;
+}
+.p1 {
+  color: lightgray;
+  font-size: 5em;
+}
+.p2 {
+  color: lightgray;
+  font-size: 2em;
+}
+td {
+  vertical-align: middle;
+}
+
+.btn-round {
+  border-radius: 48px;
+}
+.modal-size {
+  max-width: 720px;
+  overflow: hidden;
+}
+
+input.ng-valid.ng-dirty{
+  border: 2px solid darkgreen;
+}
+
+input.ng-dirty.ng-invalid{
+  border: 2px solid darkred;
+}
+
+textarea.ng-valid.ng-dirty {
+  border: 2px solid darkgreen;
+}
+textarea.ng-dirty.ng-invalid {
+  border: 2px solid darkred;
+}

@@ -6,6 +6,6 @@ export class DoctorModel {
               public addr?: string,
               public desc?: string,
               public photo?: string,
-              public schedule?:[][]) {
+              public schedule?:[]) {
   }
 }

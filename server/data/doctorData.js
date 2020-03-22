@@ -28,4 +28,9 @@ module.exports.removeDoctor = function (condition, cal) {
        cal(err, result);
     });
 };
-
+module.exports.addDoctor = function (doctor, cal) {
+    DoctorModel.create(doctor, (err, result) => {
+        if (err) throw err;
+        cal(err, result);
+    });
+};

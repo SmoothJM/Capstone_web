@@ -32,11 +32,14 @@ export class AdminService {
   getAllDoctors(): Observable<DoctorModel[]> {
     return this.sendRequest('get', this.adminUrl + '/doctor');
   }
-  createDoctor(c: DoctorModel): Observable<any> {
-    return this.sendRequest('post', this.adminUrl + '/doctor');
+  createDoctor(fd: any): Observable<any> {
+    return this.sendRequest('post', this.adminUrl + '/doctor', fd);
   }
   deleteDoctor(e: string): Observable<any> {
-    return this.sendRequest('delete', this.adminUrl + '/doctor');
+    return this.sendRequest('delete', this.adminUrl + '/doctor', {email:e});
+  }
+  checkDoctorEmailIsDuplicated(e: string): Observable<any> {
+    return this.sendRequest('post', this.adminUrl + '/doctor/checkEmail', {email:e});
   }
   /**
    * Total request function.

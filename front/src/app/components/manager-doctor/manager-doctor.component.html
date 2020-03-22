@@ -1,1 +1,167 @@
-<p>manager-doctor works!</p>
+
+
+<div *ngIf="!empty">
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Username</th>
+        <th style="width: 130px">Email</th>
+        <th style="text-align: center">Gender</th>
+        <th>Office</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of doctors">
+        <td><img [src]="photoPath + d.photo" width="80px" height="80px"></td>
+        <td>{{d.username}}</td>
+        <td>{{d.email}}</td>
+        <td *ngIf="d.gender == 'male'" class="center"><i class="fas fa-mars"></i></td>
+        <td *ngIf="d.gender == 'female'" class="center"><i class="fas fa-venus"></i></td>
+        <td *ngIf="d.gender == 'secret'" class="center"><i class="fas fa-mask"></i></td>
+        <td>{{d.addr}}</td>
+        <td><button class="btn btn-outline-danger" (click)="deleteDoctor(d.email)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="btn-group m-3" style="float:right;" *ngIf="!empty">
+  <button class="btn btn-outline-info" (click)="previousPage()"
+          [disabled]="selectPage == 1">Previous
+  </button>
+  <button *ngFor="let page of pageNumbers" (click)="changePage(page)"
+          class="btn btn-outline-info" [class.active]="page==selectPage">
+    {{page}}
+  </button>
+  <button class="btn btn-outline-info" (click)="nextPage()"
+          [disabled]="selectPage == pageNumbers[pageNumbers.length-1] || pageNumbers.length == 1">Next
+  </button>
+</div>
+
+
+<!--Create new doctor modal-->
+<div class="modal fade" id="modal-create" style="overflow:hidden;" data-backdrop="static" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-create">
+          New Doctor Join
+        </h5>
+        <a class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times-circle" style="color: red; cursor: pointer"></i>
+        </a>
+      </div>
+      <div class="modal-body px-4 pb-4" #modal>
+        <div *ngIf="message" class="text-white text-center" id="loginMessage"
+             [class.bg-danger]="successJoin" [class.bg-success]="!successJoin">
+          {{message}}
+        </div>
+        <form #form='ngForm' (ngSubmit)="submit(form)">
+          <div class="form-group">
+            <label for="email"><strong>Email:</strong></label>
+            <input id="email" #email='ngModel' name="email" class="form-control" type="text"
+                   placeholder="As the doctor login account."
+                   [(ngModel)]="doctor.email" required
+                   pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+            <ul class="bg-danger text-white mt-2" *ngIf="email.dirty && email.invalid">
+              <li *ngIf="email.errors?.required">You must enter an email address.</li>
+              <li *ngIf="email.errors?.pattern">Please enter correct email address format.</li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label for="username"><strong>Username:</strong></label>
+            <input id="username" #username='ngModel' name="username" class="form-control" type="text"
+                   placeholder="Type real name of new doctor"
+                   [(ngModel)]="doctor.username" required pattern="^[a-zA-Z ]{4,16}$">
+            <ul class="bg-danger text-white mt-2" *ngIf="username.dirty && username.invalid">
+              <li *ngIf="username.errors?.required">You must enter an username.</li>
+              <li *ngIf="username.errors?.pattern">Username can only include letters.</li>
+              <li *ngIf="username.errors?.pattern">Username is at least length of 4, less than 16.</li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label for="password"><strong>Password:</strong></label>
+            <input id="password" #password='ngModel' name="password" class="form-control" type="password"
+                   placeholder="Enter password of new doctor."
+                   [(ngModel)]="doctor.password" required
+                   pattern="^.*(?=.{6,20})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?]).*$">
+            <ul class="bg-danger text-white mt-2" *ngIf="password.dirty && password.invalid">
+              <li *ngIf="password.errors?.required">Please enter a password</li>
+              <li *ngIf="password.errors?.pattern">Password length is from 6 to 20, and should include at least an
+                uppercase, a lowercase, a number and a special letter in:
+                !@#$%^&*?
+              </li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label for="addr"><strong>Office Address:</strong></label>
+            <input id="addr" #addr='ngModel' name="addr" class="form-control" type="text"
+                   placeholder="Enter office address of new doctor."
+                   [(ngModel)]="doctor.addr" required>
+            <ul class="bg-danger text-white mt-2" *ngIf="addr.dirty && addr.invalid">
+              <li *ngIf="addr.errors?.required">Please enter office address</li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label for="gender"><strong>Gender:</strong></label>
+            <select id="gender" #gender='ngModel' name="gender" class="custom-select" required
+                    [(ngModel)]="doctor.gender">
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+              <option value="secret">Secret</option>
+            </select>
+            <ul class="bg-danger text-white mt-2" *ngIf="gender.dirty && gender.invalid">
+              <li *ngIf="gender.errors?.required">Please select your gender</li>
+            </ul>
+          </div>
+
+          <p style="font-size: 16px; margin-bottom:8px">
+            <strong>Photo:</strong>
+          </p>
+          <div class="custom-file" style="margin-bottom: 16px">
+            <input type="file" accept=".png, .jpg, .jpeg" (change)="changePhoto($event)"
+                   class="custom-file-input" id="uploadFile">
+            <label class="custom-file-label" for="uploadFile">{{photoName}}</label>
+          </div>
+
+
+          <div class="form-group">
+            <label for="desc"><strong>Description:</strong></label>
+            <textarea id="desc" #desc='ngModel' name="desc" class="form-control" rows="5" [(ngModel)]="doctor.desc"
+                      pattern="[^\<|\>]*"
+                      placeholder="Display the profile description of new doctor."></textarea>
+            <ul class="bg-danger text-white mt-2" *ngIf="desc.dirty && desc.invalid">
+              <li *ngIf="desc.errors?.pattern">Please don't enter '<' or '>'</li>
+            </ul>
+          </div>
+          <button type="reset" style="float: right" class="btn btn-secondary mx-2">Reset</button>
+          <button type="submit" style="float: right" [disabled]="form.invalid" class="btn btn-info">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div *ngIf="empty" class="box">
+  <i class="far fa-sad-tear empty"></i>
+  <p class="p1">
+    Whoops!
+  </p>
+  <p class="p2">
+    Only you in the company.
+  </p>
+</div>
+
+<div style="text-align: center">
+  <button class="btn btn-lg btn-info btn-round py-1"
+          data-toggle="modal" data-target="#modal-create">
+    New Staff Join
+  </button>
+</div>
