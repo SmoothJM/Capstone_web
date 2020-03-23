@@ -20,6 +20,8 @@ import {ChatComponent} from './components/chat/chat.component';
 import {ChatCustomerComponent} from './components/chat-customer/chat-customer.component';
 import {ManagerCustomerComponent} from './components/manager-customer/manager-customer.component';
 import {ManagerDoctorComponent} from './components/manager-doctor/manager-doctor.component';
+import {StaffComponent} from './components/staff/staff.component';
+import {AboutComponent} from './components/about/about.component';
 // import {InfoComponent} from './components/info/info.component';
 
 const routes: Routes = [
@@ -58,6 +60,8 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {path: 'register', component: RegisterComponent},
+  {path: 'staff', component: StaffComponent},
+  {path: 'about', component: AboutComponent},
   {path: '', component: WelcomeComponent},
   {path: '**', component: ErrorPageComponent}
 ];

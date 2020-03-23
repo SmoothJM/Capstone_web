@@ -1,0 +1,70 @@
+
+<!--Top 3 Doctors-->
+<div class="top-box">
+  <div *ngFor="let t of topDoctors, let i = index">
+    <div class="card slide-shadow top-item">
+      <div class="card-header">
+        <table>
+          <tr>
+            <td rowspan="2">
+              <img [src]="photoPath + t.photo" class="rounded-circle" width="80" height="80">
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td><strong>{{t.username}}: </strong> <a class="docEmail"> {{t.email}}</a></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>Office location: {{t.addr}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Introduction</h5>
+        <div class="card-text">
+          {{t.desc}}
+          <a [href]="cites[i]" class="ml-3 cite">
+            <i class="fas fa-share-square"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Divider Line-->
+<div class="divider-box">
+  <div class="line"></div>
+  <div class="icon"><i class="fas fa-medal"></i></div>
+  <div class="line"></div>
+</div>
+<!--Other Doctors-->
+<div class="other-box">
+  <div *ngFor="let o of otherDoctors">
+    <div class="card slide-shadow other-item">
+      <div class="card-header">
+        <table>
+          <tr>
+            <td rowspan="2">
+              <img [src]="photoPath + o.photo" class="rounded-circle" width="80" height="80">
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td><strong>{{o.username}}: </strong> <a class="docEmail"> {{o.email}}</a></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>Office location: {{o.addr}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Introduction</h5>
+        <div class="card-text">
+          {{o.desc}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
