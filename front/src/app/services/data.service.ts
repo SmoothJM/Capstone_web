@@ -7,6 +7,7 @@ import {Diagnose} from '../model/diagnose.model';
 import {AppointmentModel} from '../model/appointment.model';
 import {DoctorModel} from '../model/doctor.model';
 import {ChatModel} from '../model/chat.model';
+import {ResearchModel} from '../model/research.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,9 @@ export class DataService {
   }
   getAllAppointments(): Observable<AppointmentModel[]> {
     return this.sendRequest('get', this.customerURL+'/allAppointments');
+  }
+  getAllResearches(): Observable<ResearchModel[]> {
+    return this.sendRequest('get', this.customerURL + '/research');
   }
 
 

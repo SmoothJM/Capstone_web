@@ -10,6 +10,7 @@ const userModel = require('../data/userData');
 const diagnoseModel = require('../data/diagnoseData');
 const appointmentModel = require('../data/appointmentData');
 const doctorModel = require('../data/doctorData');
+const researchModel = require('../data/researchData');
 
 
 // const MODEL_DIR = 'E:/keras-yolo3-master/keras-yolo3-master/final_model/';
@@ -61,7 +62,7 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
                 diagnoseModel.findAllDiagnose({email: req.session.user['email']}, (error, results) => {
                     if (error) throw error;
                     if (results.length > 0) {
-                        level = results[results.length-1].result;
+                        level = results[results.length - 1].result;
                         // console.log(results[0].result);
                     }
                     diagnoseModel.insertDiagnose({
@@ -190,59 +191,68 @@ router.put('/', (req, res) => {
 // Add new appointment
 router.post('/appointment', (req, res) => {
     appointmentModel.addAppointment(req.body, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
     });
     res.json('Got ya!');
 });
 
 // Get latest appointment status
 router.get('/appointment', (req, res) => {
-   let cusEmail = req.session.user.email;
-   appointmentModel.getLastAppointment({cusEmail}, (err, result) => {
-      if (err) throw err;
-      if (result) {
-          res.json(result);
-      } else {
-          res.json(null);
-      }
-   });
+    let cusEmail = req.session.user.email;
+    appointmentModel.getLastAppointment({cusEmail}, (err, result) => {
+        if (err) throw err;
+        if (result) {
+            res.json(result);
+        } else {
+            res.json(null);
+        }
+    });
 });
 
 // Get all appointments for this customer
 router.get('/allAppointments', (req, res) => {
     let cusEmail = req.session.user.email;
     appointmentModel.getAppointments({cusEmail}, (err, result) => {
-       if (err) throw err;
-       if(result) {
-           res.json(result);
-       }
+        if (err) throw err;
+        if (result) {
+            res.json(result);
+        }
     });
 });
 
 // Get customer by email from front end
 router.get('/email/:email', (req, res) => {
-   customerModel.findCustomer(req.params, (err, result) => {
-       if (err) throw err;
-       if(result) {
-           result =  result.toObject();
-           delete result.password;
-           res.json(result);
-       } else {
-           res.json('Cannot find this customer.');
-       }
-   });
+    customerModel.findCustomer(req.params, (err, result) => {
+        if (err) throw err;
+        if (result) {
+            result = result.toObject();
+            delete result.password;
+            res.json(result);
+        } else {
+            res.json('Cannot find this customer.');
+        }
+    });
 });
 
 // Get bind doctor
 router.get('/doctor/:email', (req, res) => {
-   doctorModel.getDoctor(req.params, (err, result) => {
-      if (err) throw err;
-      if(result) {
-           result =  result.toObject();
-           delete result.password;
-           res.json(result);
-       }
-   });
+    doctorModel.getDoctor(req.params, (err, result) => {
+        if (err) throw err;
+        if (result) {
+            result = result.toObject();
+            delete result.password;
+            res.json(result);
+        }
+    });
+});
+
+// Get all researches for display
+router.get('/research', (req, res) => {
+    researchModel.findResearch({}, (err, result) => {
+       if(err) throw err;
+       if(result != null) res.json(result);
+       else res.json(null);
+    });
 });
 
 module.exports = router;

@@ -1,1 +1,77 @@
-<p>about works!</p>
+<div class="container-fluid" style="margin-bottom: 100px">
+  <div class="row">
+    <div class="col-4">
+        <div class="search-box">
+          <div class="form-group">
+            <label for="category"><strong>Categories</strong></label><br>
+            <select id="category" class="custom-select search" [(ngModel)]="selectedCate">
+              <option value="">All</option>
+              <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+            </select>
+          </div>
+          <button class="btn btn-outline-secondary search-btn"
+          [disabled]="empty" (click)="search()">Search</button>
+        </div>
+      </div>
+    <div class="col-8">
+      <div *ngIf="!empty">
+        <ul *ngFor="let r of res">
+          <li><strong>Title: </strong>{{r.title}}</li>
+          <li><strong>Author: </strong>{{r.author}}</li>
+          <li><strong>Category: </strong>{{r.category}}</li>
+          <li><strong>Date: </strong>{{r.issueDate | date: 'mediumDate'}}</li>
+          <li>
+            <a (click)="selectRes(r)" data-toggle="modal" data-target="#modal-abstract">
+              <strong>Abstract</strong>
+            </a>
+            <a [href]="paperFolder+r.paper">
+<!--              <i class="far fa-file-pdf"></i>-->
+              <i class="fas fa-download pdf"></i>
+            </a>
+          </li>
+        </ul>
+        <div class="btn-group m-3" style="float:right;" *ngIf="!empty">
+          <button class="btn btn-outline-info" (click)="previousPage()"
+                  [disabled]="selectPage == 1">Previous
+          </button>
+          <button *ngFor="let page of pageNumbers" (click)="changePage(page)"
+                  class="btn btn-outline-info" [class.active]="page==selectPage">
+            {{page}}
+          </button>
+          <button class="btn btn-outline-info" (click)="nextPage()"
+                  [disabled]="selectPage == pageNumbers[pageNumbers.length-1] || pageNumbers.length == 1">Next
+          </button>
+        </div>
+      </div>
+      <div class="empty-box" *ngIf="empty">
+        <i class="fas fa-inbox empty"></i>
+        <p class="p1">
+          Whoops!
+        </p>
+        <p class="p2">
+          There is no research now.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Abstract modal-->
+<div class="modal fade"  id="modal-abstract" data-backdrop="static" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-abstract">Abstract of <i>{{selectedRes.title}}</i></h5>
+        <a class="close" data-dismiss="modal">
+          <i class="fas fa-times-circle" style="color: red"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        {{selectedRes.abstract}}
+      </div>
+    </div>
+  </div>
+</div>

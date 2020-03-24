@@ -31,6 +31,6 @@ speed-measure-plugin*.json
 !.vscode/extensions.json
 .history/*
 
-**/server/public/doctor/research
+
 **/server/public/customer
 **/server/public/keras-yolo3-master

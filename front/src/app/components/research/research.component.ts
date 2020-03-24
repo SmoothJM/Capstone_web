@@ -30,7 +30,7 @@ export class ResearchComponent implements OnInit {
   public cNewCategory: string = '';
   public mNewCategory: string = '';
   public selectPage: number = 1;
-  public researchPerPage: number = 8;
+  public researchPerPage: number = 4;
   public id: string = '';
 
 
@@ -111,7 +111,10 @@ export class ResearchComponent implements OnInit {
       this.doctorService.insertResearch(fd).subscribe(_ => {
         this.cPaperFile = null;
         this.getResearches();
-        $('#modal-create').modal('hide')
+        $('#modal-create').modal('hide');
+        this.newResearch = new ResearchModel();
+        this.cNewCategory = '';
+        this.cFileName = null;
       });
     }
   }

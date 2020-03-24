@@ -2,10 +2,10 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Author</th>
+        <th style="width: 250px">Title</th>
+        <th style="width: 250px">Author</th>
         <th>Issue Date</th>
-        <th>Category</th>
+        <th style="width: 120px">Category</th>
         <th class="cell-center">Paper</th>
         <th class="cell-center">Action</th>
       </tr>
@@ -91,7 +91,7 @@
                 <div class="form-group">
                   <label for="cTitle"><strong>Title:</strong></label>
                   <input #cTitle='ngModel' id="cTitle" name="cTitle" class="form-control" type="text"
-                         [(ngModel)]="newResearch.title" required pattern="^[a-zA-Z0-9 ]+$">
+                         [(ngModel)]="newResearch.title" required pattern="^[a-zA-Z0-9 -:]+$">
                   <ul class="bg-danger text-white mt-2" *ngIf="cTitle.dirty && cTitle.invalid">
                     <li *ngIf="cTitle.errors?.required">You must enter title.</li>
                     <li *ngIf="cTitle.errors?.pattern">Only contain letter and number.</li>
@@ -100,7 +100,7 @@
                 <div class="form-group">
                   <label for="cAuthor"><strong>Author:</strong></label>
                   <input #cAuthor='ngModel'  id="cAuthor" name="cAuthor" class="form-control" type="text"
-                         [(ngModel)]="newResearch.author" required pattern="^[a-zA-Z ]+$">
+                         [(ngModel)]="newResearch.author" required pattern="^[a-zA-Z -;]+$">
                   <ul class="bg-danger text-white mt-2" *ngIf="cAuthor.dirty && cAuthor.invalid">
                     <li *ngIf="cAuthor.errors?.required">You must enter author.</li>
                     <li *ngIf="cAuthor.errors?.pattern">Only contain letter and space.</li>
