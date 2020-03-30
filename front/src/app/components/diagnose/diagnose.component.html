@@ -70,10 +70,10 @@
         <div class="before-canvas">Your photo will show here</div>
         <canvas #canvas id="canvas" width="500" height="500"></canvas>
         <div>
-          <button class="btn btn-info mx-2" (click)="snap()">Snap!</button>
+          <button class="btn btn-info mx-2" [disabled]="!device" (click)="snap()">Snap!</button>
           <button class="btn btn-secondary" (click)="cleanSnap()">Cancel</button>
           <button class="btn btn-outline-info" style="float: right" (click)="uploadTake()"
-                  [disabled]="!snapped" data-dismiss="modal">Upload</button>
+                  [disabled]="!snapped || !device" data-dismiss="modal">Upload</button>
         </div>
       </div>
       <div class="modal-footer">

@@ -30,6 +30,7 @@ export class DiagnoseComponent implements OnInit {
   public fileName: string = 'Select your local tongue photo';
   public uploaded: boolean = true;
   public photoPath: string = 'http://127.0.0.1:3000/doctor/photo/';
+  public device: boolean = false;
 
   @ViewChild('video', {static: true}) video: ElementRef;
   @ViewChild('canvas', {static: true}) canvas: ElementRef;
@@ -61,10 +62,15 @@ export class DiagnoseComponent implements OnInit {
 
   openModal() {
     this.snapped = false;
-    if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      this.device = true;
       navigator.mediaDevices.getUserMedia(this.constraints).then(this.attachVideo.bind(this)).catch(this.handleError);
     } else {
-      alert('Sorry, camera not available.');
+      this.device = false;
+      alert('Sorry, camera not available, please use Edge Browser');
+      // setTimeout(()=> {
+      //   this.closeModal();
+      // },100);
     }
   }
   attachVideo(stream) {
