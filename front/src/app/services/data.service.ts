@@ -16,6 +16,7 @@ export class DataService {
   // basicURL = 'http://localhost:3000'
   basicURL = '/api';
   customerURL = this.basicURL+'/customer';
+  quickURL = this.basicURL+'/quick';
 
   constructor(private http: HttpClient) { }
 
@@ -72,6 +73,10 @@ export class DataService {
     return this.sendRequest('get', this.customerURL + '/research');
   }
 
+  // Quick diagnosis
+  quickDiagnosis(fd): Observable<any>{
+    return this.sendRequest('post', this.quickURL+'/tongue', fd);
+  }
 
   /**
    * Total request function.

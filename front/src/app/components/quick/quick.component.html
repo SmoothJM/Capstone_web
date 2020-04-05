@@ -1,0 +1,124 @@
+<div style="margin-bottom: 30px">
+  <div class="text-center" style="font-size: 50px">
+    <i class="fas fa-paperclip"></i>
+  </div>
+  <h5 class="text-center mb-4">
+    Tongue Photo File Upload
+  </h5>
+  <div class="file-divider"></div>
+  <div class="text-center mt-3 mb-5">
+    <p class="tips">Only accept JPG JPEG PNG format photo. Size may not exceed 3MB.</p>
+  </div>
+  <div class="file-tips">
+    <span class="file-new-divider"></span>
+    <span class="uploadTips">You can upload local tongue photo</span>
+    <span class="file-new-divider"></span>
+  </div>
+  <div>
+    <form [formGroup]="uploadForm" class="m-2"
+          enctype="multipart/form-data" (ngSubmit)="uploadSubmit()">
+      <div class="input-group" style="width: 60%; margin: 0 auto;">
+        <div class="input-group-prepend">
+          <button class="btn btn-outline-secondary" type="submit" style="width: 220px"
+                  [disabled]="uploaded || submitted">
+            Upload
+            <span *ngIf="submitted" class="ml-1 pl-1 delay">
+              {{'Try again in '+second+'s'}}
+            </span>
+          </button>
+        </div>
+        <div class="custom-file">
+          <input type="file" accept=".png, .jpg, .jpeg" (change)="changeImg($event)"
+                 class="custom-file-input" id="uploadFile">
+          <label class="custom-file-label" for="uploadFile">{{fileName}}</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="file-tips btn-tips">
+    <span class="file-new-divider"></span>
+    <span class="uploadTips">OR</span>
+    <span class="file-new-divider"></span>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-round-large card-shadow btn-info" [disabled]="submitted"
+            data-toggle="modal" data-target="#modal-cam" (click)="openModal()">
+      Take Photo Now!
+      <p *ngIf="submitted" id="delay">
+        {{'Try again in '+second+'s'}}
+      </p>
+    </button>
+  </div>
+</div>
+
+
+<!-- Snap Modal -->
+<div class="modal fade" id="modal-cam" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-cam">Take a photo for your tongue</h5>
+        <a class="close" data-dismiss="modal" (click)="closeCam()" aria-label="Close">
+          <i class="fas fa-times-circle text-danger"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <div id="box-profile"></div>
+        <div id="tongue-profile"></div>
+        <video #video id="video" width="500" height="500" autoplay></video>
+        <div class="before-canvas">Your photo will show here</div>
+        <canvas #canvas id="canvas" width="500" height="500"></canvas>
+        <div>
+          <button class="btn btn-info mx-2" [disabled]="!device" (click)="snap()">Snap!</button>
+          <button class="btn btn-secondary" (click)="cleanSnap()">Cancel</button>
+          <button class="btn btn-outline-info" style="float: right" (click)="uploadTake()"
+                  [disabled]="!snapped || !device" data-dismiss="modal">Upload</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        Keep your tongue fills the tongue shape box then click Snap!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Display Modal -->
+<div class="modal fade" id="modal-detail" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label-detail">Detail of your diagnose</h5>
+        <a class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times-circle" style="color: red; cursor: pointer"></i>
+        </a>
+      </div>
+      <div class="modal-body pb-1">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col pb-3" style="border-bottom: solid 1.5px lightgrey" *ngIf="quickResult.image">
+              <img [src]="wholeImg+quickResult.image | trustUrl" width="330px" height="330px">
+              <img [src]="boxImg+quickResult.image | trustUrl" width="330px" height="330px"
+                   style="float: right">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="py-2">
+                <strong>Result: </strong>
+                <span id="result">{{quickResult.result}}</span>
+              </div>
+              <div class="py-2">
+                <strong>Percentage: </strong>
+                <span id="percentage">{{quickResult.percentage | percent: '1.0-2'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        Enjoy all services from the beginning of <a routerLink="/register" (click)="closeModal()">registered</a> members.
+      </div>
+    </div>
+  </div>
+</div>

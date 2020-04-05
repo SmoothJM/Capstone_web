@@ -1,36 +1,29 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {UserService} from '../../services/user.service';
 import {DataService} from '../../services/data.service';
-import {CustomerModel} from '../../model/customer.model';
-import {DoctorService} from '../../services/doctor.service';
-import {DoctorModel} from '../../model/doctor.model';
 import {Router} from '@angular/router';
 import {MessageService} from '../../services/message.service';
 import {Message} from '../../model/message.model';
-import {BadgeService} from '../../services/badge.service';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-diagnose',
-  templateUrl: './diagnose.component.html',
-  styleUrls: ['./diagnose.component.scss']
+  selector: 'app-quick',
+  templateUrl: './quick.component.html',
+  styleUrls: ['./quick.component.css']
 })
-export class DiagnoseComponent implements OnInit {
+export class QuickComponent implements OnInit {
   public submitted: boolean = false;
   public second: number = 0;
   public uploadForm: FormGroup;
   public tongueImg: File;
-  public customer: CustomerModel = new CustomerModel();
-  public doctorsInit: DoctorModel[] = new Array();
-  public docsPerPage: number = 5;
-  public selectedPage: number = 1;
   public snapped: boolean = false;
   public fileName: string = 'Select your local tongue photo';
   public uploaded: boolean = true;
-  public photoPath: string = 'http://127.0.0.1:3000/doctor/photo/';
   public device: boolean = false;
+  public wholeImg = 'http://127.0.0.1:3000/customer/tongue/';
+  public boxImg = this.wholeImg + 'result_box/';
+  public quickResult = {result:'',image:'',percentage:0};
 
   @ViewChild('video', {static: true}) video: ElementRef;
   @ViewChild('canvas', {static: true}) canvas: ElementRef;
@@ -46,18 +39,15 @@ export class DiagnoseComponent implements OnInit {
   };
 
   constructor(private fb: FormBuilder,
-              private userService: UserService,
               private dataService: DataService,
-              private doctorService: DoctorService,
               private router: Router,
               private messageService: MessageService,
-              private renderer: Renderer2,
-              private badgeService: BadgeService) {
-  }
+              private renderer: Renderer2) { }
 
-
-  closeModal() {
-    $('#modal-cam').modal('hide');
+  ngOnInit() {
+    this.uploadForm = this.fb.group({
+      tongueImg: ['']
+    });
   }
 
   openModal() {
@@ -119,8 +109,8 @@ export class DiagnoseComponent implements OnInit {
       let blob = this.toBlob(base64Data);
       let fd = new FormData();
       fd.append('tongueImg', blob);
-      this.dataService.uploadTongueImg(fd).subscribe(data => {
-        this.diagnoseResultDisplay(data.flag, data.result);
+      this.dataService.quickDiagnosis(fd).subscribe(data => {
+        this.diagnoseResultDisplay(data);
       });
       this.closeCam();
       this.second = 20;
@@ -137,31 +127,20 @@ export class DiagnoseComponent implements OnInit {
     }
   }
 
-
-  bindDoctor(doctor: DoctorModel) {
-   let flag = confirm(`Are you sure to select ${doctor.username}?`);
-   if (flag) {
-     this.customer.docEmail = doctor.email;
-     this.dataService.updateCustomer(this.customer).subscribe(data => {
-       this.messageService.reportMessage(new Message(`You have selected ${doctor.username} as your personal doctor.`));
-       setTimeout(() => {
-         this.messageService.reportMessage(new Message(''));
-       }, 1500);
-     });
-   }
+  closeModal(){
+    $('#modal-detail').modal('hide');
   }
 
-  diagnoseResultDisplay(flag, result?) {
-    if (flag) {
-      // this.diabetesLevel = data.result;
-      this.messageService.reportMessage(new Message('Your diagnose is done, please check the result' +
-        ' in Diagnose History.'));
-      this.badgeService.reportDiaBadgeCount(this.badgeService.originDiaBadgeCount);
-      setTimeout(() => {
-        this.messageService.reportMessage(new Message(''));
-      }, 3000);
+  diagnoseResultDisplay(data) {
+    if (data.flag) {
+      // TODO open modal to display diagnose result
+      this.quickResult.result = data.result;
+      this.quickResult.image = data.img;
+      this.quickResult.percentage = data.percentage;
+      $('#modal-detail').modal('show');
+
     } else {
-      this.messageService.reportMessage(new Message(result, true));
+      this.messageService.reportMessage(new Message(data.result, true));
     }
   }
 
@@ -178,8 +157,8 @@ export class DiagnoseComponent implements OnInit {
         this.submitted = false;
       }
     }, 1100);
-    this.dataService.uploadTongueImg(fd).subscribe(data => {
-      this.diagnoseResultDisplay(data.flag, data.result);
+    this.dataService.quickDiagnosis(fd).subscribe(data => {
+      this.diagnoseResultDisplay(data);
     });
   }
 
@@ -197,51 +176,16 @@ export class DiagnoseComponent implements OnInit {
     }
   }
 
-  get doctors(): DoctorModel[] {
-    let pageIndex = (this.selectedPage - 1) * this.docsPerPage;
-    return this.doctorsInit.slice(pageIndex, pageIndex + this.docsPerPage);
-  }
-
-  addClickEvent() {
-    setTimeout(() => {
-      $('.expand-panel .panel-head').on('click', function() {
-        $(this).parents('.panel').toggleClass('open').siblings().removeClass('open');
-        $(this).siblings('.panel-body').slideToggle(300);
-        $(this).parents('.panel').siblings().find('.panel-body').slideUp(300);
-      });
-    }, 100);
-  }
-  changePage(newPage: number) {
-    this.selectedPage = newPage;
-    this.addClickEvent();
-  }
-  get pageNumbers(): number[] {
-    return Array(Math.ceil(this.doctorsInit.length / this.docsPerPage)).fill(0)
-      .map((x, i) => i + 1);
-  }
-
-  ngOnInit() {
-    this.doctorService.getDoctors().subscribe(data => {
-      this.doctorsInit = data['doctors'];
-      this.addClickEvent();
-    });
 
 
-    this.uploadForm = this.fb.group({
-      tongueImg: ['']
-    });
 
-    this.dataService.getCustomer().subscribe(data => {
-      this.customer = data;
-      if (!this.customer.docEmail) {
-        this.messageService.reportMessage(new Message('Before diagnose, please select a doctor as your' +
-          ' personal doctor. Your diagnose report can only be viewed by the doctor you selected.', false));
-      }
-      setTimeout(() => {
-        this.messageService.reportMessage(new Message(''));
-      }, 5000);
-    });
-  }
+
+
+
+
+
+
+
 
 
 }

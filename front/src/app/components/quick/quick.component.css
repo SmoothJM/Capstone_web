@@ -1,0 +1,100 @@
+#delay {
+  text-decoration: overline;
+}
+
+.delay {
+  border-left: solid 1.5px lightgray;
+}
+#box-profile {
+  z-index: 20;
+  top: 120px;
+  left: 110px;
+  width: 300px;
+  height: 270px;
+  border: lightgray 2px solid;
+  position: absolute;
+}
+#tongue-profile {
+  top: 150px;
+  left: 180px;
+  width: 160px;
+  height: 210px;
+  border: lightgray 2px solid;
+  border-radius: 60px 60px 100% 100%;
+  position: absolute;
+}
+#canvas {
+  float: right;
+}
+.before-canvas {
+  color: lightgray;
+  top: 17px;
+  right: 17px;
+  width: 499px;
+  height: 499px;
+  position: absolute;
+  border: lightgray 2px dashed;
+  text-align: center;
+}
+.modal-footer {
+  justify-content: center;
+}
+.modal-body {
+  padding-bottom: 6px;
+}
+a {
+  cursor: pointer;
+}
+small {
+  color: darkgray;
+}
+#modal-cam {
+  overflow: hidden;
+}
+.btn-round-large {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+
+
+.tips {
+  color: #9AaAaA;
+}
+.file-tips {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2%;
+}
+.btn-tips {
+  margin: 5% 0 2% 0 ;
+}
+.uploadTips {
+  color: #9AaAaA;
+  text-align: center;
+  display: inline;
+}
+.file-new-divider {
+  width: 120px;
+  height: 2px;
+  overflow: hidden;
+  background: #e9ecef;
+  margin: 10px;
+}
+
+.file-divider {
+  margin: 0 auto;
+  text-align: center;
+  width: 40%;
+  height: 1px;
+  overflow: hidden;
+  background: #e9ecef;
+}
+
+.card-shadow {
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+  0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}

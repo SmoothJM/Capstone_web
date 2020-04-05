@@ -8,6 +8,7 @@ const login = require('./routes/login');
 const doctor = require('./routes/doctor');
 const admin = require('./routes/admin');
 const chat = require('./routes/chat');
+const quick = require('./routes/quick');
 
 const app = express();
 const basicURL = '/api';
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(basicURL + '/admin', admin);
+app.use(basicURL + '/quick', quick);
 app.use(basicURL + '/chat', chat);
 app.use(basicURL + '/customer', customer);
 app.use(basicURL + '/doctor', doctor);

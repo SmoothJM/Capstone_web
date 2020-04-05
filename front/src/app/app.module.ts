@@ -42,6 +42,7 @@ import { TrustUrlPipePipe } from './guards/trust-url-pipe.pipe';
 import { ChatCustomerComponent } from './components/chat-customer/chat-customer.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { AboutComponent } from './components/about/about.component';
+import { QuickComponent } from './components/quick/quick.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { AboutComponent } from './components/about/about.component';
     TrustUrlPipePipe,
     ChatCustomerComponent,
     StaffComponent,
-    AboutComponent
+    AboutComponent,
+    QuickComponent
   ],
   imports: [
     BrowserModule,

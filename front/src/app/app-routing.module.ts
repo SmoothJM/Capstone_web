@@ -22,6 +22,7 @@ import {ManagerCustomerComponent} from './components/manager-customer/manager-cu
 import {ManagerDoctorComponent} from './components/manager-doctor/manager-doctor.component';
 import {StaffComponent} from './components/staff/staff.component';
 import {AboutComponent} from './components/about/about.component';
+import {QuickComponent} from './components/quick/quick.component';
 // import {InfoComponent} from './components/info/info.component';
 
 const routes: Routes = [
@@ -62,6 +63,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'staff', component: StaffComponent},
   {path: 'about', component: AboutComponent},
+  {path: 'quick', component: QuickComponent},
   {path: '', component: WelcomeComponent},
   {path: '**', component: ErrorPageComponent}
 ];
