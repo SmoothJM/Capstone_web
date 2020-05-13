@@ -59,26 +59,19 @@ router.post('/tongue', upload.single('tongueImg'), (req, res, next) => {
                 });
                 let percentage = Math.max(...arr);
                 let level = levels[arr.indexOf(percentage)];
-                diagnoseModel.findAllDiagnose({email: req.session.user['email']}, (error, results) => {
-                    if (error) throw error;
-                    if (results.length > 0) {
-                        level = results[results.length - 1].result;
-                        // console.log(results[0].result);
-                    }
-                    diagnoseModel.insertDiagnose({
-                        email: req.session.user['email'],
-                        username: req.session.user['username'],
-                        result: level,
-                        img: img_name,
-                        time: new Date(),
-                        percentage: percentage
-                    }, (err, result) => {
-                        if (err) throw err;
-                    });
-                    res.json({
-                        flag: true,
-                        result: stdo
-                    });
+                diagnoseModel.insertDiagnose({
+                    email: req.session.user['email'],
+                    username: req.session.user['username'],
+                    result: level,
+                    img: img_name,
+                    time: new Date(),
+                    percentage: percentage
+                }, (err, result) => {
+                    if (err) throw err;
+                });
+                res.json({
+                    flag: true,
+                    result: stdo
                 });
             });
         } else {
@@ -249,9 +242,9 @@ router.get('/doctor/:email', (req, res) => {
 // Get all researches for display
 router.get('/research', (req, res) => {
     researchModel.findResearch({}, (err, result) => {
-       if(err) throw err;
-       if(result != null) res.json(result);
-       else res.json(null);
+        if (err) throw err;
+        if (result != null) res.json(result);
+        else res.json(null);
     });
 });
 
